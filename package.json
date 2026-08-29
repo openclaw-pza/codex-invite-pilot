@@ -1,0 +1,27 @@
+{
+  "name": "codex-invite-pilot",
+  "version": "1.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "description": "无人值守的端到端自动履约链路：发卡内核 + 不可再生库存号池 + 判据驱动的浏览器自动化",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node --test --import ./test.setup.mjs",
+    "setup-browser": "playwright install chromium",
+    "vend": "node server/vend-server.js",
+    "vend:dev": "node --watch server/vend-server.js"
+  },
+  "dependencies": {
+    "flag-icons": "^7.5.0",
+    "gsap": "^3.15.0",
+    "i18n-iso-countries": "^7.14.0",
+    "libphonenumber-js": "^1.13.10",
+    "playwright": "^1.62.1"
+  },
+  "devDependencies": {
+    "@iconify-json/logos": "^1.2.13",
+    "simple-icons": "^16.28.0"
+  }
+}

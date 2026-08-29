@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>管理员设置 · Mail SMS Pilot</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell admin-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <div class="brand-text">
+            <h1>管理员设置</h1>
+            <p>配置保存在本机 .env，密钥不会回显到浏览器</p>
+          </div>
+        </div>
+        <a class="btn btn-ghost" href="/">返回控制台</a>
+      </header>
+
+      <form id="adminForm" class="admin-form">
+        <section class="lane">
+          <div class="lane-head"><span class="step-index">01</span><h2>邮箱通道</h2></div>
+          <div class="admin-grid">
+            <label class="field-row admin-wide"><span>邮箱后台地址</span><input id="mailBaseUrl" type="url" required placeholder="https://mail.example.com" /></label>
+            <label class="field-row"><span>收件域名</span><input id="mailDomain" type="text" required placeholder="example.com" /></label>
+            <label class="field-row"><span>后台鉴权</span><input id="mailAdminAuth" type="password" autocomplete="new-password" placeholder="留空保留现有值" /></label>
+          </div>
+          <label class="danger-check"><input id="clearMailAuth" type="checkbox" /> 清除当前邮箱鉴权</label>
+        </section>
+
+        <section class="lane">
+          <div class="lane-head"><span class="step-index">02</span><h2>HeroSMS</h2></div>
+          <div class="admin-grid">
+            <label class="field-row admin-wide"><span>API 地址</span><input id="heroBaseUrl" type="url" required /></label>
+            <label class="field-row admin-wide"><span>API Key</span><input id="heroApiKey" type="password" autocomplete="new-password" placeholder="留空保留现有值" /></label>
+            <label class="field-row"><span>服务码</span><input id="heroService" type="text" required placeholder="dr" /></label>
+            <label class="field-row"><span>接码国家</span><select id="heroCountry" required><option value="">正在加载可用国家…</option></select></label>
+            <label class="field-row"><span>运营商</span><input id="heroOperator" type="text" required placeholder="any" /></label>
+            <label class="field-row"><span>选定价格（USD）</span><input id="heroMaxPrice" type="number" min="0" step="0.0001" placeholder="从下方报价选择或手动填写" /></label>
+            <label class="field-row"><span>取号策略</span><select id="heroPriority"><option value="fixed">按所选报价锁价</option><option value="price">自动低价优先</option><option value="country">直接取号</option></select></label>
+            <div class="admin-wide quote-panel">
+              <div class="quote-head">
+                <div><strong>当前可用报价</strong><p id="heroQuoteMeta">点击刷新，从 HeroSMS 获取实时档位与库存。</p></div>
+                <div class="quote-actions">
+                  <span id="heroBalance" class="balance-pill" title="HeroSMS 当前账户余额">余额读取中…</span>
+                  <button class="btn btn-ghost btn-sm" id="refreshHeroPrices" type="button">刷新报价</button>
+                </div>
+              </div>
+              <div id="heroQuoteList" class="quote-list" aria-live="polite"></div>
+              <p class="quote-help">选择一档后会自动切到“按所选报价锁价”。若 HeroSMS 网页刚出现而接口尚未同步的新档位，也可以在上方手动填写。</p>
+            </div>
+          </div>
+          <label class="danger-check"><input id="clearHeroKey" type="checkbox" /> 清除当前 HeroSMS API Key</label>
+        </section>
+
+        <div class="admin-savebar">
+          <p id="adminMessage" class="admin-message" aria-live="polite"></p>
+          <button class="btn btn-primary" id="btnSave" type="submit">保存并立即生效</button>
+        </div>
+      </form>
+    </div>
+    <script type="module" src="/admin.js"></script>
+  </body>
+</html>

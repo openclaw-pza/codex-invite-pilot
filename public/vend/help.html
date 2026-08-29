@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="验证码取号图文使用教程：卡密怎么用、怎么选服务和地区、「可用 / 卡密余额不足」是什么意思、补差价怎么补、收不到验证码怎么办、退款规则、临时邮箱怎么用。">
+<link rel="canonical" href="https://sms.tempmail2026.xyz/help.html">
+<title>图文使用教程 · 验证码取号</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='4' fill='%23E9C87A'/%3E%3Ccircle cx='13' cy='13' r='8.5' fill='none' stroke='%23E9C87A' stroke-width='1.6' opacity='.55'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./vend.css?v=437c8752">
+
+<script type="application/ld+json" id="faqLd">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "这个号码我能一直留着用吗", "acceptedAnswer": {"@type": "Answer", "text": "不能。一次性虚拟号，收完这一条验证码就释放了，无法解绑也无法长期持有。这类服务都是这个机制，不是我们单独这样。"}}, {"@type": "Question", "name": "页面为什么不显示价格了", "acceptedAnswer": {"@type": "Answer", "text": "因为对你没用。卡密是预付的，一张卡对应一次成功收码，你选便宜的地区并不会省钱、选贵的也不会多花钱。你真正需要知道的只有一件事： 这张卡能不能取这个号 ——所以我们直接标「可用 / 卡密余额不足」。"}}, {"@type": "Question", "name": "刚取的号为什么点不了取消 / 换号", "acceptedAnswer": {"@type": "Answer", "text": "号码线路限制：刚取的号约 90 秒内不能退。按钮会灰着并显示还剩几秒，到点自动亮起来。这 90 秒里你正好可以把号填进注册页面。"}}, {"@type": "Question", "name": "验证码填进去提示无效", "acceptedAnswer": {"@type": "Answer", "text": "先确认没有多复制空格。验证码本身通常只有几分钟有效期，收到就赶紧用。 要注意： 一张卡密只收一条验证码 ，收到之后页面就不再接收了。如果这条码已经过期，需要重新买一张卡密取号。"}}, {"@type": "Question", "name": "页面不小心关掉了，还能找回吗", "acceptedAnswer": {"@type": "Answer", "text": "能。重新打开页面，输入同一张卡密，如果还有进行中的号码会自动接上，倒计时也接着走。卡密已经用完的会提示「已经用过了」。"}}, {"@type": "Question", "name": "价格是怎么算的", "acceptedAnswer": {"@type": "Answer", "text": "按号码线路的实时成本换算成人民币。库存和价格本身会浮动，所以同一个地区不同时间点的成本不一样——这也是为什么会出现「今天可用、明天余额不足」的情况。"}}, {"@type": "Question", "name": "能开发票吗 / 能批量买吗", "acceptedAnswer": {"@type": "Answer", "text": "这两件事都请直接在你下单的平台上联系卖家谈，页面上处理不了。"}}]}
+</script>
+
+<style>
+/* 说明页专用样式。
+ *
+ * 这一版是重写的：上一版还在用浅色皮的 --ink / --muted / --hairline / --signal，
+ * 而黑金版 vend.css 里根本没有这几个变量 —— 页面等于**整页没样式**，
+ * 顶栏的 margin-left:auto 也因为 .bar-in 不再是 flex 而失效，
+ * 「返回取号」就掉到了左上角（安哥说的「退出键在左上角太反人类」就是这么来的）。
+ *
+ * 教训：换皮的时候，凡是引用了旧 token 的**附属页面**都要一起改，
+ * 只盯着首页看是查不出来的 —— 附属页面在测试里根本没被打开过。
+ */
+body { background: var(--bg); color: var(--t2); }
+
+/* ---------- 顶栏：退出键在右上角 ---------- */
+.hbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: 12px;
+  height: 60px; padding: 0 20px;
+  background: rgba(240,238,240,.86); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.hbar .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; color: var(--t1); }
+.hbar .sp { flex: 1; }
+.hbar-exit {
+  display: inline-flex; align-items: center; gap: 9px;
+  height: 40px; padding: 0 6px 0 16px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: transparent;
+  color: var(--t2); font-size: 13.5px; text-decoration: none;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.hbar-exit:hover { border-color: var(--gold); color: var(--hot); background: rgba(var(--gold-rgb),.08); }
+.hbar-exit .x {
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold-grad); color: var(--on-gold); font-size: 14px; font-weight: 700;
+}
+
+/* ---------- 版心 ---------- */
+/* width: 100% 是必须的，不能只写 max-width。
+ * body 是 display:flex 的列容器，.doc 是它的 flex item；width:auto 时 Chrome 会拿
+ * 内容的 min-content 去撑这个被 stretch 的项，于是表格那句 min-width:460px 顺着一路顶上来，
+ * 把 .doc 撑到 490px（min-width:0 挡不住，实测试过）。
+ * 更坏的是 body 上有 overflow-x:hidden，溢出不会表现成滚动条，而是右边 100px
+ * 被**裁掉且够不着** —— 比出现滚动条难发现得多。
+ * 判据：scripts/check-pages.mjs 里断言的是 documentElement.scrollWidth，不是「有没有滚动条」。 */
+.doc { width: 100%; max-width: 860px; margin: 0 auto; padding: 34px 22px 80px; }
+.doc-hero h1 { margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -.02em; color: var(--t1); }
+.doc-hero .sub { margin: 10px 0 0; font-size: 15px; line-height: 1.85; color: var(--t3); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip-s {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px; font-size: 12.5px;
+  background: rgba(var(--gold-rgb),.08); border: 1px solid rgba(var(--gold-rgb),.22); color: var(--gold-hover);
+}
+.chip-s b { color: var(--gold); font-family: var(--mono); font-weight: 700; }
+
+/* 快速跳转 —— 说明页最怕的是「一大段字，不知道自己的问题在哪一段」 */
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; }
+.jump a {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 15px;
+  border-radius: 10px; border: 1px solid var(--line); background: var(--panel-2);
+  font-size: 13.5px; color: var(--t2); text-decoration: none;
+  transition: border-color .18s ease, background .18s ease, transform .18s var(--ease);
+}
+.jump a:hover { border-color: rgba(var(--gold-rgb),.5); background: rgba(var(--gold-rgb),.08); color: var(--hot); transform: translateY(-2px); }
+
+/* ---------- 分节 ---------- */
+.sec { margin-top: 52px; scroll-margin-top: 76px; }
+.sec > h2 {
+  display: flex; align-items: center; gap: 11px;
+  margin: 0 0 6px; font-size: 21px; font-weight: 700; color: var(--t1); letter-spacing: -.01em;
+}
+.sec > h2::before { content: ''; width: 4px; height: 20px; border-radius: 2px; background: var(--gold-grad); }
+.sec > .lede { margin: 0 0 18px; font-size: 14px; line-height: 1.9; color: var(--t3); }
+.sec p { font-size: 14.5px; line-height: 1.92; color: var(--t3); }
+.sec b { color: var(--t1); font-weight: 600; }
+.sec .mono { font-family: var(--mono); color: var(--gold); }
+
+/* ---------- 步骤卡：一步一张图 ---------- */
+.steps { display: flex; flex-direction: column; gap: 18px; }
+.step {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px;
+  padding: 18px; border-radius: 16px;
+  background: var(--panel-2); border: 1px solid var(--line);
+}
+.step-n {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px;
+  background: var(--gold-grad); color: var(--on-gold);
+  font-family: var(--mono); font-size: 19px; font-weight: 700;
+}
+.step h3 { margin: 4px 0 6px; font-size: 16px; font-weight: 600; color: var(--t1); }
+.step p { margin: 0 0 8px; font-size: 14px; line-height: 1.88; }
+.step p:last-child { margin-bottom: 0; }
+.shot { margin: 12px 0 0; }
+.shot img {
+  display: block; width: 100%; height: auto; border-radius: 12px;
+  border: 1px solid var(--line-2); background: var(--panel-deep);
+}
+.shot figcaption { margin-top: 8px; font-size: 12px; color: var(--t4); line-height: 1.7; }
+.shot figcaption b { color: var(--gold); font-weight: 700; }
+
+/* ---------- 强调块 ---------- */
+.note {
+  margin: 18px 0 0; padding: 15px 17px; border-radius: 14px;
+  border: 1px solid rgba(var(--warn-rgb),.30); background: rgba(var(--warn-rgb),.06);
+}
+.note.red { border-color: rgba(var(--red-rgb),.34); background: rgba(var(--red-rgb),.06); }
+.note h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 14.5px; color: var(--warn); }
+.note.red h4 { color: var(--red); }
+.note p { margin: 0 0 6px; font-size: 13.5px; line-height: 1.85; color: var(--t2); }
+.note.red p { color: var(--t2); }
+.note p:last-child { margin-bottom: 0; }
+.note b { color: var(--t1); }
+.note.red b { color: var(--t1); }
+
+/* ---------- 标签演示 ---------- */
+.tagdemo { display: flex; flex-direction: column; gap: 12px; margin: 16px 0 0; }
+.tagdemo-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 14px 16px; border-radius: 13px; background: var(--panel-2); border: 1px solid var(--line);
+}
+.tagdemo-row .row-tag { flex-shrink: 0; }
+.tagdemo-row p { margin: 0; flex: 1; min-width: 220px; font-size: 13.5px; line-height: 1.8; }
+
+/* ---------- 表格 ---------- */
+.tbl-wrap { overflow-x: auto; margin-top: 16px; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 460px; }
+.tbl th, .tbl td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.8; }
+.tbl th { font-size: 12.5px; font-weight: 600; color: var(--t4); background: var(--panel-2); }
+.tbl td { color: var(--t3); }
+.tbl td b { color: var(--t1); }
+.tbl .yes { color: var(--ok-text); font-weight: 600; white-space: nowrap; }
+.tbl .no { color: var(--red); font-weight: 600; white-space: nowrap; }
+
+/* ---------- 问答 ---------- */
+.qa { margin-top: 8px; border-top: 1px solid var(--line); }
+.qa details { border-bottom: 1px solid var(--line); }
+.qa summary {
+  display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none;
+  padding: 16px 2px; font-size: 14.5px; font-weight: 600; color: var(--t1);
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: '+'; margin-left: auto; font-family: var(--mono); font-size: 18px; color: var(--gold); transition: transform .2s ease; }
+.qa details[open] summary::after { content: '−'; }
+.qa summary:hover { color: var(--hot); }
+.qa .a { padding: 0 2px 18px; font-size: 14px; line-height: 1.92; color: var(--t3); }
+.qa .a p { margin: 0 0 8px; }
+.qa .a p:last-child { margin: 0; }
+
+.doc-foot { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.doc-foot .btn-gold { height: 46px; padding: 0 26px; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; }
+.doc-foot span { font-size: 12.5px; color: var(--t4); }
+
+@media (max-width: 640px) {
+  .doc { padding: 26px 15px 64px; }
+  .doc-hero h1 { font-size: 26px; }
+  .step { grid-template-columns: 1fr; gap: 12px; padding: 16px; }
+  .step-n { width: 38px; height: 38px; border-radius: 11px; font-size: 17px; }
+  .hbar { padding: 0 14px; }
+  .hbar-exit { font-size: 13px; padding: 0 5px 0 13px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hbar">
+  <span class="brand">
+    <svg width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="4" fill="#E9C87A"></circle><circle cx="13" cy="13" r="8.5" fill="none" stroke="#E9C87A" stroke-width="1.6" opacity="0.55"></circle></svg>
+    验证码取号
+  </span>
+  <span class="sp"></span>
+  <!-- 退出键放右上角。上一版在左上角，安哥原话「太反人类」——
+       关闭 / 退出这类控件的默认位置就是右上角，别自作主张挪走。 -->
+  <a class="hbar-exit" href="./">返回取号<span class="x" aria-hidden="true">✕</span></a>
+</header>
+
+<main class="doc">
+
+  <div class="doc-hero">
+    <h1>图文使用教程</h1>
+    <p class="sub">从粘卡密到收到验证码，一共三步。这页把每一步长什么样都截了图，照着做就行。<br>看不明白的直接翻到最下面「还是搞不定」。</p>
+    <div class="chips">
+      <span class="chip-s">支持 <b id="cSvc">722</b> 个平台</span>
+      <span class="chip-s">覆盖 <b>180+</b> 个国家和地区</span>
+      <span class="chip-s">号码有效期 <b id="cTtl">20</b> 分钟</span>
+      <span class="chip-s">临时邮箱免费用 <b id="cMail">3</b> 天</span>
+    </div>
+  </div>
+
+  <nav class="jump" aria-label="快速跳转">
+    <a href="#start">三步上手</a>
+    <a href="#budget">「卡密余额不足」怎么办</a>
+    <a href="#nocode">收不到验证码</a>
+    <a href="#after">收到码但报错</a>
+    <a href="#refund">退款规则</a>
+    <a href="#mail">临时邮箱</a>
+    <a href="#faq">常见问题</a>
+  </nav>
+
+  <div class="note red">
+    <h4>⚠ 动手之前，先看这一条</h4>
+    <p>这是<b>境外一次性虚拟号</b>，收完这一条验证码就释放了，<b>无法解绑、也不可能留给你长期使用</b>。</p>
+    <p>如果你注册的账号之后触发了<b>二次验证</b>（要求再收一次短信），这个号已经找不回来了，届时只能重新取号或换别的方式。Codex / ChatGPT 桌面客户端对二次验证比较敏感，网页端一般不受影响。<b>介意这一点就先别下单</b>，别买完再来退。</p>
+  </div>
+
+  <!-- ============ 三步上手 ============ -->
+  <section class="sec" id="start">
+    <h2>三步上手</h2>
+    <p class="lede">全程在一个页面里完成，不用下载任何东西，也不用注册账号。</p>
+
+    <div class="steps">
+
+      <article class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h3>粘卡密</h3>
+          <p>下单后卖家会把卡密发给你，长得像 <span class="mono">ANGE-XXXX-XXXX-XXXX</span>。粘到页面<b>左上角</b>那个输入框里，点「验证」。</p>
+          <p><b>整段消息一起粘也行</b>——页面会自己把卡密那一串认出来，不用你手动挑。全角横杠、多余空格都能识别。</p>
+          <figure class="shot">
+            <img src="guide/step-1.jpg" alt="页面左上角的卡密输入框，粘贴卡密后点验证" loading="lazy">
+            <figcaption><b>①</b> 卡密粘这里。<b>②</b> 点「验证」。通过后这一栏会变成一张金色的卡，显示卡密面额。</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h3>选服务，再选国家</h3>
+          <p>先选你要注册<b>哪个平台</b>（ChatGPT、Discord、TikTok…上面有搜索框，打名字就能找到），再选<b>号码是哪个国家的</b>。</p>
+          <p>每一行右边会标「<b>可用</b>」或「<b>卡密余额不足</b>」，<b>页面不显示价格</b>——卡密是预付的，你只要挑标着「可用」的就行。具体看下一节。</p>
+          <figure class="shot">
+            <img src="guide/step-2a.jpg" alt="服务列表：搜索框在上，下面是一行行的平台" loading="lazy">
+            <figcaption><b>①</b> 搜索框里打平台名最快。<b>②</b> 点中那一行就进下一步。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="guide/step-2b.jpg" alt="地区列表：每行右边标着可用或卡密余额不足" loading="lazy">
+            <figcaption><b>①</b> 标「可用」的直接能取。<b>②</b> 标「卡密余额不足」的点一下会弹补差价。想换平台点「重选服务」。</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h3>取号，等验证码</h3>
+          <p>点底部金色的「<b>取手机号</b>」，号码会出现在页面中间。点旁边的「复制号码」，粘到你要注册的那个网站上。</p>
+          <div class="note red">
+            <h4>⚠ 这两步做错，码一定收不到</h4>
+            <p><b>1. 接收方式一定要选「短信 / SMS」。</b>注册页通常会给你几个选项（短信、WhatsApp、语音电话）。
+            <b>选 WhatsApp 是收不到的</b>——我们给的是普通手机号，不是 WhatsApp 账号。
+            如果页面自动跳到了语音电话，说明这个国家的号不适合，回来换一个国家。</p>
+            <p><b>2. 注册页的国家区号要和号码对上。</b>你取的是泰国号，注册页的国家就要选泰国。
+            选错了对方会往另一个国家发短信，你这边永远收不到。</p>
+          </div>
+          <p>然后<b>回到本页面等着就行</b>，页面每 <span id="cPoll" class="mono">5</span> 秒自动查一次，收到验证码会自动填进中间那六个格子里，<b>不用刷新、不用手动点</b>。切到别的标签页也没关系，浏览器标签标题上会一直显示倒计时。</p>
+          <figure class="shot">
+            <img src="guide/step-3.jpg" alt="取号后页面显示手机号和倒计时，等待验证码" loading="lazy">
+            <figcaption><b>①</b> 点这里复制号码。<b>②</b> 号码有效期倒计时。中间那六个格子就是验证码出现的位置。<b>（示意图，号码为示例）</b></figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="guide/step-4.jpg" alt="验证码到达后自动填进六个格子，下面出现复制验证码按钮" loading="lazy">
+            <figcaption>验证码到了会自动填进去，点 <b>①</b> 一键复制。到这一步这张卡密就算用完了。<b>（示意图）</b></figcaption>
+          </figure>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ 可用 / 余额不足 ============ -->
+  <section class="sec" id="budget">
+    <h2>「可用」和「卡密余额不足」</h2>
+    <p class="lede">这是这个页面唯一需要理解的概念，一分钟看完。</p>
+
+    <div class="tagdemo">
+      <div class="tagdemo-row">
+        <span class="row-tag ok">可用</span>
+        <p>你这张卡密<b>直接能取这个号</b>，不用再花一分钱。挑这种就对了。</p>
+      </div>
+      <div class="tagdemo-row">
+        <span class="row-tag short">卡密余额不足</span>
+        <p>这个地区的号<b>成本高过你卡密的面额</b>。想用的话要补差价，不想补就换一个标「可用」的地区，<b>收码效果完全一样</b>。</p>
+      </div>
+      <div class="tagdemo-row">
+        <span class="row-tag paid">已补差价</span>
+        <p>你之前补过这个地区的差价、卖家也核对到账了，现在可以正常取号。</p>
+      </div>
+    </div>
+
+    <h3 style="margin:26px 0 0;font-size:16px;color:var(--t1)">要补差价的话，怎么补</h3>
+    <p>点一下标着「卡密余额不足」的那一行，页面会弹出补差价窗口，上面把三件事都写清楚了：<b>这个地区多少钱、你的卡密能抵多少、你还要补多少</b>。</p>
+    <figure class="shot">
+      <img src="guide/step-topup.jpg" alt="补差价弹窗：显示地区价格、卡密抵扣、应补金额和支付宝收款码" loading="lazy">
+      <figcaption><b>①</b> 这就是你要补的金额。<b>②</b> 转账时必须按这里的要求备注，否则卖家对不上账。</figcaption>
+    </figure>
+
+    <div class="note">
+      <h4>补差价的三条注意事项</h4>
+      <p><b>1. 转账时一定要按提示备注卡密后 4 位。</b>不备注卖家对不上是谁付的钱，只能干等。</p>
+      <p><b>2. 这是人工核对，不是即时到账即放行。</b>转完点「我已转账，开始取号」，卖家核对到账后那个地区才会变成「可用」。急的话直接在闲鱼上戳卖家一句。</p>
+      <p><b>3. 补款只对这一次取号有效。</b>不是给卡密充值，也不能转到别的地区去用。</p>
+    </div>
+
+    <p style="margin-top:16px">说到底：<b>绝大多数人根本用不上补差价</b>。标「可用」的地区通常有几十上百个，随便挑一个都能收码。补差价只是给「非某个特定国家的号不可」的人留的口子。</p>
+  </section>
+
+  <!-- ============ 收不到码 ============ -->
+  <section class="sec" id="nocode">
+    <h2>收不到验证码怎么办</h2>
+    <p class="lede">先别急着关页面，也别急着找卖家吵——这事有标准处理流程，而且<b>不会额外扣你的钱</b>。</p>
+
+    <div class="steps">
+      <article class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h3>先等满 2~3 分钟</h3>
+          <p>正常 1~3 分钟内会到。境外短信偶尔会慢，页面在自动查，你不用做任何操作。</p>
+        </div>
+      </article>
+      <article class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h3>点「更换号码」，换一个号再试</h3>
+          <p><b>原号码的费用会退回卡密，不额外扣钱。</b>号码有效期内可以反复换，<span id="cChange">每次之间要隔约 90 秒</span>。</p>
+          <p>有些国家的号，目标平台就是不给发短信。<b>多换两个国家通常就成了</b>——这比在同一个国家反复试有用得多。</p>
+        </div>
+      </article>
+      <article class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h3>不想再试了，就点「取消并退款」</h3>
+          <p>费用同样退回，卡密还能继续用。</p>
+          <p>注意：<b>刚取的号约 90 秒内既不能换、也不能取消</b>，按钮会先灰着并显示还剩几秒。这是号码线路的硬性限制，不是我们设的卡。等它自己亮起来就行。</p>
+        </div>
+      </article>
+      <article class="step">
+        <div class="step-n">4</div>
+        <div>
+          <h3>换了好几个都收不到 → 注销卡密退款</h3>
+          <p>左栏下方有「<b>注销卡密并申请退款</b>」。点了之后这张卡密作废（作废后不能再取号），然后回你下单的平台找卖家，把<b>卡密后四位</b>发给他退款。</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 验证之后报错 ============ -->
+  <section class="sec" id="after">
+    <h2>验证码收到了，但网站报错</h2>
+    <p class="lede">
+      比如「令牌交换失败」「400 / 401 / 403」「Localhost 拒绝连接」「出错了，请重试」。
+      <b>先说结论：这类报错跟手机号没有关系。</b>验证码已经收到、手机号已经绑定成功了，
+      卡在这里的是你和对方网站之间的网络。
+    </p>
+    <div class="note">
+      <h4>按这个顺序试，多数都能过</h4>
+      <p><b>1. 换个节点。</b>别用香港节点、也别用「自动选择」，选<b>美国或日本</b>，
+      家庭宽带类型的节点比机房节点稳。换完退出重新登录一次。</p>
+      <p><b>2. 查一下出口 IP 干不干净。</b>很多人用的节点被大量共享过，会被判定成风险 IP。
+      可以上 <span class="mono">ippure.com</span> 这类网站自查一下。</p>
+      <p><b>3. 换个浏览器或用无痕窗口。</b>清掉旧的登录状态再来一次。</p>
+      <p><b>4. 把报错原文复制去搜。</b>这些都是对方网站的通用报错，搜一下能找到一堆现成方案。</p>
+    </div>
+    <div class="note red">
+      <h4>关于这类情况的退款</h4>
+      <p><b>验证码已经送到你手里、手机号已经绑定成功，这一单就算完成了。</b>
+      之后因为网络、节点、IP、账号本身状态导致的登录失败，不在退款范围内——
+      那部分不是我们能控制的，也不是我们卖的东西。</p>
+      <p>我们负责的边界很清楚：<b>把验证码送到你手里</b>。没送到，退款；送到了，交易结束。</p>
+    </div>
+  </section>
+
+  <!-- ============ 退款规则 ============ -->
+  <section class="sec" id="refund">
+    <h2>退款规则</h2>
+    <p class="lede">写在明面上，免得事后扯皮。</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>情况</th><th>能不能退</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td><b>取到号，但没收到验证码</b></td><td class="yes">能退</td><td>在有效期内点「更换号码」或「取消并退款」，费用退回卡密，卡密可以继续用。</td></tr>
+          <tr><td><b>换了几次都收不到</b></td><td class="yes">能退</td><td>注销卡密后联系卖家，按订单退款。</td></tr>
+          <tr><td><b>已经收到验证码了</b></td><td class="no">不能退</td><td>验证码一到，这次交易就算完成了，换号和退款都会锁上。</td></tr>
+          <tr><td><b>超过有效期没做任何操作</b></td><td class="no">不能退</td><td>号码自动过期释放，这部分成本已经产生。有效期内记得处理。</td></tr>
+          <tr><td><b>收到码了，但登录时报错</b><br><span class="mono">令牌交换失败 / 400 / 401 / 403</span></td><td class="no">不能退</td><td>验证码已送达、号码已绑定，这一单就完成了。这类报错是网络和节点问题，<a href="#after">见上一节</a>。</td></tr>
+          <tr><td><b>号码收到码了，但账号后来被平台封了</b></td><td class="no">不能退</td><td>我们负责的是「把验证码送到你手里」，账号能不能长期用取决于你注册的那个平台。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <h4>一张卡密能用几次</h4>
+      <p>一张卡密对应<b>一次成功收码</b>。中间换号、取消都不额外扣费，<span id="cChange2">号码有效期内可以反复换</span>。收到验证码之后，这张卡密就用完了。</p>
+    </div>
+  </section>
+
+  <!-- ============ 临时邮箱 ============ -->
+  <section class="sec" id="mail">
+    <h2>顺带送你一个临时邮箱</h2>
+    <p class="lede">页面顶部有「临时邮箱」这个标签，<b>免费、不用登录、点一下就有</b>，用来接注册验证邮件正合适。</p>
+    <figure class="shot">
+      <img src="guide/step-mail.jpg" alt="临时邮箱页面：一个地址和实时刷新的收件箱" loading="lazy">
+      <figcaption><b>①</b> 点这里就有一个地址，不用注册。<b>②</b> 收到的信自动出现，认出验证码会单独标出来，点「复制」就行。<b>（示意图）</b></figcaption>
+    </figure>
+    <p>可以自己挑前缀（系统会自动加 <span class="mono">tmp</span> 前缀并去掉符号，<b>最终地址以创建后显示的为准</b>）。邮箱 <b id="cMail2">3</b> 天后自动失效，收到的信一起清掉。<b>只有你本人能读这个邮箱的信</b>，别人拿到地址也读不了。</p>
+    <div class="note">
+      <h4>别拿它注册你在意的账号</h4>
+      <p>这是<b>临时</b>邮箱，过期就找不回来了，找回密码、绑定支付这些统统做不了。注册个一次性的东西可以，长期账号请用你自己的邮箱。</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="sec" id="faq">
+    <h2>常见问题</h2>
+    <div class="qa">
+      <details>
+        <summary>这个号码我能一直留着用吗</summary>
+        <div class="a"><p>不能。一次性虚拟号，收完这一条验证码就释放了，无法解绑也无法长期持有。这类服务都是这个机制，不是我们单独这样。</p></div>
+      </details>
+      <details>
+        <summary>页面为什么不显示价格了</summary>
+        <div class="a"><p>因为对你没用。卡密是预付的，一张卡对应一次成功收码，你选便宜的地区并不会省钱、选贵的也不会多花钱。你真正需要知道的只有一件事：<b>这张卡能不能取这个号</b>——所以我们直接标「可用 / 卡密余额不足」。</p><p></p></div>
+      </details>
+      <details>
+        <summary>刚取的号为什么点不了取消 / 换号</summary>
+        <div class="a"><p>号码线路限制：刚取的号约 90 秒内不能退。按钮会灰着并显示还剩几秒，到点自动亮起来。这 90 秒里你正好可以把号填进注册页面。</p></div>
+      </details>
+      <details>
+        <summary>验证码填进去提示无效</summary>
+        <div class="a"><p>先确认没有多复制空格。验证码本身通常只有几分钟有效期，收到就赶紧用。</p><p>要注意：<b>一张卡密只收一条验证码</b>，收到之后页面就不再接收了。如果这条码已经过期，需要重新买一张卡密取号。</p></div>
+      </details>
+      <details>
+        <summary>页面不小心关掉了，还能找回吗</summary>
+        <div class="a"><p>能。重新打开页面，输入同一张卡密，如果还有进行中的号码会自动接上，倒计时也接着走。卡密已经用完的会提示「已经用过了」。</p></div>
+      </details>
+      <details>
+        <summary>价格是怎么算的</summary>
+        <div class="a"><p>按号码线路的实时成本换算成人民币。库存和价格本身会浮动，所以同一个地区不同时间点的成本不一样——这也是为什么会出现「今天可用、明天余额不足」的情况。</p></div>
+      </details>
+      <details>
+        <summary>能开发票吗 / 能批量买吗</summary>
+        <div class="a"><p>这两件事都请直接在你下单的平台上联系卖家谈，页面上处理不了。</p></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 兜底 ============ -->
+  <section class="sec" id="contact">
+    <h2>还是搞不定</h2>
+    <p>在你下单的那个平台上找卖家沟通就行。为了让他一次就能查到你的记录，麻烦把这两样一起发过去：</p>
+    <p>· <b>卡密后四位</b>（不用发完整卡密）<br>· <b>你取到的那个手机号</b>（如果已经取过号）</p>
+    <p>说清楚卡在哪一步、页面上显示的原话是什么，比说「用不了」有用得多。</p>
+    <div class="doc-foot">
+      <a class="btn-gold" href="./">← 回到取号页面</a>
+      <span>本页说明随功能更新，页面上显示的实时状态以取号页为准。</span>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="./help.js?v=619dc672"></script>
+</body>
+</html>

@@ -1,0 +1,1097 @@
+/* ═══════════════════════════════════════════════════════════════
+   验证码取号 · style.css（整文件替换）
+   浅色纸质外壳 + 深色主舞台。色调分层代替描边，4/8 间距阶。
+   ─────────────────────────────────────────────────────────────
+   ⚠ 变量语义变化（名字没变，值换了角色）：
+   · --gold 系   = 主强调（深紫 #3B3348），.btn-gold 等继续用它 → 浅底上可读
+   · --gold-light / --glow-rgb = 码色 #E9C87A，全站唯一高饱和色，
+     只出现在深色舞台上的号码/验证码/邮件里的码
+   · --panel-deep / --stage-grad = 深色舞台面
+   ⚠ 新特性使用标注（需确认兼容性的都在这里）：
+   · aspect-ratio     → .qr .ann-qr .svc-ico .flag .mail-ico（Chrome88+/Safari15+）
+   · backdrop-filter  → 只剩 .topbar（.mask 已摘除：实测滚动掉 82/89 帧，见 .mask 处）
+   · 没有用 :has()、container query、color-mix()
+   · 噪点材质 = 内联 data-URI SVG feTurbulence，非外部资源
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  /* 底与面 */
+  --bg:#F0EEF0;            /* 纸 */
+  --panel:#F8F6F8;         /* 卡片/弹窗 */
+  --panel-2:#F1EEF2;       /* 卡片内的内嵌一档（展开中的步骤等） */
+  --panel-3:#EAE6EC;       /* 再深一档（ghost 按钮、表头底） */
+  --panel-4:#E2DDE5;       /* 最深的浅色面（禁用、占位） */
+  --panel-raised:#FCFBFD;  /* 浮起最高层（弹窗、激活 tab） */
+  --panel-deep:#221F28;    /* 深-舞台 */
+  --input-bg:#FFFFFF;
+  /* 线（尽量少用，保留给表格分隔等兜底） */
+  --line:#E3DFE4; --line-2:#D8D2DA; --line-3:#C9C2CD;
+  /* 强调（原 gold 职责 → 深紫） */
+  --gold:#3B3348; --gold-hover:#4A4159; --gold-dark:#2A2436;
+  --gold-light:#E9C87A;    /* 码色，唯一高饱和 */
+  --gold-grad:linear-gradient(135deg,#473E58 0%,#332C41 100%);
+  --on-gold:#F6F4F8;
+  /* 墨（浅底文字，中文吃对比度，t3 不再更浅） */
+  --t1:#1C1A22; --t2:#4A4553; --t3:#7B7585; --t4:#948E9E; --t5:#ABA5B4;
+  /* 语义色（去饱和，让码色独占高饱和） */
+  --hot:#A8543E; --warn:#8F6A2E; --red:#A34B44;
+  --sel:rgba(59,51,72,.06);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  /* 深色舞台上的文字 */
+  --text-bright:#F7F5F0; --text-cream:#EDE7DB;
+  --text-muted-gold:#C8B27E; --text-dim:#8A8394;
+  --ok-text:#54755F;
+  --stage-grad:radial-gradient(120% 150% at 18% -10%,#2B2634 0%,#221F28 46%,#1A171F 100%);
+  /* 分量值，供 rgba(var(--x-rgb), a) */
+  --gold-rgb:59,51,72;         /* 强调紫 */
+  --glow-rgb:233,200,122;      /* 码色光晕 */
+  --warn-rgb:143,106,46; --red-rgb:163,75,68; --ok-rgb:84,117,95;
+  --white-rgb:255,255,255; --black-rgb:22,19,27;
+  --text-bright-rgb:247,245,240;
+  /* ── 新增的非颜色工具变量（additive，不影响旧引用） ── */
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;              /* 只给拉丁/数字 */
+  --monos:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.55'/></svg>");
+  --shadow-1:0 1px 2px rgba(var(--black-rgb),.05),0 0 0 1px rgba(var(--black-rgb),.03);
+  --shadow-2:0 12px 32px -16px rgba(var(--black-rgb),.16),0 0 0 1px rgba(var(--black-rgb),.03);
+  --shadow-pop:0 32px 72px -24px rgba(var(--black-rgb),.42);
+}
+
+/* ── 基础 ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100vh;color:var(--t1);background:var(--bg);
+  font:15px/1.6 var(--sans);
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+/* 背景场：一点紫、一点金的极淡渐变 + 全页噪点（纯 CSS 材质） */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(90rem 44rem at 76% -12%,rgba(var(--gold-rgb),.055),transparent 62%),
+    radial-gradient(72rem 40rem at -8% 34%,rgba(var(--glow-rgb),.05),transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:var(--noise);background-size:160px 160px;opacity:.05;
+}
+img,svg{display:block;max-width:100%}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+input{border:0;outline:none;background:transparent}
+::selection{background:rgba(var(--glow-rgb),.45)}
+:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(var(--gold-rgb),.28);border-radius:8px}
+a{color:var(--gold-hover);text-decoration:none}
+a:hover{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+h1,h2,h3,p,figure{margin:0}
+table{border-collapse:collapse}
+
+/* ── 工具类 ───────────────────────────────────────────── */
+.mono{font-family:var(--monos);letter-spacing:.02em}
+.muted{color:var(--t3)}
+.spacer{flex:1}
+.linkish{color:var(--gold-hover);font-size:13px;padding:4px 2px;border-radius:6px}
+.linkish:hover{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.x{
+  width:32px;height:32px;min-width:32px;border-radius:999px;display:grid;place-items:center;
+  color:var(--t3);font-size:18px;line-height:1;transition:background .15s var(--ease)
+}
+.x:hover{background:var(--sel);color:var(--t1)}
+
+/* ── 按钮（主按钮=紫墨，金色不做浅底按钮） ─────────────── */
+.btn-gold,.btn-ghost,.btn-quiet{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:40px;padding:0 20px;border-radius:10px;font-size:14px;font-weight:600;
+  white-space:nowrap;transition:background .15s var(--ease),transform .1s var(--ease),box-shadow .15s var(--ease);
+}
+.btn-gold{
+  background:var(--gold-grad);color:var(--on-gold);
+  box-shadow:0 2px 6px -2px rgba(var(--black-rgb),.35),inset 0 1px 0 rgba(var(--white-rgb),.1);
+}
+.btn-gold:hover{background:var(--gold-hover);box-shadow:0 4px 12px -4px rgba(var(--black-rgb),.4)}
+.btn-gold:active{transform:translateY(1px)}
+.btn-ghost{background:var(--panel-3);color:var(--t1)}
+.btn-ghost:hover{background:var(--panel-4)}
+.btn-quiet{color:var(--t3);padding:0 12px}
+.btn-quiet:hover{background:var(--sel);color:var(--t1)}
+.btn-sm{height:32px;padding:0 14px;font-size:13px;border-radius:8px}
+.btn-lg{height:48px;padding:0 28px;font-size:15px;border-radius:12px}
+.btn-block{width:100%}
+button:disabled{opacity:.45;pointer-events:none}
+
+/* ── 顶栏：悬浮胶囊 ───────────────────────────────────── */
+.topbar{
+  position:sticky;top:12px;z-index:50;
+  width:min(1264px,100% - 32px);margin:12px auto 0;
+  display:flex;align-items:center;gap:16px;
+  height:56px;padding:0 10px 0 20px;border-radius:999px;
+  background:rgba(248,246,248,.98);            /* backdrop-filter 不可用时的降级 */
+  box-shadow:0 10px 30px -14px rgba(var(--black-rgb),.16),0 0 0 1px rgba(var(--black-rgb),.04);
+}
+@supports (backdrop-filter:blur(1px)){
+  .topbar{background:rgba(248,246,248,.8);backdrop-filter:blur(16px) saturate(1.2)}
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand::before{ /* 纯 CSS 品牌印：深紫方 + 金点 */
+  content:"";width:26px;height:26px;border-radius:8px;flex:none;
+  background:
+    radial-gradient(5px 5px at 68% 34%,var(--gold-light) 45%,transparent 50%),
+    var(--gold-grad);
+  box-shadow:inset 0 1px 0 rgba(var(--white-rgb),.14);
+}
+.brand-name{font-size:16px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.tabs{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(var(--black-rgb),.05)}
+.tab{
+  display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;
+  border-radius:999px;font-size:14px;font-weight:600;color:var(--t2);white-space:nowrap;
+  transition:background .15s var(--ease),color .15s var(--ease);
+}
+.tab:hover{color:var(--t1)}
+.tab[aria-selected="true"]{background:var(--panel-raised);color:var(--t1);box-shadow:var(--shadow-1)}
+.free-tag{
+  font-size:11px;font-weight:600;line-height:1;padding:3px 6px;border-radius:999px;
+  color:var(--ok-text);background:rgba(var(--ok-rgb),.12);
+}
+.ann-pill{
+  display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;margin:0 auto;
+  border-radius:999px;font-size:13px;color:var(--t2);flex:1 1 auto;min-width:0;max-width:52ch;
+  justify-content:center;transition:background .15s var(--ease);
+}
+.ann-pill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ann-pill:hover{background:var(--sel);color:var(--t1)}
+.ann-dot{width:6px;height:6px;border-radius:999px;flex:none;background:var(--hot)}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;
+  border-radius:999px;font-size:13px;font-weight:600;color:var(--t1);white-space:nowrap;
+  background:rgba(var(--ok-rgb),.09);
+}
+.chip .mono{font-size:13px}
+.chip-dot{width:7px;height:7px;border-radius:999px;background:rgb(var(--ok-rgb));flex:none}
+.chip-off{color:var(--t3);background:var(--panel-3)}
+.chip-off .chip-dot{background:var(--t4)}
+.help-link{
+  display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;
+  font-size:13px;color:var(--t2);white-space:nowrap;
+}
+.help-link:hover{background:var(--sel);color:var(--t1);text-decoration:none}
+
+/* ── 页头 + 主栅格 ────────────────────────────────────── */
+/* 版心加宽：原来 1264 在 1440 屏上两边各留 88px，安哥反馈留白太多。
+ * 1560 是上限，超宽屏不会拉成一条横带；1440 屏上实际占到 1400。 */
+main{width:min(1560px,100% - 40px);margin:0 auto}
+.page-head{padding:36px 4px 20px}
+.page-head h1{font-size:21px;font-weight:700;letter-spacing:.01em}
+.page-head p{margin-top:4px;font-size:14px;color:var(--t3);text-wrap:pretty}
+.page-head b{color:var(--t2);font-weight:600}
+/* 5:7 的真栅格，代替随手 360px 边栏 */
+.body-row{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  gap:24px;align-items:start;padding-bottom:48px;
+}
+
+/* ── 左列：步骤流 ─────────────────────────────────────── */
+.rail{min-width:0}
+.rail-card{
+  background:var(--panel);border-radius:20px;padding:8px;
+  box-shadow:var(--shadow-2);
+  display:flex;flex-direction:column;gap:4px;
+}
+.rail-step{border-radius:14px;transition:background .2s var(--ease)}
+.rail-step.open{background:var(--panel-2)}
+.step-head{
+  width:100%;display:flex;align-items:center;gap:12px;
+  min-height:52px;padding:8px 14px;border-radius:14px;text-align:left;
+}
+.rail-step:not(.open) .step-head:hover{background:var(--sel)}
+.step-head .rail-h{flex:1}
+.step-count{
+  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--t4);
+  min-width:22px;
+}
+.rail-step.done .step-count{color:var(--ok-text)}
+.rail-h{font-size:15px;font-weight:600;color:var(--t1)}
+.step-head .muted{font-size:12px}
+.rail-note{font-size:12px;line-height:1.6;color:var(--t3);margin:0;padding:2px 14px 12px;text-wrap:pretty}
+/* 展开体：默认收起，JS 切 .open */
+.rail-step > :not(.step-head){display:none}
+.rail-step.open > .search{display:flex}
+.rail-step.open > .listwrap,.rail-step.open > .rail-note{display:block}
+/* 手风琴默认 `.rail-step > :not(.step-head){display:none}` 藏掉一切，
+   展开时靠这几条逐个放出来。新加的直接子元素**必须**在这里登记一笔，
+   否则 JS 里 hidden=false 也没用 —— DOM 里有、buyer 看不见。
+   （价位条就栽在这：chip 全渲染好了，计算样式却是 display:none） */
+.rail-step.open > .tier-pick{display:block}
+.rail-step.open > .step-head .muted,
+.rail-step.done > .step-head .muted{display:none}
+/* 已完成步骤只露出所选摘要 */
+.rail-step.done > .picked{display:flex}
+
+/* 卡密验证成功卡（#cardOk） */
+#cardOk{
+  margin:0 8px 8px;padding:14px 16px;border-radius:12px;
+  background:var(--gold-grad);color:var(--text-cream);
+  display:none;align-items:center;gap:12px;
+  box-shadow:inset 0 1px 0 rgba(var(--white-rgb),.1);
+}
+#cardOk .mono{font-size:13px;color:var(--text-bright)}
+#cardOk .muted{color:var(--text-dim);font-size:12px}
+#cardOk b{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold-light);letter-spacing:.02em}
+#cardOk b small{font-size:13px;font-weight:400;margin-right:2px}
+
+/* 搜索/输入行 */
+.search{
+  display:flex;align-items:center;gap:8px;height:44px;margin:2px 8px 8px;
+  padding:0 6px 0 14px;border-radius:11px;background:var(--input-bg);
+  box-shadow:inset 0 0 0 1px rgba(var(--black-rgb),.06),0 1px 2px rgba(var(--black-rgb),.03);
+  transition:box-shadow .15s var(--ease);
+}
+.search:focus-within{box-shadow:inset 0 0 0 2px rgba(var(--gold-rgb),.4)}
+.search input{flex:1;min-width:0;height:100%;font-size:14px}
+.search input::placeholder{color:var(--t4)}
+.search::before{content:"⌕";font-size:17px;color:var(--t4);line-height:1;transform:scaleX(-1)}
+.rail-step[data-step="key"] .search::before{content:"✳";font-size:12px}
+
+/* 列表：行高 44，一屏 ≥10 行 */
+.listwrap{position:relative;margin:0 8px 8px}
+.list{max-height:446px;overflow-y:auto;overscroll-behavior:contain;border-radius:10px;padding:4px;scrollbar-width:thin;scrollbar-color:var(--line-3) transparent}
+.fade{
+  position:absolute;left:0;right:0;bottom:0;height:32px;pointer-events:none;border-radius:0 0 10px 10px;
+  background:linear-gradient(transparent,var(--panel-2));
+}
+.row{
+  position:relative;width:100%;display:flex;align-items:center;gap:12px;
+  min-height:44px;padding:4px 10px;border-radius:10px;text-align:left;
+  transition:background .15s var(--ease),transform .18s var(--ease),box-shadow .18s var(--ease);
+}
+/* 悬停：放大浮起 */
+.row:hover{
+  background:var(--panel-raised);transform:scale(1.02);z-index:2;
+  box-shadow:0 10px 24px -12px rgba(var(--black-rgb),.3),0 0 0 1px rgba(var(--black-rgb),.03);
+}
+.row:hover .svc-ico,.row:hover .flag{transform:scale(1.12)}
+.row:active{transform:scale(1.005)}
+.row[aria-selected="true"]{background:rgba(var(--gold-rgb),.09);box-shadow:0 0 0 1.5px rgba(var(--gold-rgb),.3)}
+.row[aria-selected="true"] .row-name,
+.row[aria-selected="true"] .reg-name{font-weight:700;color:var(--gold-dark)}
+.row-name{flex:1;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-tag{
+  font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:999px;flex:none;
+}
+.row-tag.ok{color:var(--ok-text);background:rgba(var(--ok-rgb),.11)}
+.row-tag.short{color:var(--warn);background:rgba(var(--warn-rgb),.12)}
+.row-tag.paid{color:var(--gold-hover);background:rgba(var(--gold-rgb),.1)}
+/* 图标/国旗：白瓷片方案 —— 白底小方块在浅底上当作有意为之的"瓷片"，
+   圆角 + 极淡投影环，深浅两种底上都成立，图片资产不用重出 */
+.svc-ico,.flag,.mail-ico{
+  width:28px;height:28px;aspect-ratio:1;flex:none;border-radius:8px;overflow:hidden;
+  background:#FFF;display:grid;place-items:center;
+  box-shadow:0 0 0 1px rgba(var(--black-rgb),.06),0 1px 2px rgba(var(--black-rgb),.05);
+  font-size:15px;line-height:1;transition:transform .18s var(--ease);
+}
+.svc-ico svg,.mail-ico svg{width:62%;height:62%}
+.svc-ico{font-family:var(--serif);font-weight:600;color:var(--t2);font-size:14px}
+.flag{border-radius:7px}
+.flag-blank{background:var(--panel-4);box-shadow:none;color:var(--t4)}
+.reg-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.reg-name{font-size:14px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reg-sub{font-size:12px;line-height:1.35;color:var(--t3)}
+.reg-right{display:flex;align-items:center;gap:10px;flex:none}
+.reg-right .reg-sub{text-align:right}
+/* 接 OpenAI 时置顶那两条的「⭐ 推荐」标（只有泰国带星，见 vend.js 的 OPENAI_PICKS）。
+   沿用榜单 .live-pick 的金色调，但这里是行内徽章，尺寸跟 .row-tag 对齐，
+   免得同一行里两个徽章高矮不一。 */
+.reg-pick{
+  font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:999px;flex:none;
+  background:rgba(var(--glow-rgb),.16);color:var(--gold-light);white-space:nowrap;
+}
+
+/* 所选摘要行（步骤收起后 / 等码期的 rail-summary） */
+.picked{
+  display:none;align-items:center;gap:10px;min-height:44px;
+  margin:0 8px 8px;padding:4px 12px;border-radius:10px;background:rgba(var(--gold-rgb),.06);
+}
+.picked-name{flex:1;font-size:14px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.picked .reg-sub{flex:none}
+.rail-summary{display:none;flex-direction:column;gap:0;padding:4px 0}
+.rail-summary .picked{display:flex}
+.rail-foot{padding:8px 8px 8px;display:flex;flex-direction:column;gap:10px}
+.rail-cta{box-shadow:0 8px 20px -8px rgba(var(--gold-rgb),.55),inset 0 1px 0 rgba(var(--white-rgb),.1)}
+.rail-foot .rail-note{padding:0 6px}
+
+/* ── 右列：深色主舞台 ─────────────────────────────────── */
+.stage-wrap{position:sticky;top:84px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.stage{
+  position:relative;overflow:hidden;border-radius:24px;
+  min-height:560px;padding:40px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  background:var(--stage-grad);color:var(--text-cream);
+  box-shadow:0 32px 64px -28px rgba(var(--black-rgb),.5),inset 0 1px 0 rgba(var(--white-rgb),.07);
+}
+.stage::after{ /* 舞台噪点 */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:var(--noise);background-size:160px 160px;opacity:.07;
+}
+.rings{
+  position:absolute;inset:-20%;pointer-events:none;
+  background:repeating-radial-gradient(circle at 50% 46%,rgba(var(--white-rgb),.04) 0 1px,transparent 1px 88px);
+  -webkit-mask-image:radial-gradient(60% 60% at 50% 46%,#000 30%,transparent 75%);
+          mask-image:radial-gradient(60% 60% at 50% 46%,#000 30%,transparent 75%);
+}
+.stage > *{position:relative;z-index:1}
+.badge{
+  display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 16px;border-radius:999px;
+  font-size:13px;font-weight:600;color:var(--text-cream);
+  background:rgba(var(--white-rgb),.06);box-shadow:inset 0 0 0 1px rgba(var(--white-rgb),.06);
+}
+.blip{width:7px;height:7px;border-radius:999px;background:var(--gold-light);animation:blip 2s var(--ease) infinite}
+@keyframes blip{0%,100%{box-shadow:0 0 0 0 rgba(var(--glow-rgb),.5)}55%{box-shadow:0 0 0 7px rgba(var(--glow-rgb),0)}}
+.numline{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;justify-content:center}
+.numflag{
+  width:30px;height:30px;border-radius:8px;overflow:hidden;background:#FFF;flex:none;align-self:center;
+  display:grid;place-items:center;font-size:16px;
+  box-shadow:0 0 0 1px rgba(var(--white-rgb),.12),0 2px 6px rgba(var(--black-rgb),.4);
+}
+.numflag-name{font-size:14px;color:var(--text-dim);align-self:center}
+.num{
+  font-family:var(--monos);font-size:clamp(30px,3.2vw,44px);font-weight:600;
+  letter-spacing:.045em;color:var(--text-bright);
+}
+.numline .btn-quiet{color:var(--text-dim);align-self:center}
+.numline .btn-quiet:hover{background:rgba(var(--white-rgb),.07);color:var(--text-cream)}
+.numhint{font-size:13px;color:var(--text-dim);margin-top:-16px;text-align:center;text-wrap:pretty}
+.numhint b{color:var(--text-cream);font-weight:600}
+
+/* 六格：验证码是主角 */
+.slots{display:flex;gap:12px}
+.slot{
+  width:58px;height:72px;border-radius:14px;display:grid;place-items:center;
+  font-family:var(--monos);font-size:34px;font-weight:600;color:var(--gold-light);
+  background:rgba(var(--black-rgb),.32);
+  box-shadow:inset 0 0 0 1px rgba(var(--white-rgb),.055),inset 0 2px 6px rgba(var(--black-rgb),.4);
+}
+.slot:empty::before{content:"";width:16px;height:2px;border-radius:2px;background:rgba(var(--text-bright-rgb),.16)}
+/* 唯一的戏剧性时刻：码到 */
+.slot.filled{
+  background:rgba(var(--glow-rgb),.08);
+  box-shadow:inset 0 0 0 1px rgba(var(--glow-rgb),.28),0 0 28px -4px rgba(var(--glow-rgb),.35);
+  text-shadow:0 0 22px rgba(var(--glow-rgb),.55);
+  animation:slotIn .5s var(--ease) backwards;
+}
+.slot.filled:nth-child(2){animation-delay:.05s}.slot.filled:nth-child(3){animation-delay:.1s}
+.slot.filled:nth-child(4){animation-delay:.15s}.slot.filled:nth-child(5){animation-delay:.2s}
+.slot.filled:nth-child(6){animation-delay:.25s}
+@keyframes slotIn{from{transform:scale(.8);opacity:0;filter:brightness(2)}to{transform:scale(1);opacity:1}}
+
+.sms-raw{
+  max-width:520px;width:100%;display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:14px;background:rgba(var(--black-rgb),.3);
+  font-size:13px;line-height:1.6;color:var(--text-dim);
+  box-shadow:inset 0 0 0 1px rgba(var(--white-rgb),.05);
+}
+.sms-raw p{flex:1;min-width:0}
+.sms-raw b{color:var(--gold-light);font-family:var(--monos);font-weight:600;letter-spacing:.04em}
+.stage-empty{display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
+.stage-empty p{font-size:15px;color:var(--text-dim);text-wrap:pretty}
+.stage-empty p b{display:block;font-size:17px;font-weight:600;color:var(--text-cream);margin-bottom:6px}
+.stage-empty ol{
+  display:flex;gap:28px;margin:0;padding:0;list-style:none;
+  font-size:13px;color:var(--text-dim);counter-reset:step;
+}
+.stage-empty ol li{display:flex;align-items:center;gap:8px;counter-increment:step}
+.stage-empty ol li::before{
+  content:counter(step);font-family:var(--serif);font-style:italic;font-size:14px;
+  width:24px;height:24px;border-radius:999px;display:grid;place-items:center;
+  color:var(--text-muted-gold);box-shadow:inset 0 0 0 1px rgba(var(--glow-rgb),.22);
+}
+.countdown{width:min(420px,100%);display:flex;flex-direction:column;gap:8px}
+.cd-line{display:flex;align-items:baseline;gap:6px;justify-content:center;font-size:13px;color:var(--text-dim)}
+.cd-line b{font-family:var(--monos);font-size:15px;color:var(--text-cream);font-weight:600}
+.cd-total{font-family:var(--monos);font-size:12px;color:var(--text-dim)}
+.cd-bar{height:4px;border-radius:4px;background:rgba(var(--white-rgb),.08);overflow:hidden}
+.cd-bar i{
+  display:block;height:100%;width:96%;border-radius:4px;
+  background:linear-gradient(90deg,var(--text-muted-gold),var(--gold-light));
+  transition:width 1s linear;
+}
+.stage-actions{display:flex;gap:12px;align-items:center}
+.stage .btn-ghost{background:rgba(var(--white-rgb),.08);color:var(--text-cream)}
+.stage .btn-ghost:hover{background:rgba(var(--white-rgb),.13)}
+.stage .btn-quiet{color:var(--text-dim)}
+.stage .btn-quiet:hover{background:rgba(var(--white-rgb),.06);color:var(--text-cream)}
+.act-note{font-size:12px;color:var(--text-dim);text-align:center;max-width:46ch;text-wrap:pretty;margin-top:-12px}
+
+/* 三条规则 */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rule{
+  padding:14px 16px;border-radius:14px;background:var(--panel);
+  font-size:13px;line-height:1.6;color:var(--t2);box-shadow:var(--shadow-1);text-wrap:pretty;
+}
+.rule b{display:block;color:var(--t1);font-weight:600;margin-bottom:2px}
+
+/* ── 弹窗 ─────────────────────────────────────────────── */
+/* 实时成功实录（新组件：记录每张卡密在哪个地区验证成功） */
+.live{background:var(--panel);border-radius:14px;box-shadow:var(--shadow-1);overflow:hidden}
+.live-head{display:flex;align-items:center;gap:8px;padding:14px 16px 6px;font-size:12px;font-weight:600;color:var(--t3)}
+.live-head .blip{background:rgb(var(--ok-rgb))}
+.live-list{display:flex;flex-direction:column;padding:2px 8px 8px}
+.live-row{display:flex;align-items:center;gap:10px;min-height:40px;padding:2px 8px;border-radius:8px;font-size:13px;color:var(--t2)}
+.live-row .mono{font-size:12px;color:var(--t3)}
+.live-row .flag{width:22px;height:22px;border-radius:6px;font-size:12px}
+.live-row b{font-weight:600;color:var(--t1)}
+.live-row .live-ok{color:var(--ok-text);font-weight:700}
+.live-row .muted{margin-left:auto;font-size:12px;white-space:nowrap}
+.live-row.in{animation:liveIn .45s var(--ease)}
+@keyframes liveIn{from{opacity:0;transform:translateY(-8px)}30%{background:rgba(var(--ok-rgb),.1)}to{opacity:1}}
+
+/* 遮罩**不用** backdrop-filter。
+ *
+ * 这条被实测咬过两次：
+ *   · 公告收回动画：平均帧间隔 22~27ms、每次掉 10~14 帧；摘掉后 16.8ms、掉 0~1
+ *   · 向导弹窗滚动：平均 36.7ms（约 27fps）、89 帧掉 82；摘掉后 16.7ms、掉 0
+ * 两次都做过对照实验：藏大图、加 will-change、translateZ(0)、换 opacity 过渡、
+ * 把 blur 调到 4px 再调到 2px —— 全部无效。开销跟模糊半径无关，
+ * 是「backdrop-filter 存在 + 上面有东西在动」这个组合的固定成本。
+ *
+ * 所以不是调参能救的，只能不用。底色从 .44 加深到 .52 补上失去的聚焦感 ——
+ * 毛玻璃好看，但不值 27fps。 */
+.mask{
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  padding:24px;background:rgba(var(--black-rgb),.52);
+}
+.mask.open{display:flex}
+.modal{
+  width:100%;max-width:480px;max-height:calc(100vh - 48px);overflow-y:auto;
+  background:var(--panel-raised);border-radius:20px;padding:28px;
+  box-shadow:var(--shadow-pop);
+  display:flex;flex-direction:column;gap:20px;
+}
+.modal-head{font-size:19px;font-weight:700;letter-spacing:.01em}
+.modal-sub{font-size:13px;color:var(--t3);margin-top:-14px}
+.modal-actions{display:flex;gap:12px}
+.modal-actions .btn-gold{flex:1.4}
+.modal-actions .btn-ghost{flex:1}
+.modal-note{font-size:12px;line-height:1.7;color:var(--t3);text-wrap:pretty}
+
+/* 取号前的价位条：一档一个 chip */
+.tier-pick{padding:10px 2px 2px}
+.tier-pick-head{font-size:12px;color:var(--t2);margin-bottom:8px}
+.tier-pick-head .muted{font-size:11px;color:var(--t4)}
+.tier-chips{display:flex;flex-wrap:wrap;gap:8px}
+.tier-chip{
+  padding:7px 12px;border-radius:999px;border:1px solid var(--line-2);
+  background:var(--panel-2);font:inherit;font-size:13px;color:var(--t1);cursor:pointer;line-height:1.3;
+}
+.tier-chip .tc-stock{display:block;font-size:10px;color:var(--t4);margin-top:1px}
+.tier-chip:hover{border-color:var(--gold-dark)}
+.tier-chip[aria-pressed="true"]{border-color:var(--gold-dark);background:transparent;font-weight:600}
+
+/* 价位选择：一档一行，可点 */
+.tier-list{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto;padding:2px}
+.tier-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:56px;padding:10px 16px;text-align:left;
+  background:var(--panel-2);border:1px solid var(--line-2);border-radius:12px;
+  font:inherit;color:var(--t1);cursor:pointer;
+}
+.tier-row:hover:not(:disabled){border-color:var(--gold-dark)}
+/* 买不起的档也要列出来（否则买家以为「没有更好的号了」，其实只是钱不够），
+   但必须一眼看出不能点 */
+.tier-row:disabled{cursor:not-allowed;opacity:.5}
+.tier-row .tr-price{font-family:var(--serif);font-size:18px;font-weight:600}
+.tier-row .tr-meta{font-size:12px;color:var(--t3);display:block;margin-top:2px}
+.tier-row .tr-right{font-size:12px;color:var(--t3);flex:none;text-align:right}
+.tier-row[data-current="1"]{border-color:var(--gold-dark);background:transparent}
+.tier-empty{padding:18px;text-align:center;color:var(--t3);font-size:14px}
+
+/* 补差价：三行计算 */
+.topup-calc{background:var(--panel-2);border-radius:14px;padding:6px 18px}
+.tc-row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;font-size:14px}
+.tc-name{display:flex;align-items:center;gap:10px;color:var(--t2);min-width:0}
+.tc-row b{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:.01em}
+.tc-sep{height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+.tc-total{min-height:56px}
+.tc-total .tc-name{color:var(--t1);font-weight:600}
+.tc-total b{font-size:28px;color:var(--gold-dark)}
+.topup-pay{display:flex;gap:16px;align-items:center}
+.qr{
+  width:124px;aspect-ratio:1;flex:none;border-radius:12px;background:#FFF;
+  display:grid;place-items:center;text-align:center;padding:8px;
+  font-size:11px;color:var(--t4);
+  box-shadow:0 0 0 1px rgba(var(--black-rgb),.06),0 2px 8px rgba(var(--black-rgb),.06);
+}
+.qr img{width:100%;height:100%;object-fit:contain}
+.topup-copy{flex:1;font-size:13px;line-height:1.8;color:var(--t2);text-wrap:pretty}
+.topup-copy b{color:var(--t1)}
+.topup-copy .mono{font-weight:700;background:rgba(var(--glow-rgb),.28);padding:1px 6px;border-radius:6px}
+
+/* 公告弹窗 */
+.ann-modal{max-width:720px}
+/* 公告关闭：吸回顶部胶囊（JS 算好 --ann-x/--ann-y 后加 .closing） */
+/* 曲线换成先快后慢（原来是 cubic-bezier(.5,0,.75,.4) 的慢起步，
+ * 配上 35% 才开始动的关键帧 = 前 157ms 几乎不动、后面突然窜走，
+ * 就算不掉帧观感上也是「僵一下再冲出去」）。
+ * 现在从第一帧就开始位移，大部分距离在还看得见的时候走完，读起来才是「被吸回去」。 */
+.ann-modal.closing{animation:annAbsorb .45s var(--ease) forwards;pointer-events:none}
+@keyframes annAbsorb{
+  from{opacity:1;transform:none}
+  62%{opacity:.5}
+  to{opacity:0;transform:translate(var(--ann-x,0),var(--ann-y,-42vh)) scale(.06)}
+}
+/* 关闭这 450ms 里摘掉遮罩的毛玻璃。
+ * 实测（CDP tracing，17 次测量）：backdrop-filter 存在时，只要页面在跑合成器动画，
+ * 每 2~3 帧就掉 1 帧（最大帧间隔 50~67ms）；摘掉后掉帧 0~1、稳在 60fps。
+ * 开销跟模糊半径无关（8px/4px/2px 实测一样卡），所以只能整条摘，调小没用。
+ * 遮罩本身此刻正在淡出，少这 450ms 的模糊看不出来。 */
+.mask.closing{animation:maskFade .45s var(--ease) forwards}
+@keyframes maskFade{to{background:rgba(var(--black-rgb),0)}}
+.ann-pill.pulse{animation:pillPulse .6s var(--ease) .3s}
+@keyframes pillPulse{0%{box-shadow:0 0 0 0 rgba(var(--gold-rgb),.35)}55%{background:var(--sel)}100%{box-shadow:0 0 0 14px rgba(var(--gold-rgb),0)}}
+.ann-head{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700}
+.ann-head .x{margin-left:auto}
+.ann-tag{
+  font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:999px;
+  color:var(--on-gold);background:var(--gold);
+}
+.ann-body{display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.8;color:var(--t2)}
+.ann-body ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.ann-body b{color:var(--t1)}
+.ann-body .warn,.ann-body .hot{color:var(--hot);font-weight:600}
+.ann-body aside{ /* 名词解释块 */
+  background:var(--panel-2);border-radius:14px;padding:16px 18px;font-size:13px;line-height:1.8;
+}
+.ann-body aside b{display:inline}
+.ann-body aside .row-tag{margin-right:4px}
+.ann-imgs{display:flex;gap:16px;align-items:flex-start}
+.ann-qr{
+  width:132px;aspect-ratio:1;flex:none;border-radius:12px;background:#FFF;
+  display:grid;place-items:center;text-align:center;padding:8px;font-size:11px;color:var(--t4);
+  box-shadow:0 0 0 1px rgba(var(--black-rgb),.06),0 2px 8px rgba(var(--black-rgb),.06);
+}
+.ann-qr img{width:100%;height:100%;object-fit:contain}
+/* 甲方竖版宣传图：定宽、高度随原比例，不裁切不变形 */
+.ann-promo{width:200px;flex:none;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(var(--black-rgb),.06)}
+.ann-promo img{width:100%;height:auto}
+.ann-actions{display:flex;align-items:center;gap:16px}
+.ann-skip{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);cursor:pointer;user-select:none}
+.ann-skip input{accent-color:var(--gold);width:16px;height:16px}
+.ann-actions .btn-gold{margin-left:auto;min-width:132px}
+.ann-fine{font-size:12px;color:var(--t4);line-height:1.7}
+
+/* ── 临时邮箱 ─────────────────────────────────────────── */
+.mail-wrap{display:none;padding-bottom:48px}
+.mail-inner{width:min(760px,100%);margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.mail-addr{
+  background:var(--panel);border-radius:20px;padding:24px;box-shadow:var(--shadow-2);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.addr{display:flex;flex-direction:column;gap:4px;flex:1;min-width:240px}
+.addr-label{font-size:12px;color:var(--t3)}
+.addr-main{font-family:var(--monos);font-size:19px;font-weight:600;letter-spacing:.01em;word-break:break-all}
+.mail-opts{display:flex;align-items:center;gap:8px}
+.my-mailboxes{display:none;flex-direction:column;gap:2px;width:100%;padding-top:8px}
+.my-mailboxes.open{display:flex}
+.box-row{
+  display:flex;align-items:center;gap:10px;min-height:40px;padding:2px 10px;border-radius:10px;
+  font-family:var(--monos);font-size:13px;color:var(--t2);width:100%;text-align:left;
+}
+.box-row:hover{background:var(--sel)}
+.inbox{background:var(--panel);border-radius:20px;box-shadow:var(--shadow-2);overflow:hidden}
+.inbox-head{
+  display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 24px;
+  font-size:13px;font-weight:600;color:var(--t2);
+}
+.inbox-head .blip{background:rgb(var(--ok-rgb))}
+.inbox-foot{padding:14px 24px 18px;font-size:12px;color:var(--t4);text-align:center}
+.mail-item{display:flex;gap:14px;padding:16px 24px;background:var(--panel-raised)}
+.mail-item + .mail-item{box-shadow:inset 0 1px 0 var(--line)}
+.mail-ico{width:36px;height:36px;border-radius:10px;font-size:13px;font-family:var(--serif);font-weight:600;color:var(--t2)}
+.mail-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.mail-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mail-from{font-size:14px;font-weight:700}
+.mail-addr-sm{font-size:12px;color:var(--t4);font-family:var(--monos)}
+.mail-time{margin-left:auto;font-size:12px;color:var(--t4)}
+.mail-sub{font-size:13px;color:var(--t2)}
+/* 信中认出的验证码：金底墨字，一键复制 */
+.mail-acts{display:flex;align-items:center;gap:10px;margin-top:2px}
+/* 验证码胶囊：这是整个临时邮箱页面上买家唯一真正要用的东西，
+ * 必须一眼看见、一眼看出能点。三段之间要有 gap（原来漏了，挤成一整行文字），
+ * 「复制」要长得像按钮（原来透明无边框、字色字重跟标签一样，认不出是按钮）。
+ * 金色是全站约定的「码色」，但这里底是近白的 --panel-raised，
+ * 光晕得加浓 + 上实边框才压得住，否则等于没画。 */
+.mail-code{
+  display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 12px;border-radius:10px;
+  font-family:var(--monos);font-size:16px;font-weight:700;letter-spacing:.12em;color:var(--t1);
+  background:rgba(var(--glow-rgb),.42);box-shadow:inset 0 0 0 1px rgba(var(--glow-rgb),.95);
+}
+.mail-code .label{
+  font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0;color:var(--t2);
+}
+.mail-code .val{font-size:18px;letter-spacing:.16em;user-select:all}
+.mail-code button{
+  font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0;
+  height:26px;padding:0 12px;border:0;border-radius:7px;cursor:pointer;
+  background:var(--gold);color:var(--on-gold);
+}
+.mail-code button:hover{background:var(--gold-hover)}
+.mail-code button:active{transform:translateY(1px)}
+.mail-acts .muted{font-size:12px}
+
+/* ── GEO：起步价表 + FAQ ──────────────────────────────── */
+.geo{padding:24px 0 0}
+.geo-inner{
+  width:min(1264px,100%);margin:0 auto;padding:40px 0 24px;
+  display:flex;flex-direction:column;gap:24px;
+  box-shadow:inset 0 1px 0 var(--line);      /* 与主区的唯一一根分隔线 */
+}
+.geo-inner h2{font-size:17px;font-weight:700}
+.geo-lede{font-size:14px;color:var(--t3);max-width:64ch;text-wrap:pretty;margin-top:-16px}
+.table-scroll{overflow-x:auto;background:var(--panel);border-radius:16px;box-shadow:var(--shadow-1)}
+.price-table{width:100%;min-width:560px;font-size:14px}
+.price-table th{
+  text-align:left;font-size:12px;font-weight:600;color:var(--t3);
+  padding:14px 20px 10px;white-space:nowrap;
+}
+.price-table td{padding:12px 20px;min-height:44px}
+.price-table tbody tr:nth-child(odd){background:rgba(var(--black-rgb),.02)}
+.price-table td b{font-family:var(--serif);font-size:15px;font-weight:600}
+.price-table .muted{font-size:13px}
+.faq{display:flex;flex-direction:column;gap:8px}
+.faq details{background:var(--panel);border-radius:14px;box-shadow:var(--shadow-1);overflow:hidden}
+.faq summary{
+  display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 20px;
+  font-size:14px;font-weight:600;cursor:pointer;list-style:none;user-select:none;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:var(--serif);font-size:19px;color:var(--t4);transition:transform .2s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 20px 18px;font-size:13px;line-height:1.8;color:var(--t2);max-width:72ch;text-wrap:pretty}
+.geo-updated{font-size:12px;color:var(--t4)}
+.foot{
+  width:min(1264px,100% - 32px);margin:0 auto;padding:24px 4px 40px;
+  display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--t4);
+}
+.foot a{color:var(--t3)}
+
+/* ── Toast ────────────────────────────────────────────── */
+.toast{
+  position:fixed;left:50%;bottom:32px;z-index:200;transform:translate(-50%,16px);
+  display:flex;align-items:center;gap:10px;max-width:calc(100vw - 48px);
+  padding:12px 20px;border-radius:999px;font-size:14px;font-weight:600;
+  background:var(--panel-deep);color:var(--text-cream);
+  box-shadow:var(--shadow-pop);opacity:0;pointer-events:none;
+  transition:opacity .2s var(--ease),transform .25s var(--ease);
+}
+.toast .mono{color:var(--gold-light);letter-spacing:.08em}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast.bad{background:#3A2320;color:#F2DEDA}
+.toast.bad .mono{color:#E8A79B}
+
+/* ── 状态矩阵（body[data-tab] / body[data-state]）──────
+   选择器写成 [data-…] 后代形式：挂在 body 上照常生效 */
+[data-tab="sms"] .mail-wrap{display:none}
+[data-tab="mail"] .mail-wrap{display:block}
+[data-tab="mail"] .body-row,[data-tab="mail"] .page-head{display:none}
+
+[data-state="idle"] #cardOk{display:none}
+[data-state="ready"] #cardOk,[data-state="waiting"] #cardOk,[data-state="done"] #cardOk{display:flex}
+[data-state="ready"] .rail-step[data-step="key"] .search,
+[data-state="waiting"] .rail-step[data-step="key"] .search,
+[data-state="done"] .rail-step[data-step="key"] .search{display:none}
+[data-state="idle"] .rail-cta{opacity:.45;pointer-events:none}
+[data-state="waiting"] .rail-step,[data-state="done"] .rail-step{display:none}
+[data-state="waiting"] .rail-summary,[data-state="done"] .rail-summary{display:flex}
+[data-state="waiting"] .rail-foot,[data-state="done"] .rail-foot{display:none}
+
+[data-state="idle"] .stage > :not(.stage-empty):not(.rings),
+[data-state="ready"] .stage > :not(.stage-empty):not(.rings){display:none}
+[data-state="waiting"] .stage-empty,[data-state="done"] .stage-empty{display:none}
+[data-state="waiting"] .sms-raw{display:none}
+[data-state="done"] .countdown,[data-state="done"] .act-note{display:none}
+[data-state="done"] .badge .blip{background:rgb(var(--ok-rgb));animation:none}
+/* 已完成（收到码之后）：JS 另加 body[data-finished] */
+[data-finished] .stage-actions,[data-finished] .numhint{display:none}
+
+/* ── 响应式：390 不横向溢出，点区 ≥44px ───────────────── */
+@media (max-width:960px){
+  .body-row{grid-template-columns:1fr;gap:16px}
+  .stage-wrap{position:static}
+  /* 等码/收码期把舞台顶到最前，买家盯的是它 */
+  [data-state="waiting"] .stage-wrap,[data-state="done"] .stage-wrap{order:-1}
+  .rules{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .topbar{
+    height:auto;min-height:56px;flex-wrap:wrap;border-radius:24px;
+    padding:10px 12px;gap:8px;top:8px;width:min(1264px,100% - 16px);
+  }
+  .brand{order:1}.chip{order:2;margin-left:auto}.help-link{order:3;display:none}
+  .tabs{order:4;width:100%;justify-content:stretch}
+  .tabs .tab{flex:1;justify-content:center;height:40px}
+  .ann-pill{order:5;width:100%;max-width:none;justify-content:flex-start;height:40px}
+  .spacer{display:none}
+  main{width:min(1264px,100% - 16px)}
+  .page-head{padding:24px 4px 16px}
+  .stage{min-height:0;padding:36px 16px;gap:24px;border-radius:20px}
+  .num{font-size:30px;letter-spacing:.03em}
+  .slots{gap:8px}
+  .slot{width:46px;height:60px;font-size:27px;border-radius:11px}
+  .stage-empty ol{flex-direction:column;gap:12px;align-items:flex-start}
+  .stage-actions{flex-direction:column;gap:8px;width:100%}
+  .stage-actions .btn-ghost{width:100%;height:44px}
+  .list{max-height:440px}
+  .topup-pay{flex-direction:column;align-items:center;text-align:center}
+  .ann-imgs{flex-wrap:wrap}
+  .ann-promo{width:100%}
+  .ann-qr{width:124px}
+  .modal{padding:20px;border-radius:16px}
+  .modal-actions{flex-direction:column}
+  .mail-addr{padding:20px}
+  .addr-main{font-size:16px}
+  .mail-item{padding:14px 16px}
+  .mail-time{width:100%;margin-left:0;order:3}
+  .foot{padding-bottom:32px}
+}
+
+@media (max-width:720px){
+  /* 可点区 ≥44px（桌面保持 32px 不变） */
+  .btn-sm{height:44px;padding:0 16px;border-radius:10px}
+  .x{width:44px;height:44px;min-width:44px}
+  .linkish{min-height:44px;display:inline-flex;align-items:center}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   合并补丁 —— 交付稿没覆盖到的类，以及和 vend.js 对接需要的几条。
+   改动理由都写在各条上面，别当成可以随手删的噪音。
+   ═══════════════════════════════════════════════════════════════ */
+
+/* hidden 属性必须真的隐藏。
+ * 作者样式里的 display（.mask{display:flex} 这类）会盖掉 UA 的 [hidden]{display:none}，
+ * 结果是「看不见但仍然拦截点击」——整屏遮罩把全页点击吃掉，页面完全点不动。
+ * 这个坑在黑金版上真踩过一次，浏览器实测才抓到，代码 review 看不出来。 */
+[hidden] { display: none !important; }
+
+/* help.html / manage.html 用的是 --cn 和 --mono 这两个旧名字。
+ * 新皮改叫 --sans / --monos，不补别名的话那两页的字体声明会整条失效。 */
+:root { --cn: var(--sans); --mono: var(--monos); }
+
+/* 没有品牌图标的服务（720 个里约 570 个）走首字母牌。
+ * 做成明确的深紫底浅字牌子，读起来是「刻意的占位」而不是「图挂了」。 */
+.svc-ico-text {
+  background: var(--gold);
+  color: var(--on-gold);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* 选完服务后那行提示（「已选 X · 挑一个标着可用的地区」） */
+.pick-hint {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--t3);
+}
+.pick-hint b { color: var(--t1); font-weight: 600; }
+
+/* 号码旁边的国旗 + 地区名。vend.js 是整块重绘的，所以要有个容器。 */
+.numflag-wrap { display: inline-flex; align-items: center; gap: 8px; }
+
+/* 换了几个号还收不到码时才出现的退款入口。
+ * 交付稿把这一整块丢了 —— 没有它，买家只能直接去闲鱼开纠纷。 */
+.void-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-3);
+}
+.void-box p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.75; color: var(--t3); }
+
+/* 摘要行里被 JS 撑开的那一格 */
+.grow { flex: 1; min-width: 0; }
+
+/* 自定义邮箱前缀那一行 */
+.search.wide { width: 100%; }
+
+/* 国旗现在画在白瓷片里。旗子是 3:2、瓷片是正方形，用 contain 让整面旗完整显示、
+ * 上下留白 —— 比 cover 安全：带徽章的旗裁一刀就成了另一个国家。 */
+.flag img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.flag-edge { display: none; }
+
+/* 补差价弹窗的关闭键是合并时补进去的（新稿压根没有关闭按钮）。
+ * .modal-head 在新皮里是个 <h3>（块级），按钮跟在它后面会掉到标题下一行，
+ * 所以这里绝对定位到右上角 —— 关闭键的默认位置就在那儿。 */
+.modal { position: relative; }
+.modal > .x { position: absolute; top: 16px; right: 16px; z-index: 2; }
+
+/* 微信码现在是一张 <img class="ann-qr">。img 的 height 属性会变成 presentational hint，
+ * 它一旦生效 aspect-ratio 就被忽略、方框又变回长方形（实测 132x160）。
+ * height:auto 把这条 hint 让开，二维码才铺满正方形框、扫得出来。 */
+img.ann-qr { height: auto; aspect-ratio: 1; object-fit: cover; }
+
+/* 公告图片区：一张宣传长图 + 两个方形码。
+ * 码要够大才扫得出来，所以给固定 150px 宽的列，宣传图吃剩下的空间。 */
+.ann-imgs { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.ann-imgs .ann-promo { flex: 1 1 260px; min-width: 220px; margin: 0; }
+.ann-qr-fig { flex: 0 0 150px; margin: 0; text-align: center; }
+.ann-qr-fig figcaption { margin-top: 6px; font-size: 11.5px; line-height: 1.6; color: var(--t3); }
+@media (max-width: 640px) {
+  .ann-imgs { justify-content: center; }
+  .ann-imgs .ann-promo { flex: 1 1 100%; }
+}
+
+/* 号码里的区号单独一档：比本地号码暗一点、小一点，一眼能分清哪段是区号。
+ * 有些平台的验证页要求填不含区号的号码，分不清就会填错。 */
+.num-cc { color: var(--text-dim); margin-right: .28em; font-size: .82em; }
+.num-nat { letter-spacing: .04em; }
+.num-hint-cc { font-size: 12px; color: var(--text-dim); margin-top: 6px; text-align: center; }
+
+/* 实时可用榜的兜底行（还没拉到数据、或者不跑 JS 时看到的） */
+.live-row.muted { color: var(--t4); justify-content: flex-start; }
+
+/* 榜单里标「卖家推荐」的那两条（泰国 / 美国，安哥验证过的高成功率地区） */
+.live-pick {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(var(--glow-rgb), .16);
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+
+
+/* ── 意见反馈 ───────────────────────────────────────────
+ * 贴右边缘竖排。顶栏已经排满（卡密面额那条是买家真要看的），
+ * 右下角泡泡在移动端会压住内容 —— 右边缘竖排是最不碍事的一处。
+ * 窄屏直接收掉：手机上那一条边太金贵，页脚里另有入口。 */
+/* 贴左边缘。原来在右边、又小又灰，几乎没人看得见。
+ * 现在：实心强调色 + 图标 + 更大的字，外加一圈每 9 秒扩散一次的光环。
+ *
+ * 光环单独一个元素、只动 transform 和 opacity —— 这两个属性走合成器，
+ * 不触发重排重绘。之前公告收回那次已经量过：一个常驻动画只要碰到
+ * 需要重绘的属性（backdrop-filter/box-shadow），整页动画就会持续掉帧。
+ * 一个一直在跑的常驻元素更加不能踩这个坑。 */
+.fb-pill{
+  position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:60;
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  padding:20px 11px;border:0;border-radius:0 14px 14px 0;cursor:pointer;
+  font-family:var(--sans);
+  background:var(--gold-grad);color:var(--on-gold);
+  box-shadow:0 10px 30px -12px rgba(var(--black-rgb),.5);
+  transition:transform .2s var(--ease),filter .2s var(--ease);
+}
+.fb-pill .fb-txt{
+  writing-mode:vertical-rl;
+  font-size:13.5px;font-weight:600;letter-spacing:.22em;
+}
+.fb-pill .fb-ico{display:flex;opacity:.92}
+.fb-pill:hover{transform:translateY(-50%) translateX(4px);filter:brightness(1.14)}
+.fb-pill:active{transform:translateY(-50%) translateX(1px)}
+.fb-pill:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
+
+/* 扩散环。9 秒一轮，只在前 22% 有动作，剩下的时间它是隐形的 ——
+ * 一直在跳的东西看两分钟就变成噪音，买家反而会主动无视它。 */
+.fb-ring{
+  position:absolute;inset:0;border-radius:0 14px 14px 0;
+  box-shadow:0 0 0 2px rgba(var(--glow-rgb),.65);
+  opacity:0;pointer-events:none;
+  animation:fbRing 9s var(--ease) 2s infinite;
+}
+@keyframes fbRing{
+  0%{opacity:.7;transform:scale(1)}
+  22%{opacity:0;transform:scale(1.35)}
+  100%{opacity:0;transform:scale(1.35)}
+}
+@media (prefers-reduced-motion:reduce){
+  .fb-ring{animation:none}
+  .fb-pill{transition:none}
+}
+
+/* 窄屏：左边那一条竖排会压住正文，改成左下角的圆钮，只留图标 */
+@media (max-width:900px){
+  .fb-pill{
+    top:auto;bottom:18px;left:14px;transform:none;
+    border-radius:999px;padding:13px;
+  }
+  .fb-pill .fb-txt{display:none}
+  .fb-pill:hover{transform:translateX(0);filter:brightness(1.14)}
+  .fb-ring{border-radius:999px}
+}
+
+.fb-field{display:flex;flex-direction:column;gap:6px;position:relative}
+.fb-field > span:first-child{font-size:13px;font-weight:600;color:var(--t2)}
+.fb-field textarea,.fb-field input{
+  width:100%;padding:10px 12px;border-radius:10px;
+  border:1px solid var(--line-2);background:var(--input-bg);color:var(--t1);
+  font-family:var(--sans);font-size:14px;line-height:1.6;resize:vertical;
+}
+.fb-field textarea:focus,.fb-field input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+.fb-count{align-self:flex-end;font-size:12px;color:var(--t4);font-variant-numeric:tabular-nums}
+
+/* 联系卖家 / 意见反馈这两个新弹窗的标题块。
+ * 必须单独写：.modal-sub 上那条 margin-top:-14px 是给补差价弹窗的 .modal-head 配的，
+ * 换成 .modal-title 之后那 14px 直接把副标题拽到标题上，两行叠在一起 —— 线上截图看得很清楚。
+ * 这类"给某个组件调的负 margin"被第二个组件复用时必然出事，所以这里显式清零而不是改全局。 */
+.modal-intro{display:flex;flex-direction:column;gap:6px}
+.modal-intro .modal-title{font-size:19px;font-weight:700;line-height:1.35;margin:0}
+.modal-intro .modal-sub{margin:0}
+
+/* 联系弹窗里的码要居中、要够大 —— .ann-qr-fig 的 flex:0 0 150px 是给公告栏
+ * 那个横排三图配的，放进竖排弹窗会贴着左边而且被压小到扫不出来。 */
+#contactMask .ann-qr-fig{flex:0 0 auto;align-self:center}
+#contactMask .ann-qr{width:200px}
+
+/* 支付宝自动付款区。接了支付宝时它是主路径，手动扫码那块整个收起来 ——
+ * 两套同时摆出来，买家不知道该走哪条，反而更容易付错。 */
+.topup-auto{display:flex;flex-direction:column;gap:8px}
+.btn-block{width:100%}
+.topup-auto .topup-copy{font-size:12px;line-height:1.7;color:var(--t3);text-align:center;margin:0}
+
+/* ── Codex 邀请助手 ───────────────────────────────────────
+ * 向导要「一眼看出现在该干嘛」，所以三种状态在视觉上必须拉开：
+ * 没轮到的灰着、正在做的亮起来、做完的打勾。
+ * 只用文字描述状态的向导，买家看完还是不知道该点哪儿。 */
+.tab-codex{margin-left:6px}
+.modal-wide{max-width:640px}
+
+.cx-warn{
+  font-size:13px;line-height:1.8;color:var(--t2);text-wrap:pretty;
+  padding:12px 14px;border-radius:10px;
+  background:rgba(var(--warn-rgb),.08);
+  box-shadow:inset 0 0 0 1px rgba(var(--warn-rgb),.22);
+}
+
+.cx-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.cx-step{display:flex;gap:14px;padding:16px 0;box-shadow:inset 0 1px 0 var(--line)}
+.cx-step:first-child{box-shadow:none}
+/* 没轮到的整条压暗，但不能压到看不清 —— 买家要能预读后面几步 */
+.cx-step[data-state="todo"]{opacity:.5}
+.cx-step[data-state="done"] .cx-num{background:var(--ok-text);color:var(--panel-raised)}
+.cx-step[data-state="active"] .cx-num{background:var(--gold);color:var(--on-gold)}
+
+.cx-num{
+  flex:0 0 26px;height:26px;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;
+  background:var(--panel-3);color:var(--t3);
+}
+.cx-step[data-state="done"] .cx-num::after{content:"✓"}
+.cx-step[data-state="done"] .cx-num{font-size:14px}
+.cx-step[data-state="done"] .cx-num span{display:none}
+
+.cx-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.cx-body h3{font-size:15px;font-weight:700;margin:0}
+.cx-hint{font-size:13px;line-height:1.7;color:var(--t3);margin:0;text-wrap:pretty}
+.cx-act{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:4px}
+
+.cx-addr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cx-addr code{
+  font-family:var(--monos);font-size:14px;font-weight:600;color:var(--t1);
+  padding:7px 11px;border-radius:8px;background:var(--panel-3);user-select:all;
+  overflow-wrap:anywhere;
+}
+
+.cx-wait{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);font-variant-numeric:tabular-nums}
+.cx-dot{
+  width:7px;height:7px;border-radius:999px;background:var(--gold-light);
+  animation:cxPulse 1.4s ease-in-out infinite;
+}
+@keyframes cxPulse{0%,100%{opacity:.25}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){ .cx-dot{animation:none;opacity:.8} }
+
+/* Codex 向导的下单前置闸。勾选之前「创建邮箱」是禁用的 ——
+ * 这条是卖家商品文案里用三个感叹号喊的：邀请页没写送额度就收不到额度。
+ * 写成一句提醒买家会跳过，做成硬闸才拦得住。 */
+.cx-gate{
+  padding:14px 16px;border-radius:12px;
+  background:rgba(var(--red-rgb),.07);
+  box-shadow:inset 0 0 0 1px rgba(var(--red-rgb),.28);
+  display:flex;flex-direction:column;gap:8px;
+  transition:background .2s var(--ease),box-shadow .2s var(--ease);
+}
+/* 勾了之后从"警告红"退成"已确认绿"，让买家看得出这道闸过了 */
+.cx-gate[data-state="ok"]{
+  background:rgba(var(--ok-rgb),.08);
+  box-shadow:inset 0 0 0 1px rgba(var(--ok-rgb),.3);
+}
+.cx-gate-t{margin:0;font-size:14px;font-weight:700;color:var(--t1)}
+.cx-gate-b{margin:0;font-size:13px;line-height:1.8;color:var(--t2);text-wrap:pretty}
+.cx-check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--t1)}
+.cx-check input{width:17px;height:17px;accent-color:var(--gold);cursor:pointer}
+
+.cx-phone{display:inline-flex;align-items:center;gap:10px}
+.cx-phone b{font-family:var(--monos);font-size:16px;letter-spacing:.06em}
+
+/* 最后一步没有系统信号能判断做没做，永远停在待办 —— 但它是唯一决定
+ * 给不给额度的动作，所以不能跟着"未轮到"一起压暗到看不见。 */
+.cx-step-last[data-state="todo"]{opacity:.85}
+.cx-step-last .cx-hint b{color:var(--hot)}
+
+/* 拖到书签栏的那个链接。它是整个半自动的入口，所以必须显眼 ——
+ * 但又不能做成按钮：买家要**拖**它而不是点它，视觉上得像个可以抓起来的东西。 */
+.cx-bm-box{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:14px 16px;border-radius:12px;
+  background:var(--panel-3);
+}
+.cx-bm-l{flex:1;min-width:220px;display:flex;flex-direction:column;gap:5px}
+.cx-bm-t{margin:0;font-size:13.5px;font-weight:700;color:var(--t1)}
+.cx-bm-h{margin:0;font-size:12.5px;line-height:1.75;color:var(--t3);text-wrap:pretty}
+.cx-bm-h kbd{
+  font-family:var(--monos);font-size:11px;padding:1px 5px;border-radius:4px;
+  background:var(--panel-raised);box-shadow:inset 0 0 0 1px var(--line-2);color:var(--t2);
+}
+.cx-bm{
+  flex:0 0 auto;cursor:grab;user-select:none;text-decoration:none;
+  padding:11px 18px;border-radius:10px;
+  font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:.04em;
+  background:var(--gold-grad);color:var(--on-gold);
+  box-shadow:0 8px 20px -10px rgba(var(--black-rgb),.55);
+  transition:transform .16s var(--ease),filter .16s var(--ease);
+}
+.cx-bm:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.cx-bm:active{cursor:grabbing;transform:translateY(0)}
+.cx-bm-mb{display:none}
+@media (max-width:900px){
+  /* 手机上没有书签栏，拖不了。整块收起来，只留一句说明，别让买家在那儿较劲 */
+  .cx-bm{display:none}
+  .cx-bm-mb{display:inline}
+}
+
+/* ── Codex 一键邀请：独立标签页（2026-08-27 从弹窗改过来）────────
+   原来是个 modal，买家从取号页点开、关掉就丢；现在和临时邮箱一样是一页。 */
+.codex-wrap{display:none}
+[data-tab="codex"] .codex-wrap{display:block}
+[data-tab="codex"] .body-row,[data-tab="codex"] .page-head{display:none}
+
+.cx-inner{max-width:900px;margin:0 auto;padding:26px 18px 40px}
+.cx-head h2{margin:0 0 8px;font-size:26px;letter-spacing:-.01em}
+.cx-lede{margin:0 0 12px;color:var(--text-dim);line-height:1.65}
+.cx-help-link{display:inline-block;margin-bottom:18px;color:var(--gold);font-weight:650;text-decoration:none;border-bottom:1px dashed var(--gold);padding-bottom:1px}
+.cx-help-link:hover{color:var(--gold-hover);border-bottom-color:var(--gold-hover)}
+
+.cx-card{background:var(--panel-raised);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.cx-card-t{margin:0 0 10px;font-weight:700}
+.cx-card .search{display:flex;gap:8px}
+.cx-card .search input{flex:1;min-width:0;background:var(--input-bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;color:var(--ink,inherit)}
+.cx-card-ok{margin:0 0 14px;color:var(--ok-text);font-weight:650}
+
+/* 对照图：正例描绿、反例描红，一眼分得出哪张是"别照着做" */
+.cx-shots{margin-top:26px}
+.cx-shots-t{margin:0 0 12px;font-size:17px}
+.cx-shot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.cx-shot{margin:0;background:var(--panel-raised);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cx-shot img{display:block;width:100%;height:auto}
+.cx-shot figcaption{padding:10px 12px 12px;font-size:13px;line-height:1.6;color:var(--text-dim)}
+.cx-shot figcaption b.ok{color:var(--ok-text);margin-right:6px}
+.cx-shot figcaption b.bad{color:var(--red);margin-right:6px}
+.cx-shot-ok{border-color:rgba(84,117,95,.5)}
+.cx-shot-bad{border-color:rgba(163,75,68,.5)}

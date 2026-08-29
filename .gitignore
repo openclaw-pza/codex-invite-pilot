@@ -1,0 +1,36 @@
+# ---- 依赖与构建产物 ----
+node_modules/
+*.log
+.DS_Store
+
+# ---- 凭据：任何一样进版本库都等于把线上环境送人 ----
+.env
+.env.local
+secrets/
+
+# ---- 运行时数据库 ----
+# account-pool 含明文密码与 refresh_token；vend 含真实卡密。
+# data/ 下只有几个静态 JSON 该进库，其余一律排除。
+data/*
+!data/country-cn.json
+!data/hero-countries.json
+!data/hero-services.json
+
+# ---- 运行时状态 ----
+data/automation/
+data/codex-auth/
+data/outlook-tokens/
+data/webmail-profiles/
+data/run.lock
+output/playwright/
+.playwright-cli/
+
+# ---- Chrome 扩展签名私钥与打包产物 ----
+extension.pem
+extension.crx
+
+# ---- 改文件前的原始备份 ----
+_orig_*
+
+# ---- 探针/临时脚本 ----
+scripts/_*.mjs

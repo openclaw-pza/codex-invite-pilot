@@ -1,0 +1,15 @@
+codex-invite-pilot
+Copyright 2026 【待填：作者名或 ID】
+
+本产品包含由项目作者开发的软件。
+
+本项目使用 Apache License 2.0 授权（见 LICENSE）。
+按该许可证，你可以自由使用、修改、商用与再分发，
+只需保留本 NOTICE 与 LICENSE 文件。
+
+项目主页：https://github.com/【待填】/codex-invite-pilot
+作者站点：【待填】
+
+---
+
+第三方依赖各自遵循其原始许可证，见 package.json 与 node_modules/*/LICENSE。

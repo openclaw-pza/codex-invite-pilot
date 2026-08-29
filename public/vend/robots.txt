@@ -1,0 +1,38 @@
+# 验证码取号 · sms.tempmail2026.xyz
+# 开放给生成式引擎抓取（GEO）。接口和管理页一律不许爬。
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /manage.html
+Disallow: /manage.js
+
+# 生成式引擎（显式列出，避免被通配规则的顺序问题误伤）
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Baiduspider
+Allow: /
+User-agent: Sogou web spider
+Allow: /
+
+Sitemap: https://sms.tempmail2026.xyz/sitemap.xml

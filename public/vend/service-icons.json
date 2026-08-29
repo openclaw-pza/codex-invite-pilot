@@ -1,0 +1,762 @@
+{
+  "tg": {
+    "source": "simple-icons",
+    "slug": "telegram",
+    "hex": "#26A5E4"
+  },
+  "go": {
+    "source": "simple-icons",
+    "slug": "google",
+    "hex": "#4285F4"
+  },
+  "li": {
+    "source": "simple-icons",
+    "slug": "baidu",
+    "hex": "#2932E1"
+  },
+  "lf": {
+    "source": "simple-icons",
+    "slug": "tiktok",
+    "hex": "#000000"
+  },
+  "nv": {
+    "source": "simple-icons",
+    "slug": "naver",
+    "hex": "#03C75A"
+  },
+  "oi": {
+    "source": "simple-icons",
+    "slug": "tinder",
+    "hex": "#FF6B6B"
+  },
+  "tn": {
+    "source": "logos",
+    "slug": "linkedin-icon",
+    "width": 256,
+    "height": 256
+  },
+  "fb": {
+    "source": "simple-icons",
+    "slug": "facebook",
+    "hex": "#0866FF"
+  },
+  "wx": {
+    "source": "simple-icons",
+    "slug": "apple",
+    "hex": "#000000"
+  },
+  "wa": {
+    "source": "simple-icons",
+    "slug": "whatsapp",
+    "hex": "#25D366"
+  },
+  "ig": {
+    "source": "simple-icons",
+    "slug": "instagram",
+    "hex": "#FF0069"
+  },
+  "ot": {
+    "source": "handmade",
+    "name": "通用短信气泡（无品牌，手绘）"
+  },
+  "ds": {
+    "source": "simple-icons",
+    "slug": "discord",
+    "hex": "#5865F2"
+  },
+  "me": {
+    "source": "simple-icons",
+    "slug": "line",
+    "hex": "#00C300"
+  },
+  "ka": {
+    "source": "simple-icons",
+    "slug": "shopee",
+    "hex": "#EE4D2D"
+  },
+  "tw": {
+    "source": "simple-icons",
+    "slug": "x",
+    "hex": "#000000"
+  },
+  "hw": {
+    "source": "simple-icons",
+    "slug": "alipay",
+    "hex": "#1677FF"
+  },
+  "gp": {
+    "source": "simple-icons",
+    "slug": "ticketmaster",
+    "hex": "#026CDF"
+  },
+  "wb": {
+    "source": "simple-icons",
+    "slug": "wechat",
+    "hex": "#07C160"
+  },
+  "kt": {
+    "source": "simple-icons",
+    "slug": "kakaotalk",
+    "hex": "#FFCD00"
+  },
+  "nf": {
+    "source": "simple-icons",
+    "slug": "netflix",
+    "hex": "#E50914"
+  },
+  "qq": {
+    "source": "simple-icons",
+    "slug": "qq",
+    "hex": "#1EBAFC"
+  },
+  "dp": {
+    "source": "simple-icons",
+    "slug": "protonmail",
+    "hex": "#6D4AFF"
+  },
+  "zh": {
+    "source": "simple-icons",
+    "slug": "zoho",
+    "hex": "#E42527"
+  },
+  "fu": {
+    "source": "simple-icons",
+    "slug": "snapchat",
+    "hex": "#1D1D1F"
+  },
+  "vk": {
+    "source": "simple-icons",
+    "slug": "vk",
+    "hex": "#0077FF"
+  },
+  "re": {
+    "source": "simple-icons",
+    "slug": "coinbase",
+    "hex": "#0052FF"
+  },
+  "ok": {
+    "source": "simple-icons",
+    "slug": "odnoklassniki",
+    "hex": "#EE8208"
+  },
+  "ub": {
+    "source": "simple-icons",
+    "slug": "uber",
+    "hex": "#000000"
+  },
+  "mt": {
+    "source": "simple-icons",
+    "slug": "steam",
+    "hex": "#000000"
+  },
+  "ew": {
+    "source": "simple-icons",
+    "slug": "nike",
+    "hex": "#111111"
+  },
+  "dh": {
+    "source": "simple-icons",
+    "slug": "ebay",
+    "hex": "#E53238"
+  },
+  "uk": {
+    "source": "simple-icons",
+    "slug": "airbnb",
+    "hex": "#FF5A5F"
+  },
+  "ahb": {
+    "source": "simple-icons",
+    "slug": "ubisoft",
+    "hex": "#000000"
+  },
+  "nz": {
+    "source": "simple-icons",
+    "slug": "foodpanda",
+    "hex": "#D70F64"
+  },
+  "vi": {
+    "source": "simple-icons",
+    "slug": "viber",
+    "hex": "#7360F2"
+  },
+  "ts": {
+    "source": "simple-icons",
+    "slug": "paypal",
+    "hex": "#002991"
+  },
+  "qv": {
+    "source": "simple-icons",
+    "slug": "badoo",
+    "hex": "#783BF9"
+  },
+  "bo": {
+    "source": "simple-icons",
+    "slug": "wise",
+    "hex": "#9FE870"
+  },
+  "zk": {
+    "source": "simple-icons",
+    "slug": "deliveroo",
+    "hex": "#00CCBC"
+  },
+  "alj": {
+    "source": "simple-icons",
+    "slug": "spotify",
+    "hex": "#1ED760"
+  },
+  "acz": {
+    "source": "simple-icons",
+    "slug": "claude",
+    "hex": "#D97757"
+  },
+  "kf": {
+    "source": "simple-icons",
+    "slug": "sinaweibo",
+    "hex": "#E6162D"
+  },
+  "ry": {
+    "source": "simple-icons",
+    "slug": "mcdonalds",
+    "hex": "#FBC817"
+  },
+  "jg": {
+    "source": "simple-icons",
+    "slug": "grab",
+    "hex": "#00B14F"
+  },
+  "ij": {
+    "source": "simple-icons",
+    "slug": "revolut",
+    "hex": "#191C1F"
+  },
+  "hb": {
+    "source": "simple-icons",
+    "slug": "twitch",
+    "hex": "#9146FF"
+  },
+  "bw": {
+    "source": "simple-icons",
+    "slug": "signal",
+    "hex": "#3B45FD"
+  },
+  "hx": {
+    "source": "simple-icons",
+    "slug": "aliexpress",
+    "hex": "#FF4747"
+  },
+  "et": {
+    "source": "simple-icons",
+    "slug": "clubhouse",
+    "hex": "#1D1D1F"
+  },
+  "cn": {
+    "source": "simple-icons",
+    "slug": "fiverr",
+    "hex": "#1DBF73"
+  },
+  "aor": {
+    "source": "simple-icons",
+    "slug": "okx",
+    "hex": "#000000"
+  },
+  "qf": {
+    "source": "simple-icons",
+    "slug": "xiaohongshu",
+    "hex": "#FF2442"
+  },
+  "ip": {
+    "source": "simple-icons",
+    "slug": "burgerking",
+    "hex": "#D62300"
+  },
+  "acm": {
+    "source": "simple-icons",
+    "slug": "razer",
+    "hex": "#00FF00"
+  },
+  "gf": {
+    "source": "simple-icons",
+    "slug": "google",
+    "hex": "#4285F4"
+  },
+  "vm": {
+    "source": "simple-icons",
+    "slug": "okcupid",
+    "hex": "#0500BE"
+  },
+  "ma": {
+    "source": "simple-icons",
+    "slug": "maildotru",
+    "hex": "#005FF9"
+  },
+  "bbl": {
+    "source": "simple-icons",
+    "slug": "autodesk",
+    "hex": "#000000"
+  },
+  "fz": {
+    "source": "simple-icons",
+    "slug": "kfc",
+    "hex": "#F40027"
+  },
+  "aim": {
+    "source": "simple-icons",
+    "slug": "firebase",
+    "hex": "#DD2C00"
+  },
+  "abk": {
+    "source": "simple-icons",
+    "slug": "gmx",
+    "hex": "#1C449B"
+  },
+  "aom": {
+    "source": "simple-icons",
+    "slug": "monzo",
+    "hex": "#14233C"
+  },
+  "mj": {
+    "source": "simple-icons",
+    "slug": "zalo",
+    "hex": "#0068FF"
+  },
+  "kc": {
+    "source": "simple-icons",
+    "slug": "vinted",
+    "hex": "#007782"
+  },
+  "aed": {
+    "source": "simple-icons",
+    "slug": "bookingdotcom",
+    "hex": "#003A9A"
+  },
+  "bxy": {
+    "source": "simple-icons",
+    "slug": "max",
+    "hex": "#525252"
+  },
+  "ac": {
+    "source": "simple-icons",
+    "slug": "doordash",
+    "hex": "#FF3008"
+  },
+  "gq": {
+    "source": "simple-icons",
+    "slug": "freelancer",
+    "hex": "#29B2FE"
+  },
+  "tu": {
+    "source": "simple-icons",
+    "slug": "lyft",
+    "hex": "#FF00BF"
+  },
+  "brk": {
+    "source": "simple-icons",
+    "slug": "indeed",
+    "hex": "#003A9B"
+  },
+  "aon": {
+    "source": "simple-icons",
+    "slug": "binance",
+    "hex": "#F0B90B"
+  },
+  "aiz": {
+    "source": "simple-icons",
+    "slug": "brevo",
+    "hex": "#0B996E"
+  },
+  "bqp": {
+    "source": "simple-icons",
+    "slug": "zara",
+    "hex": "#000000"
+  },
+  "aex": {
+    "source": "simple-icons",
+    "slug": "neon",
+    "hex": "#34D59A"
+  },
+  "baq": {
+    "source": "simple-icons",
+    "slug": "redbubble",
+    "hex": "#E41321"
+  },
+  "gs": {
+    "source": "simple-icons",
+    "slug": "samsung",
+    "hex": "#1428A0"
+  },
+  "aiw": {
+    "source": "simple-icons",
+    "slug": "roblox",
+    "hex": "#000000"
+  },
+  "ccu": {
+    "source": "simple-icons",
+    "slug": "googlechat",
+    "hex": "#34A853"
+  },
+  "ayz": {
+    "source": "simple-icons",
+    "slug": "kimi",
+    "hex": "#000000"
+  },
+  "pd": {
+    "source": "simple-icons",
+    "slug": "ifood",
+    "hex": "#EA1D2C"
+  },
+  "ane": {
+    "source": "simple-icons",
+    "slug": "supercell",
+    "hex": "#1D1D1F"
+  },
+  "ahe": {
+    "source": "simple-icons",
+    "slug": "bunq",
+    "hex": "#3394D7"
+  },
+  "nc": {
+    "source": "simple-icons",
+    "slug": "payoneer",
+    "hex": "#FF4800"
+  },
+  "ef": {
+    "source": "simple-icons",
+    "slug": "nextdoor",
+    "hex": "#8ED500"
+  },
+  "bp": {
+    "source": "simple-icons",
+    "slug": "gofundme",
+    "hex": "#00B964"
+  },
+  "ano": {
+    "source": "simple-icons",
+    "slug": "shopify",
+    "hex": "#7AB55C"
+  },
+  "vd": {
+    "source": "simple-icons",
+    "slug": "betfair",
+    "hex": "#FFB80B"
+  },
+  "box": {
+    "source": "simple-icons",
+    "slug": "thumbtack",
+    "hex": "#009FD9"
+  },
+  "abb": {
+    "source": "simple-icons",
+    "slug": "cocacola",
+    "hex": "#D00013"
+  },
+  "yu": {
+    "source": "simple-icons",
+    "slug": "xiaomi",
+    "hex": "#FF6900"
+  },
+  "amb": {
+    "source": "simple-icons",
+    "slug": "vercel",
+    "hex": "#000000"
+  },
+  "abq": {
+    "source": "simple-icons",
+    "slug": "upwork",
+    "hex": "#6FDA44"
+  },
+  "aq": {
+    "source": "simple-icons",
+    "slug": "glovo",
+    "hex": "#F2CC38"
+  },
+  "ccx": {
+    "source": "simple-icons",
+    "slug": "google",
+    "hex": "#4285F4"
+  },
+  "afz": {
+    "source": "simple-icons",
+    "slug": "klarna",
+    "hex": "#FFB3C7"
+  },
+  "blm": {
+    "source": "simple-icons",
+    "slug": "epicgames",
+    "hex": "#313131"
+  },
+  "yy": {
+    "source": "simple-icons",
+    "slug": "venmo",
+    "hex": "#008CFF"
+  },
+  "vy": {
+    "source": "simple-icons",
+    "slug": "meta",
+    "hex": "#0467DF"
+  },
+  "ble": {
+    "source": "simple-icons",
+    "slug": "nexon",
+    "hex": "#000000"
+  },
+  "nq": {
+    "source": "simple-icons",
+    "slug": "tripdotcom",
+    "hex": "#287DFA"
+  },
+  "auh": {
+    "source": "simple-icons",
+    "slug": "meituan",
+    "hex": "#FFD100"
+  },
+  "aav": {
+    "source": "simple-icons",
+    "slug": "alchemy",
+    "hex": "#0C0C0E"
+  },
+  "yn": {
+    "source": "simple-icons",
+    "slug": "allegro",
+    "hex": "#FF5A00"
+  },
+  "bnl": {
+    "source": "simple-icons",
+    "slug": "reddit",
+    "hex": "#FF4500"
+  },
+  "ev": {
+    "source": "simple-icons",
+    "slug": "picpay",
+    "hex": "#21C25E"
+  },
+  "jx": {
+    "source": "simple-icons",
+    "slug": "swiggy",
+    "hex": "#FC8019"
+  },
+  "zs": {
+    "source": "simple-icons",
+    "slug": "bilibili",
+    "hex": "#00A1D6"
+  },
+  "zl": {
+    "source": "simple-icons",
+    "slug": "airtel",
+    "hex": "#E40000"
+  },
+  "bny": {
+    "source": "simple-icons",
+    "slug": "suno",
+    "hex": "#000000"
+  },
+  "abo": {
+    "source": "simple-icons",
+    "slug": "webdotde",
+    "hex": "#FFD800"
+  },
+  "apf": {
+    "source": "simple-icons",
+    "slug": "carrefour",
+    "hex": "#004E9F"
+  },
+  "asp": {
+    "source": "simple-icons",
+    "slug": "phonepe",
+    "hex": "#5F259F"
+  },
+  "bbg": {
+    "source": "simple-icons",
+    "slug": "square",
+    "hex": "#3E4348"
+  },
+  "aop": {
+    "source": "simple-icons",
+    "slug": "kleinanzeigen",
+    "hex": "#1D4B00"
+  },
+  "atp": {
+    "source": "simple-icons",
+    "slug": "vonage",
+    "hex": "#000000"
+  },
+  "aux": {
+    "source": "simple-icons",
+    "slug": "lightning",
+    "hex": "#792EE5"
+  },
+  "aqj": {
+    "source": "simple-icons",
+    "slug": "bigbasket",
+    "hex": "#A5CD39"
+  },
+  "zo": {
+    "source": "simple-icons",
+    "slug": "kaggle",
+    "hex": "#20BEFF"
+  },
+  "pz": {
+    "source": "simple-icons",
+    "slug": "lidl",
+    "hex": "#0050AA"
+  },
+  "bxn": {
+    "source": "simple-icons",
+    "slug": "intel",
+    "hex": "#0071C5"
+  },
+  "bab": {
+    "source": "simple-icons",
+    "slug": "opera",
+    "hex": "#FF1B2D"
+  },
+  "bra": {
+    "source": "simple-icons",
+    "slug": "go",
+    "hex": "#00ADD8"
+  },
+  "ace": {
+    "source": "simple-icons",
+    "slug": "tata",
+    "hex": "#486AAE"
+  },
+  "bkd": {
+    "source": "simple-icons",
+    "slug": "sahibinden",
+    "hex": "#1D1D1F"
+  },
+  "xs": {
+    "source": "simple-icons",
+    "slug": "groupme",
+    "hex": "#00AFF0"
+  },
+  "bwa": {
+    "source": "simple-icons",
+    "slug": "hostinger",
+    "hex": "#673DE6"
+  },
+  "aaa": {
+    "source": "simple-icons",
+    "slug": "nubank",
+    "hex": "#820AD1"
+  },
+  "fk": {
+    "source": "simple-icons",
+    "slug": "blibli",
+    "hex": "#0072FF"
+  },
+  "atn": {
+    "source": "simple-icons",
+    "slug": "fawry",
+    "hex": "#FFD300"
+  },
+  "cw": {
+    "source": "simple-icons",
+    "slug": "paddypower",
+    "hex": "#004833"
+  },
+  "bbi": {
+    "source": "simple-icons",
+    "slug": "aiqfome",
+    "hex": "#7A1FA2"
+  },
+  "aoo": {
+    "source": "simple-icons",
+    "slug": "pegasusairlines",
+    "hex": "#FDC43E"
+  },
+  "bpz": {
+    "source": "simple-icons",
+    "slug": "justeat",
+    "hex": "#FF8000"
+  },
+  "ni": {
+    "source": "simple-icons",
+    "slug": "gojek",
+    "hex": "#00AA13"
+  },
+  "ge": {
+    "source": "simple-icons",
+    "slug": "paytm",
+    "hex": "#20336B"
+  },
+  "sr": {
+    "source": "simple-icons",
+    "slug": "starbucks",
+    "hex": "#006241"
+  },
+  "afd": {
+    "source": "simple-icons",
+    "slug": "astra",
+    "hex": "#5C2EDE"
+  },
+  "ber": {
+    "source": "simple-icons",
+    "slug": "gumtree",
+    "hex": "#72EF36"
+  },
+  "bob": {
+    "source": "simple-icons",
+    "slug": "shell",
+    "hex": "#FFD500"
+  },
+  "bxg": {
+    "source": "simple-icons",
+    "slug": "basicattentiontoken",
+    "hex": "#80247B"
+  },
+  "zd": {
+    "source": "simple-icons",
+    "slug": "zilch",
+    "hex": "#00D287"
+  },
+  "bmm": {
+    "source": "simple-icons",
+    "slug": "hey",
+    "hex": "#5522FA"
+  },
+  "qy": {
+    "source": "simple-icons",
+    "slug": "zhihu",
+    "hex": "#0084FF"
+  },
+  "azn": {
+    "source": "simple-icons",
+    "slug": "ufc",
+    "hex": "#D20A0A"
+  },
+  "ny": {
+    "source": "simple-icons",
+    "slug": "bitcoin",
+    "hex": "#F7931A"
+  },
+  "aoq": {
+    "source": "simple-icons",
+    "slug": "fi",
+    "hex": "#00B899"
+  },
+  "arp": {
+    "source": "simple-icons",
+    "slug": "continente",
+    "hex": "#E31E24"
+  },
+  "bnp": {
+    "source": "simple-icons",
+    "slug": "fresh",
+    "hex": "#1D1D1F"
+  },
+  "dy": {
+    "source": "simple-icons",
+    "slug": "zomato",
+    "hex": "#E23744"
+  },
+  "arb": {
+    "source": "simple-icons",
+    "slug": "vegas",
+    "hex": "#1A1A1A"
+  },
+  "of": {
+    "source": "simple-icons",
+    "slug": "jet",
+    "hex": "#FBBA00"
+  }
+}

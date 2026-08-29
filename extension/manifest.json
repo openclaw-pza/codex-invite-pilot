@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Codex Invite Pilot",
+  "version": "0.2.2",
+  "description": "邀请链接手动复制打开；邮箱验证码自动提取，手机号自动接码。",
+  "permissions": ["sidePanel", "tabs", "storage", "alarms"],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*",
+    "http://localhost:8787/*",
+    "https://chatgpt.com/*",
+    "https://auth.openai.com/*",
+    "https://auth0.openai.com/*",
+    "https://accounts.openai.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://auth.openai.com/*",
+        "https://auth0.openai.com/*",
+        "https://accounts.openai.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "打开 Codex Invite Pilot"
+  }
+}

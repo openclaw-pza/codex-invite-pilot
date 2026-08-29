@@ -1,0 +1,5072 @@
+[
+  {
+    "code": "mm",
+    "name": "Microsoft",
+    "minUsd": 0.011,
+    "countries": 194,
+    "stock": 38706113,
+    "cnName": "Microsoft · Outlook"
+  },
+  {
+    "code": "am",
+    "name": "Amazon",
+    "minUsd": 0.022,
+    "countries": 195,
+    "stock": 33248644,
+    "cnName": "Amazon"
+  },
+  {
+    "code": "tg",
+    "name": "Telegram",
+    "minUsd": 0.11,
+    "countries": 192,
+    "stock": 30538041,
+    "cnName": "Telegram"
+  },
+  {
+    "code": "go",
+    "name": "Google,youtube,Gmail",
+    "minUsd": 0.022,
+    "countries": 195,
+    "stock": 25021658,
+    "cnName": "Google · Gmail · YouTube"
+  },
+  {
+    "code": "mb",
+    "name": "Yahoo",
+    "minUsd": 0.011,
+    "countries": 194,
+    "stock": 24468237,
+    "cnName": "Yahoo"
+  },
+  {
+    "code": "li",
+    "name": "Baidu",
+    "minUsd": 0.022,
+    "countries": 190,
+    "stock": 20940897,
+    "cnName": "百度"
+  },
+  {
+    "code": "lf",
+    "name": "TikTok/Douyin",
+    "minUsd": 0.011,
+    "countries": 189,
+    "stock": 18141394,
+    "cnName": "TikTok · 抖音"
+  },
+  {
+    "code": "nv",
+    "name": "Naver",
+    "minUsd": 0.0385,
+    "countries": 194,
+    "stock": 14891108,
+    "cnName": "Naver"
+  },
+  {
+    "code": "oi",
+    "name": "Tinder",
+    "minUsd": 0.0165,
+    "countries": 194,
+    "stock": 13764603,
+    "cnName": "Tinder"
+  },
+  {
+    "code": "yw",
+    "name": "Grindr",
+    "minUsd": 0.011,
+    "countries": 179,
+    "stock": 13585505
+  },
+  {
+    "code": "tn",
+    "name": "LinkedIN",
+    "minUsd": 0.011,
+    "countries": 184,
+    "stock": 11750310,
+    "cnName": "LinkedIn"
+  },
+  {
+    "code": "fb",
+    "name": "facebook",
+    "minUsd": 0.0275,
+    "countries": 195,
+    "stock": 10801226,
+    "cnName": "Facebook"
+  },
+  {
+    "code": "wx",
+    "name": "Apple",
+    "minUsd": 0.011,
+    "countries": 156,
+    "stock": 10361239,
+    "cnName": "Apple ID"
+  },
+  {
+    "code": "wa",
+    "name": "Whatsapp",
+    "minUsd": 0.165,
+    "countries": 193,
+    "stock": 10144577,
+    "cnName": "WhatsApp"
+  },
+  {
+    "code": "ig",
+    "name": "Instagram+Threads",
+    "minUsd": 0.0165,
+    "countries": 191,
+    "stock": 9521255,
+    "cnName": "Instagram · Threads"
+  },
+  {
+    "code": "wr",
+    "name": "Walmart",
+    "minUsd": 0.0825,
+    "countries": 177,
+    "stock": 8497331
+  },
+  {
+    "code": "ot",
+    "name": "Any other",
+    "minUsd": 0.0275,
+    "countries": 145,
+    "stock": 8449867,
+    "cnName": "其他服务（通用号）"
+  },
+  {
+    "code": "ds",
+    "name": "Discord",
+    "minUsd": 0.011,
+    "countries": 193,
+    "stock": 7861393,
+    "cnName": "Discord"
+  },
+  {
+    "code": "pm",
+    "name": "AOL",
+    "minUsd": 0.011,
+    "countries": 183,
+    "stock": 7229126
+  },
+  {
+    "code": "me",
+    "name": "Line messenger",
+    "minUsd": 0.0138,
+    "countries": 192,
+    "stock": 7037664,
+    "cnName": "LINE"
+  },
+  {
+    "code": "ka",
+    "name": "Shopee",
+    "minUsd": 0.044,
+    "countries": 169,
+    "stock": 6925362,
+    "cnName": "Shopee"
+  },
+  {
+    "code": "tw",
+    "name": "Twitter/X",
+    "minUsd": 0.011,
+    "countries": 188,
+    "stock": 5754054
+  },
+  {
+    "code": "hw",
+    "name": "Alipay/Alibaba/1688",
+    "minUsd": 0.022,
+    "countries": 191,
+    "stock": 5255990
+  },
+  {
+    "code": "gp",
+    "name": "Ticketmaster",
+    "minUsd": 0.088,
+    "countries": 178,
+    "stock": 5027353
+  },
+  {
+    "code": "wb",
+    "name": "WeChat",
+    "minUsd": 0.0385,
+    "countries": 192,
+    "stock": 4759496,
+    "cnName": "微信 WeChat"
+  },
+  {
+    "code": "kt",
+    "name": "KakaoTalk",
+    "minUsd": 0.077,
+    "countries": 189,
+    "stock": 4563237,
+    "cnName": "KakaoTalk"
+  },
+  {
+    "code": "nf",
+    "name": "Netflix",
+    "minUsd": 0.022,
+    "countries": 185,
+    "stock": 4510500,
+    "cnName": "Netflix"
+  },
+  {
+    "code": "pf",
+    "name": "pof.com",
+    "minUsd": 0.0275,
+    "countries": 179,
+    "stock": 4466082
+  },
+  {
+    "code": "qq",
+    "name": "Tencent QQ",
+    "minUsd": 0.0385,
+    "countries": 185,
+    "stock": 4420509
+  },
+  {
+    "code": "dp",
+    "name": "ProtonMail",
+    "minUsd": 0.011,
+    "countries": 60,
+    "stock": 4334526
+  },
+  {
+    "code": "zh",
+    "name": "Zoho",
+    "minUsd": 0.0165,
+    "countries": 173,
+    "stock": 4314639
+  },
+  {
+    "code": "yl",
+    "name": "Yalla",
+    "minUsd": 0.011,
+    "countries": 166,
+    "stock": 4293960
+  },
+  {
+    "code": "fu",
+    "name": "Snapchat",
+    "minUsd": 0.011,
+    "countries": 174,
+    "stock": 4293824
+  },
+  {
+    "code": "vk",
+    "name": "vk.com",
+    "minUsd": 0.0275,
+    "countries": 182,
+    "stock": 4227281,
+    "cnName": "VKontakte"
+  },
+  {
+    "code": "ya",
+    "name": "Yandex",
+    "minUsd": 0.011,
+    "countries": 170,
+    "stock": 3895798,
+    "cnName": "Yandex"
+  },
+  {
+    "code": "re",
+    "name": "Coinbase",
+    "minUsd": 0.0468,
+    "countries": 180,
+    "stock": 3832991
+  },
+  {
+    "code": "ok",
+    "name": "ok.ru",
+    "minUsd": 0.0165,
+    "countries": 79,
+    "stock": 3784333
+  },
+  {
+    "code": "fd",
+    "name": "Mamba",
+    "minUsd": 0.0165,
+    "countries": 67,
+    "stock": 3687021
+  },
+  {
+    "code": "ub",
+    "name": "Uber",
+    "minUsd": 0.0248,
+    "countries": 193,
+    "stock": 3577075,
+    "cnName": "Uber"
+  },
+  {
+    "code": "mt",
+    "name": "Steam",
+    "minUsd": 0.011,
+    "countries": 184,
+    "stock": 3545476,
+    "cnName": "Steam"
+  },
+  {
+    "code": "ew",
+    "name": "Nike",
+    "minUsd": 0.055,
+    "countries": 186,
+    "stock": 3518882
+  },
+  {
+    "code": "dh",
+    "name": "eBay",
+    "minUsd": 0.044,
+    "countries": 187,
+    "stock": 3511778
+  },
+  {
+    "code": "uk",
+    "name": "Airbnb",
+    "minUsd": 0.0275,
+    "countries": 186,
+    "stock": 3490494
+  },
+  {
+    "code": "im",
+    "name": "Imo",
+    "minUsd": 0.0165,
+    "countries": 189,
+    "stock": 3476697
+  },
+  {
+    "code": "ahb",
+    "name": "Ubisoft",
+    "minUsd": 0.044,
+    "countries": 68,
+    "stock": 3436417
+  },
+  {
+    "code": "nz",
+    "name": "Foodpanda",
+    "minUsd": 0.022,
+    "countries": 180,
+    "stock": 3435316
+  },
+  {
+    "code": "wc",
+    "name": "Craigslist",
+    "minUsd": 0.022,
+    "countries": 160,
+    "stock": 3387188
+  },
+  {
+    "code": "za",
+    "name": "JDcom",
+    "minUsd": 0.022,
+    "countries": 177,
+    "stock": 3367154
+  },
+  {
+    "code": "bz",
+    "name": "Blizzard",
+    "minUsd": 0.0275,
+    "countries": 181,
+    "stock": 3208225,
+    "cnName": "Blizzard"
+  },
+  {
+    "code": "vi",
+    "name": "Viber",
+    "minUsd": 0.011,
+    "countries": 194,
+    "stock": 3164688,
+    "cnName": "Viber"
+  },
+  {
+    "code": "sn",
+    "name": "OLX",
+    "minUsd": 0.0165,
+    "countries": 150,
+    "stock": 3120521
+  },
+  {
+    "code": "bl",
+    "name": "BIGO LIVE",
+    "minUsd": 0.0165,
+    "countries": 173,
+    "stock": 3106939
+  },
+  {
+    "code": "ts",
+    "name": "PayPal",
+    "minUsd": 0.055,
+    "countries": 185,
+    "stock": 3105576,
+    "cnName": "PayPal"
+  },
+  {
+    "code": "qv",
+    "name": "Badoo",
+    "minUsd": 0.044,
+    "countries": 43,
+    "stock": 2939306
+  },
+  {
+    "code": "bo",
+    "name": "Wise",
+    "minUsd": 0.0165,
+    "countries": 52,
+    "stock": 2882301
+  },
+  {
+    "code": "zk",
+    "name": "Deliveroo",
+    "minUsd": 0.033,
+    "countries": 166,
+    "stock": 2858241
+  },
+  {
+    "code": "tx",
+    "name": "Bolt",
+    "minUsd": 0.033,
+    "countries": 169,
+    "stock": 2834533
+  },
+  {
+    "code": "rr",
+    "name": "Wolt",
+    "minUsd": 0.022,
+    "countries": 157,
+    "stock": 2817303
+  },
+  {
+    "code": "dr",
+    "name": "OpenAI",
+    "minUsd": 0.0275,
+    "countries": 176,
+    "stock": 2809895,
+    "cnName": "OpenAI · ChatGPT"
+  },
+  {
+    "code": "alj",
+    "name": "Spotify",
+    "minUsd": 0.044,
+    "countries": 184,
+    "stock": 2798884
+  },
+  {
+    "code": "acz",
+    "name": "Claude ",
+    "minUsd": 0.055,
+    "countries": 77,
+    "stock": 2780483
+  },
+  {
+    "code": "uu",
+    "name": "Wildberries",
+    "minUsd": 0.055,
+    "countries": 63,
+    "stock": 2775522
+  },
+  {
+    "code": "kf",
+    "name": "Weibo",
+    "minUsd": 0.0165,
+    "countries": 95,
+    "stock": 2767862
+  },
+  {
+    "code": "zr",
+    "name": "Papara",
+    "minUsd": 0.0198,
+    "countries": 144,
+    "stock": 2759832
+  },
+  {
+    "code": "fs",
+    "name": "Şikayet var",
+    "minUsd": 0.165,
+    "countries": 55,
+    "stock": 2700861
+  },
+  {
+    "code": "ry",
+    "name": "McDonalds",
+    "minUsd": 0.0264,
+    "countries": 107,
+    "stock": 2674278
+  },
+  {
+    "code": "app",
+    "name": "ClassPass",
+    "minUsd": 0.11,
+    "countries": 111,
+    "stock": 2652996
+  },
+  {
+    "code": "vz",
+    "name": "Hinge",
+    "minUsd": 0.055,
+    "countries": 77,
+    "stock": 2642575
+  },
+  {
+    "code": "jg",
+    "name": "Grab",
+    "minUsd": 0.022,
+    "countries": 151,
+    "stock": 2629917
+  },
+  {
+    "code": "aqt",
+    "name": "Skrill",
+    "minUsd": 0.055,
+    "countries": 32,
+    "stock": 2626249
+  },
+  {
+    "code": "zy",
+    "name": "Nttgame",
+    "minUsd": 0.143,
+    "countries": 138,
+    "stock": 2617795
+  },
+  {
+    "code": "sg",
+    "name": "OZON",
+    "minUsd": 0.0825,
+    "countries": 64,
+    "stock": 2617382
+  },
+  {
+    "code": "ep",
+    "name": "Temu",
+    "minUsd": 0.033,
+    "countries": 17,
+    "stock": 2488257
+  },
+  {
+    "code": "abd",
+    "name": "BeBoo",
+    "minUsd": 0.11,
+    "countries": 45,
+    "stock": 2484827
+  },
+  {
+    "code": "ij",
+    "name": "Revolut",
+    "minUsd": 0.11,
+    "countries": 47,
+    "stock": 2476249
+  },
+  {
+    "code": "wg",
+    "name": "Skout",
+    "minUsd": 0.0165,
+    "countries": 146,
+    "stock": 2436101
+  },
+  {
+    "code": "ah",
+    "name": "EscapeFromTarkov",
+    "minUsd": 0.044,
+    "countries": 59,
+    "stock": 2410563
+  },
+  {
+    "code": "rt",
+    "name": "hily",
+    "minUsd": 0.066,
+    "countries": 138,
+    "stock": 2358580
+  },
+  {
+    "code": "hb",
+    "name": "Twitch",
+    "minUsd": 0.0165,
+    "countries": 19,
+    "stock": 2347278
+  },
+  {
+    "code": "bwv",
+    "name": "Manus",
+    "minUsd": 0.088,
+    "countries": 22,
+    "stock": 2344931
+  },
+  {
+    "code": "bw",
+    "name": "Signal",
+    "minUsd": 0.022,
+    "countries": 76,
+    "stock": 2335679
+  },
+  {
+    "code": "ie",
+    "name": "bet365",
+    "minUsd": 0.066,
+    "countries": 35,
+    "stock": 2314547
+  },
+  {
+    "code": "mo",
+    "name": "Bumble",
+    "minUsd": 0.055,
+    "countries": 48,
+    "stock": 2247878
+  },
+  {
+    "code": "afp",
+    "name": "VFS GLOBAL",
+    "minUsd": 0.11,
+    "countries": 65,
+    "stock": 2242860
+  },
+  {
+    "code": "ua",
+    "name": "BlaBlaCar",
+    "minUsd": 0.055,
+    "countries": 31,
+    "stock": 2228408
+  },
+  {
+    "code": "auz",
+    "name": "Outlier",
+    "minUsd": 0.0743,
+    "countries": 9,
+    "stock": 2215381
+  },
+  {
+    "code": "aez",
+    "name": "Shein",
+    "minUsd": 0.066,
+    "countries": 16,
+    "stock": 2213358
+  },
+  {
+    "code": "df",
+    "name": "Happn",
+    "minUsd": 0.022,
+    "countries": 98,
+    "stock": 2193399
+  },
+  {
+    "code": "hx",
+    "name": "AliExpress",
+    "minUsd": 0.0688,
+    "countries": 9,
+    "stock": 2166506
+  },
+  {
+    "code": "ws",
+    "name": "Feeld",
+    "minUsd": 0.0135,
+    "countries": 41,
+    "stock": 2162567
+  },
+  {
+    "code": "uz",
+    "name": "OffGamers",
+    "minUsd": 0.066,
+    "countries": 141,
+    "stock": 2123707
+  },
+  {
+    "code": "gx",
+    "name": "Hepsiburadacom",
+    "minUsd": 0.0495,
+    "countries": 62,
+    "stock": 2113038
+  },
+  {
+    "code": "et",
+    "name": "Clubhouse",
+    "minUsd": 0.011,
+    "countries": 41,
+    "stock": 2102591
+  },
+  {
+    "code": "cn",
+    "name": "Fiverr",
+    "minUsd": 0.0688,
+    "countries": 29,
+    "stock": 2091277
+  },
+  {
+    "code": "aor",
+    "name": "OKX",
+    "minUsd": 0.0688,
+    "countries": 32,
+    "stock": 2043544
+  },
+  {
+    "code": "qf",
+    "name": "RedBook",
+    "minUsd": 0.022,
+    "countries": 44,
+    "stock": 2034174
+  },
+  {
+    "code": "ip",
+    "name": "Burger King",
+    "minUsd": 0.033,
+    "countries": 70,
+    "stock": 2025371
+  },
+  {
+    "code": "qx",
+    "name": "WorldRemit",
+    "minUsd": 0.022,
+    "countries": 42,
+    "stock": 1996905
+  },
+  {
+    "code": "acm",
+    "name": "Razer",
+    "minUsd": 0.055,
+    "countries": 32,
+    "stock": 1975742
+  },
+  {
+    "code": "gf",
+    "name": "GoogleVoice",
+    "minUsd": 0.2063,
+    "countries": 4,
+    "stock": 1960519
+  },
+  {
+    "code": "bgj",
+    "name": "MoonPay",
+    "minUsd": 0.066,
+    "countries": 26,
+    "stock": 1940145
+  },
+  {
+    "code": "aol",
+    "name": "Paysera",
+    "minUsd": 0.11,
+    "countries": 24,
+    "stock": 1918407
+  },
+  {
+    "code": "vm",
+    "name": "OkCupid",
+    "minUsd": 0.066,
+    "countries": 33,
+    "stock": 1896337
+  },
+  {
+    "code": "ma",
+    "name": "Mail.ru",
+    "minUsd": 0.011,
+    "countries": 142,
+    "stock": 1895810,
+    "cnName": "Mail.ru"
+  },
+  {
+    "code": "bbl",
+    "name": "Autodesk",
+    "minUsd": 0.066,
+    "countries": 23,
+    "stock": 1889802
+  },
+  {
+    "code": "tc",
+    "name": "Rumbler",
+    "minUsd": 0.011,
+    "countries": 45,
+    "stock": 1847626
+  },
+  {
+    "code": "vp",
+    "name": "Kwai",
+    "minUsd": 0.11,
+    "countries": 9,
+    "stock": 1839610
+  },
+  {
+    "code": "ls",
+    "name": "Careem",
+    "minUsd": 0.033,
+    "countries": 149,
+    "stock": 1832926
+  },
+  {
+    "code": "fz",
+    "name": "KFC",
+    "minUsd": 0.022,
+    "countries": 19,
+    "stock": 1831666
+  },
+  {
+    "code": "bfr",
+    "name": "Dott",
+    "minUsd": 0.066,
+    "countries": 25,
+    "stock": 1799033
+  },
+  {
+    "code": "aim",
+    "name": "Firebase",
+    "minUsd": 0.0605,
+    "countries": 17,
+    "stock": 1793998
+  },
+  {
+    "code": "ti",
+    "name": "cryptocom",
+    "minUsd": 0.088,
+    "countries": 33,
+    "stock": 1774072
+  },
+  {
+    "code": "abk",
+    "name": "GMX",
+    "minUsd": 0.011,
+    "countries": 45,
+    "stock": 1726472
+  },
+  {
+    "code": "alg",
+    "name": "Ankama",
+    "minUsd": 0.066,
+    "countries": 29,
+    "stock": 1675236
+  },
+  {
+    "code": "xz",
+    "name": "paycell",
+    "minUsd": 0.0396,
+    "countries": 140,
+    "stock": 1673685
+  },
+  {
+    "code": "aom",
+    "name": "Monzo",
+    "minUsd": 0.11,
+    "countries": 20,
+    "stock": 1666590
+  },
+  {
+    "code": "mj",
+    "name": "Zalo",
+    "minUsd": 0.11,
+    "countries": 187,
+    "stock": 1663248
+  },
+  {
+    "code": "yi",
+    "name": "Yemeksepeti",
+    "minUsd": 0.11,
+    "countries": 18,
+    "stock": 1647897
+  },
+  {
+    "code": "agg",
+    "name": "OneForma",
+    "minUsd": 0.055,
+    "countries": 27,
+    "stock": 1606167
+  },
+  {
+    "code": "xk",
+    "name": "DiDi",
+    "minUsd": 0.022,
+    "countries": 40,
+    "stock": 1596337
+  },
+  {
+    "code": "aba",
+    "name": "Rappi",
+    "minUsd": 0.077,
+    "countries": 5,
+    "stock": 1578434
+  },
+  {
+    "code": "ki",
+    "name": "99app",
+    "minUsd": 0.0688,
+    "countries": 8,
+    "stock": 1571444
+  },
+  {
+    "code": "kc",
+    "name": "Vinted",
+    "minUsd": 0.11,
+    "countries": 46,
+    "stock": 1557728
+  },
+  {
+    "code": "apb",
+    "name": "eToro",
+    "minUsd": 0.0688,
+    "countries": 6,
+    "stock": 1556506
+  },
+  {
+    "code": "aed",
+    "name": "Booking.com",
+    "minUsd": 0.11,
+    "countries": 114,
+    "stock": 1511116
+  },
+  {
+    "code": "do",
+    "name": "Leboncoin",
+    "minUsd": 0.0198,
+    "countries": 34,
+    "stock": 1491757
+  },
+  {
+    "code": "abe",
+    "name": "Foodora",
+    "minUsd": 0.066,
+    "countries": 24,
+    "stock": 1437238
+  },
+  {
+    "code": "bxy",
+    "name": "MAX",
+    "minUsd": 0.44,
+    "countries": 71,
+    "stock": 1425035
+  },
+  {
+    "code": "byp",
+    "name": "Kaito",
+    "minUsd": 0.077,
+    "countries": 21,
+    "stock": 1391014
+  },
+  {
+    "code": "bqb",
+    "name": "Weex",
+    "minUsd": 0.0715,
+    "countries": 26,
+    "stock": 1387019
+  },
+  {
+    "code": "ac",
+    "name": "DoorDash",
+    "minUsd": 0.011,
+    "countries": 10,
+    "stock": 1379010
+  },
+  {
+    "code": "mv",
+    "name": "Fruitz",
+    "minUsd": 0.0385,
+    "countries": 26,
+    "stock": 1377990
+  },
+  {
+    "code": "ahi",
+    "name": "Daki",
+    "minUsd": 0.22,
+    "countries": 3,
+    "stock": 1359747
+  },
+  {
+    "code": "sw",
+    "name": "NCsoft",
+    "minUsd": 0.0688,
+    "countries": 21,
+    "stock": 1344518
+  },
+  {
+    "code": "abc",
+    "name": "Taptap Send",
+    "minUsd": 0.11,
+    "countries": 26,
+    "stock": 1296768
+  },
+  {
+    "code": "abn",
+    "name": "Bybit",
+    "minUsd": 0.11,
+    "countries": 61,
+    "stock": 1296242
+  },
+  {
+    "code": "gq",
+    "name": "Freelancer",
+    "minUsd": 0.033,
+    "countries": 17,
+    "stock": 1286956
+  },
+  {
+    "code": "asb",
+    "name": "YUEWEN 阅文集团",
+    "minUsd": 0.0605,
+    "countries": 21,
+    "stock": 1271898
+  },
+  {
+    "code": "vg",
+    "name": "ShellBox",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 1265070
+  },
+  {
+    "code": "bex",
+    "name": "Whatnot",
+    "minUsd": 0.044,
+    "countries": 17,
+    "stock": 1261695
+  },
+  {
+    "code": "ul",
+    "name": "Getir",
+    "minUsd": 0.165,
+    "countries": 15,
+    "stock": 1233506
+  },
+  {
+    "code": "tu",
+    "name": "Lyft",
+    "minUsd": 0.0688,
+    "countries": 7,
+    "stock": 1226467
+  },
+  {
+    "code": "ahd",
+    "name": "Midnite",
+    "minUsd": 0.0743,
+    "countries": 18,
+    "stock": 1220993
+  },
+  {
+    "code": "fh",
+    "name": "Lalamove",
+    "minUsd": 0.0605,
+    "countries": 5,
+    "stock": 1220193
+  },
+  {
+    "code": "brk",
+    "name": "Indeed",
+    "minUsd": 0.066,
+    "countries": 6,
+    "stock": 1212352
+  },
+  {
+    "code": "aon",
+    "name": "Binance",
+    "minUsd": 0.088,
+    "countries": 25,
+    "stock": 1205450
+  },
+  {
+    "code": "dl",
+    "name": "Lazada",
+    "minUsd": 0.033,
+    "countries": 22,
+    "stock": 1205145
+  },
+  {
+    "code": "aiz",
+    "name": "Brevo",
+    "minUsd": 0.066,
+    "countries": 7,
+    "stock": 1201522
+  },
+  {
+    "code": "bqp",
+    "name": "Zara",
+    "minUsd": 0.0715,
+    "countries": 9,
+    "stock": 1198759
+  },
+  {
+    "code": "aex",
+    "name": "Neon",
+    "minUsd": 0.044,
+    "countries": 2,
+    "stock": 1195180
+  },
+  {
+    "code": "rc",
+    "name": "Skype",
+    "minUsd": 0.066,
+    "countries": 10,
+    "stock": 1195078
+  },
+  {
+    "code": "agk",
+    "name": "Ipsos iSay",
+    "minUsd": 0.099,
+    "countries": 12,
+    "stock": 1188843
+  },
+  {
+    "code": "aje",
+    "name": "CupidMedia",
+    "minUsd": 0.077,
+    "countries": 4,
+    "stock": 1185366
+  },
+  {
+    "code": "baq",
+    "name": "Redbubble",
+    "minUsd": 0.0605,
+    "countries": 15,
+    "stock": 1179525
+  },
+  {
+    "code": "ada",
+    "name": "TRUTH SOCIAL",
+    "minUsd": 0.044,
+    "countries": 19,
+    "stock": 1172340
+  },
+  {
+    "code": "aeu",
+    "name": "TheFork",
+    "minUsd": 0.055,
+    "countries": 9,
+    "stock": 1155615
+  },
+  {
+    "code": "vs",
+    "name": "WinzoGame",
+    "minUsd": 0.055,
+    "countries": 3,
+    "stock": 1153586
+  },
+  {
+    "code": "gs",
+    "name": "SamsungShop",
+    "minUsd": 0.0743,
+    "countries": 11,
+    "stock": 1147051
+  },
+  {
+    "code": "ht",
+    "name": "Bitso",
+    "minUsd": 0.132,
+    "countries": 1,
+    "stock": 1140952
+  },
+  {
+    "code": "ky",
+    "name": "SpatenOktoberfest",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1140451
+  },
+  {
+    "code": "om",
+    "name": "Corona",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 1140387
+  },
+  {
+    "code": "awg",
+    "name": "Natura Avon",
+    "minUsd": 0.242,
+    "countries": 1,
+    "stock": 1139787
+  },
+  {
+    "code": "sy",
+    "name": "Brahma",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 1139729
+  },
+  {
+    "code": "bqh",
+    "name": "PEDIR GAS",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1139474
+  },
+  {
+    "code": "alb",
+    "name": "Guiche Web",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1139465
+  },
+  {
+    "code": "afs",
+    "name": "Privalia",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1139249
+  },
+  {
+    "code": "anw",
+    "name": "Premmia",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1139087
+  },
+  {
+    "code": "axm",
+    "name": "Não Me Perturbe",
+    "minUsd": 0.242,
+    "countries": 1,
+    "stock": 1139014
+  },
+  {
+    "code": "bsa",
+    "name": "will",
+    "minUsd": 0.253,
+    "countries": 1,
+    "stock": 1138237
+  },
+  {
+    "code": "bfa",
+    "name": "Webmotors ",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1137586
+  },
+  {
+    "code": "bqr",
+    "name": "ASAAS",
+    "minUsd": 0.264,
+    "countries": 1,
+    "stock": 1137259
+  },
+  {
+    "code": "abh",
+    "name": "UOL Host",
+    "minUsd": 0.253,
+    "countries": 1,
+    "stock": 1135456
+  },
+  {
+    "code": "ann",
+    "name": "Bradesco",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 1134621
+  },
+  {
+    "code": "arf",
+    "name": "Enjoei",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1133837
+  },
+  {
+    "code": "em",
+    "name": "ZéDelivery",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 1132415
+  },
+  {
+    "code": "afe",
+    "name": "GovBr",
+    "minUsd": 0.22,
+    "countries": 1,
+    "stock": 1132244
+  },
+  {
+    "code": "rl",
+    "name": "inDriver",
+    "minUsd": 0.0275,
+    "countries": 15,
+    "stock": 1124871
+  },
+  {
+    "code": "auc",
+    "name": "TotalPass",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 1123343
+  },
+  {
+    "code": "aoz",
+    "name": "ReclameAQUI",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1122981
+  },
+  {
+    "code": "aiw",
+    "name": "Roblox",
+    "minUsd": 0.055,
+    "countries": 17,
+    "stock": 1120277
+  },
+  {
+    "code": "ccu",
+    "name": "Google Chat",
+    "minUsd": 0.0121,
+    "countries": 181,
+    "stock": 1110939
+  },
+  {
+    "code": "ayz",
+    "name": "Kimi",
+    "minUsd": 0.11,
+    "countries": 27,
+    "stock": 1094542
+  },
+  {
+    "code": "ja",
+    "name": "Weverse",
+    "minUsd": 0.055,
+    "countries": 10,
+    "stock": 1082217
+  },
+  {
+    "code": "pd",
+    "name": "IFood",
+    "minUsd": 0.11,
+    "countries": 4,
+    "stock": 1071578
+  },
+  {
+    "code": "bdw",
+    "name": "Valora ",
+    "minUsd": 0.0165,
+    "countries": 2,
+    "stock": 1066601
+  },
+  {
+    "code": "bod",
+    "name": "Genspark",
+    "minUsd": 0.066,
+    "countries": 20,
+    "stock": 1065127
+  },
+  {
+    "code": "baj",
+    "name": "Bipa",
+    "minUsd": 0.242,
+    "countries": 1,
+    "stock": 1064275
+  },
+  {
+    "code": "bxj",
+    "name": "Quero-Quero PAG",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1064257
+  },
+  {
+    "code": "btm",
+    "name": "ZeeNow",
+    "minUsd": 0.286,
+    "countries": 1,
+    "stock": 1064140
+  },
+  {
+    "code": "cau",
+    "name": "Ero Me",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1064129
+  },
+  {
+    "code": "ccl",
+    "name": "Cruzeiro",
+    "minUsd": 0.352,
+    "countries": 1,
+    "stock": 1060556
+  },
+  {
+    "code": "oz",
+    "name": "Poshmark",
+    "minUsd": 0.0605,
+    "countries": 3,
+    "stock": 1056526
+  },
+  {
+    "code": "ana",
+    "name": "Sicredi",
+    "minUsd": 1.1,
+    "countries": 1,
+    "stock": 1051075
+  },
+  {
+    "code": "ane",
+    "name": "Supercell",
+    "minUsd": 0.044,
+    "countries": 10,
+    "stock": 1047787
+  },
+  {
+    "code": "bhr",
+    "name": "Dil Mil",
+    "minUsd": 0.066,
+    "countries": 10,
+    "stock": 1030778
+  },
+  {
+    "code": "anx",
+    "name": "InfinitePay",
+    "minUsd": 0.2668,
+    "countries": 1,
+    "stock": 1016805
+  },
+  {
+    "code": "abg",
+    "name": "PagBank",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1013228
+  },
+  {
+    "code": "agd",
+    "name": "Grailed",
+    "minUsd": 0.0605,
+    "countries": 21,
+    "stock": 1012372
+  },
+  {
+    "code": "afr",
+    "name": "Ultragaz",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1011912
+  },
+  {
+    "code": "ahe",
+    "name": "Bunq",
+    "minUsd": 0.022,
+    "countries": 20,
+    "stock": 1007518
+  },
+  {
+    "code": "aoi",
+    "name": "Cryptonow",
+    "minUsd": 0.11,
+    "countries": 26,
+    "stock": 1004328
+  },
+  {
+    "code": "nc",
+    "name": "Payoneer",
+    "minUsd": 0.055,
+    "countries": 20,
+    "stock": 1002076
+  },
+  {
+    "code": "bjz",
+    "name": "Jeevansathi",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 999418
+  },
+  {
+    "code": "bmd",
+    "name": "VooV Meeting",
+    "minUsd": 0.055,
+    "countries": 9,
+    "stock": 977425
+  },
+  {
+    "code": "lc",
+    "name": "Subito",
+    "minUsd": 0.0161,
+    "countries": 18,
+    "stock": 976060
+  },
+  {
+    "code": "oe",
+    "name": "Codashop",
+    "minUsd": 0.0688,
+    "countries": 5,
+    "stock": 964383
+  },
+  {
+    "code": "gr",
+    "name": "Astropay",
+    "minUsd": 0.033,
+    "countries": 23,
+    "stock": 963266
+  },
+  {
+    "code": "aey",
+    "name": "Next",
+    "minUsd": 0.209,
+    "countries": 1,
+    "stock": 954737
+  },
+  {
+    "code": "aok",
+    "name": "NETELLER",
+    "minUsd": 0.11,
+    "countries": 20,
+    "stock": 947581
+  },
+  {
+    "code": "anj",
+    "name": "Gemini",
+    "minUsd": 0.088,
+    "countries": 9,
+    "stock": 943671
+  },
+  {
+    "code": "anq",
+    "name": "Hitnspin",
+    "minUsd": 0.077,
+    "countries": 16,
+    "stock": 942024
+  },
+  {
+    "code": "my",
+    "name": "CAIXA",
+    "minUsd": 0.022,
+    "countries": 18,
+    "stock": 940753
+  },
+  {
+    "code": "ef",
+    "name": "Nextdoor",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 939755
+  },
+  {
+    "code": "bp",
+    "name": "GoFundMe",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 937801
+  },
+  {
+    "code": "ama",
+    "name": "WooPlus",
+    "minUsd": 0.099,
+    "countries": 3,
+    "stock": 936358
+  },
+  {
+    "code": "aoh",
+    "name": "YooMoney",
+    "minUsd": 0.11,
+    "countries": 20,
+    "stock": 935260
+  },
+  {
+    "code": "gt",
+    "name": "Gett",
+    "minUsd": 0.11,
+    "countries": 9,
+    "stock": 924914
+  },
+  {
+    "code": "btv",
+    "name": "Radiate",
+    "minUsd": 0.077,
+    "countries": 5,
+    "stock": 922339
+  },
+  {
+    "code": "ano",
+    "name": "Shopify",
+    "minUsd": 0.0743,
+    "countries": 3,
+    "stock": 920905
+  },
+  {
+    "code": "vd",
+    "name": "Betfair",
+    "minUsd": 0.022,
+    "countries": 9,
+    "stock": 916041
+  },
+  {
+    "code": "il",
+    "name": "IQOS",
+    "minUsd": 0.011,
+    "countries": 9,
+    "stock": 903376
+  },
+  {
+    "code": "sa",
+    "name": "AGIBANK",
+    "minUsd": 0.209,
+    "countries": 1,
+    "stock": 883524
+  },
+  {
+    "code": "aow",
+    "name": "Geekay",
+    "minUsd": 0.066,
+    "countries": 13,
+    "stock": 873962
+  },
+  {
+    "code": "box",
+    "name": "Thumbtack",
+    "minUsd": 0.1672,
+    "countries": 5,
+    "stock": 871018
+  },
+  {
+    "code": "bmi",
+    "name": "Sisal",
+    "minUsd": 0.1672,
+    "countries": 7,
+    "stock": 864406
+  },
+  {
+    "code": "adt",
+    "name": "willhaben",
+    "minUsd": 0.0693,
+    "countries": 18,
+    "stock": 863140
+  },
+  {
+    "code": "gm",
+    "name": "Mocospace",
+    "minUsd": 0.033,
+    "countries": 6,
+    "stock": 851814
+  },
+  {
+    "code": "bai",
+    "name": "SNKRDUNK",
+    "minUsd": 0.066,
+    "countries": 8,
+    "stock": 835508
+  },
+  {
+    "code": "ajj",
+    "name": "Rebtel",
+    "minUsd": 0.0605,
+    "countries": 6,
+    "stock": 833918
+  },
+  {
+    "code": "tv",
+    "name": "Flink",
+    "minUsd": 0.066,
+    "countries": 9,
+    "stock": 831123
+  },
+  {
+    "code": "xy",
+    "name": "Depop",
+    "minUsd": 0.077,
+    "countries": 4,
+    "stock": 824049
+  },
+  {
+    "code": "asq",
+    "name": "Warpcast",
+    "minUsd": 0.0743,
+    "countries": 7,
+    "stock": 822258
+  },
+  {
+    "code": "are",
+    "name": "Seated",
+    "minUsd": 0.0743,
+    "countries": 5,
+    "stock": 821546
+  },
+  {
+    "code": "ee",
+    "name": "Twilio",
+    "minUsd": 0.0688,
+    "countries": 8,
+    "stock": 805781
+  },
+  {
+    "code": "akd",
+    "name": " Feels",
+    "minUsd": 0.0275,
+    "countries": 23,
+    "stock": 799507
+  },
+  {
+    "code": "awq",
+    "name": "Atlas Earth",
+    "minUsd": 0.0198,
+    "countries": 10,
+    "stock": 791883
+  },
+  {
+    "code": "xr",
+    "name": "Tango",
+    "minUsd": 0.0275,
+    "countries": 19,
+    "stock": 775933
+  },
+  {
+    "code": "akp",
+    "name": "Her",
+    "minUsd": 0.0715,
+    "countries": 5,
+    "stock": 774334
+  },
+  {
+    "code": "dg",
+    "name": "Mercari",
+    "minUsd": 0.187,
+    "countries": 3,
+    "stock": 772751
+  },
+  {
+    "code": "cq",
+    "name": "Mercado",
+    "minUsd": 0.0825,
+    "countries": 12,
+    "stock": 772411
+  },
+  {
+    "code": "aoe",
+    "name": "Sendwave",
+    "minUsd": 0.044,
+    "countries": 8,
+    "stock": 771035
+  },
+  {
+    "code": "aig",
+    "name": "Five Surveys",
+    "minUsd": 0.0743,
+    "countries": 8,
+    "stock": 767367
+  },
+  {
+    "code": "abb",
+    "name": "Coca-Cola",
+    "minUsd": 0.121,
+    "countries": 2,
+    "stock": 765296
+  },
+  {
+    "code": "tr",
+    "name": "Paysend",
+    "minUsd": 0.0688,
+    "countries": 15,
+    "stock": 761783
+  },
+  {
+    "code": "aff",
+    "name": "C6 Bank",
+    "minUsd": 0.22,
+    "countries": 1,
+    "stock": 759060
+  },
+  {
+    "code": "ly",
+    "name": "Olacabs",
+    "minUsd": 0.0149,
+    "countries": 33,
+    "stock": 753726
+  },
+  {
+    "code": "bav",
+    "name": "LeoList",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 752854
+  },
+  {
+    "code": "bdg",
+    "name": "HUD",
+    "minUsd": 0.077,
+    "countries": 6,
+    "stock": 751147
+  },
+  {
+    "code": "bkk",
+    "name": "Poparide",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 750688
+  },
+  {
+    "code": "jq",
+    "name": "Paysafecard",
+    "minUsd": 0.165,
+    "countries": 29,
+    "stock": 750367
+  },
+  {
+    "code": "uf",
+    "name": "Eneba",
+    "minUsd": 0.044,
+    "countries": 12,
+    "stock": 739545
+  },
+  {
+    "code": "ait",
+    "name": "FeetFinder",
+    "minUsd": 0.0853,
+    "countries": 8,
+    "stock": 738678
+  },
+  {
+    "code": "qj",
+    "name": "Whoosh",
+    "minUsd": 0.055,
+    "countries": 27,
+    "stock": 715001
+  },
+  {
+    "code": "axp",
+    "name": "ChargePoint",
+    "minUsd": 0.066,
+    "countries": 9,
+    "stock": 713355
+  },
+  {
+    "code": "als",
+    "name": "Greggs ",
+    "minUsd": 0.0275,
+    "countries": 10,
+    "stock": 707677
+  },
+  {
+    "code": "yu",
+    "name": "Xiaomi",
+    "minUsd": 0.0165,
+    "countries": 16,
+    "stock": 705940
+  },
+  {
+    "code": "aul",
+    "name": "Alignable",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 701033
+  },
+  {
+    "code": "bba",
+    "name": "SwitchUp",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 700101
+  },
+  {
+    "code": "bon",
+    "name": "RetailMeNot",
+    "minUsd": 0.198,
+    "countries": 2,
+    "stock": 699977
+  },
+  {
+    "code": "auj",
+    "name": "High 5 Casino",
+    "minUsd": 0.11,
+    "countries": 2,
+    "stock": 699810
+  },
+  {
+    "code": "bvi",
+    "name": "Salams",
+    "minUsd": 0.0825,
+    "countries": 6,
+    "stock": 686556
+  },
+  {
+    "code": "aub",
+    "name": "Smitten",
+    "minUsd": 0.0688,
+    "countries": 6,
+    "stock": 683701
+  },
+  {
+    "code": "amb",
+    "name": "Vercel",
+    "minUsd": 0.11,
+    "countries": 3,
+    "stock": 679368
+  },
+  {
+    "code": "cb",
+    "name": "Bazos",
+    "minUsd": 0.0198,
+    "countries": 11,
+    "stock": 677425
+  },
+  {
+    "code": "abq",
+    "name": "Upwork",
+    "minUsd": 0.033,
+    "countries": 13,
+    "stock": 673628
+  },
+  {
+    "code": "agm",
+    "name": "CMB",
+    "minUsd": 0.0935,
+    "countries": 9,
+    "stock": 665430
+  },
+  {
+    "code": "gj",
+    "name": "Carousell",
+    "minUsd": 0.0825,
+    "countries": 16,
+    "stock": 665028
+  },
+  {
+    "code": "awv",
+    "name": "Wallapop",
+    "minUsd": 0.165,
+    "countries": 19,
+    "stock": 659947
+  },
+  {
+    "code": "aq",
+    "name": "Glovo",
+    "minUsd": 0.055,
+    "countries": 16,
+    "stock": 657697
+  },
+  {
+    "code": "lj",
+    "name": "Santander",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 652448
+  },
+  {
+    "code": "zn",
+    "name": "Biedronka",
+    "minUsd": 0.0198,
+    "countries": 6,
+    "stock": 652326
+  },
+  {
+    "code": "cm",
+    "name": "Prom",
+    "minUsd": 0.0198,
+    "countries": 5,
+    "stock": 645649
+  },
+  {
+    "code": "aup",
+    "name": "Botim",
+    "minUsd": 0.066,
+    "countries": 19,
+    "stock": 645632
+  },
+  {
+    "code": "bpc",
+    "name": "LOVOO",
+    "minUsd": 0.0825,
+    "countries": 8,
+    "stock": 645343
+  },
+  {
+    "code": "ccw",
+    "name": "夸克  Quark",
+    "minUsd": 0.099,
+    "countries": 23,
+    "stock": 645207
+  },
+  {
+    "code": "blr",
+    "name": "DocuSign",
+    "minUsd": 0.055,
+    "countries": 34,
+    "stock": 644770
+  },
+  {
+    "code": "ue",
+    "name": "Onet",
+    "minUsd": 0.0198,
+    "countries": 6,
+    "stock": 643706
+  },
+  {
+    "code": "hu",
+    "name": "Ukrnet",
+    "minUsd": 0.0198,
+    "countries": 5,
+    "stock": 640054
+  },
+  {
+    "code": "ex",
+    "name": "Linode",
+    "minUsd": 0.033,
+    "countries": 9,
+    "stock": 630255
+  },
+  {
+    "code": "apg",
+    "name": "Damai",
+    "minUsd": 0.077,
+    "countries": 8,
+    "stock": 626582
+  },
+  {
+    "code": "blz",
+    "name": "MiniPay",
+    "minUsd": 0.077,
+    "countries": 17,
+    "stock": 620650
+  },
+  {
+    "code": "ccv",
+    "name": "Triumph",
+    "minUsd": 0.055,
+    "countries": 2,
+    "stock": 618910
+  },
+  {
+    "code": "pu",
+    "name": "Justdating",
+    "minUsd": 0.055,
+    "countries": 9,
+    "stock": 616912
+  },
+  {
+    "code": "ccx",
+    "name": "Google Messenger",
+    "minUsd": 0.165,
+    "countries": 178,
+    "stock": 616785
+  },
+  {
+    "code": "xx",
+    "name": "Joyride",
+    "minUsd": 0.0275,
+    "countries": 9,
+    "stock": 615736
+  },
+  {
+    "code": "ako",
+    "name": "Ryde",
+    "minUsd": 0.11,
+    "countries": 4,
+    "stock": 607267
+  },
+  {
+    "code": "aiq",
+    "name": "Prime Opinion",
+    "minUsd": 0.088,
+    "countries": 7,
+    "stock": 600746
+  },
+  {
+    "code": "atr",
+    "name": "RIDE ",
+    "minUsd": 0.033,
+    "countries": 3,
+    "stock": 589930
+  },
+  {
+    "code": "acb",
+    "name": "Spark Driver",
+    "minUsd": 0.198,
+    "countries": 2,
+    "stock": 584723
+  },
+  {
+    "code": "bqn",
+    "name": "Upward",
+    "minUsd": 0.077,
+    "countries": 6,
+    "stock": 580629
+  },
+  {
+    "code": "mw",
+    "name": "Transfergo",
+    "minUsd": 0.132,
+    "countries": 15,
+    "stock": 579283
+  },
+  {
+    "code": "ayb",
+    "name": "AsianDating",
+    "minUsd": 0.066,
+    "countries": 7,
+    "stock": 578532
+  },
+  {
+    "code": "kk",
+    "name": "Idealista",
+    "minUsd": 0.044,
+    "countries": 6,
+    "stock": 574821
+  },
+  {
+    "code": "afz",
+    "name": "Klarna",
+    "minUsd": 0.044,
+    "countries": 13,
+    "stock": 571754
+  },
+  {
+    "code": "acc",
+    "name": " LuckyLand Slots",
+    "minUsd": 0.132,
+    "countries": 2,
+    "stock": 571187
+  },
+  {
+    "code": "blm",
+    "name": "Epic Games ",
+    "minUsd": 0.0825,
+    "countries": 6,
+    "stock": 569789
+  },
+  {
+    "code": "hc",
+    "name": "MOMO",
+    "minUsd": 0.0178,
+    "countries": 5,
+    "stock": 561779
+  },
+  {
+    "code": "us",
+    "name": "IRCTC",
+    "minUsd": 0.0198,
+    "countries": 5,
+    "stock": 559562
+  },
+  {
+    "code": "agj",
+    "name": "Marktplaats",
+    "minUsd": 0.0968,
+    "countries": 15,
+    "stock": 557387
+  },
+  {
+    "code": "zm",
+    "name": "OfferUp",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 550878
+  },
+  {
+    "code": "yy",
+    "name": "Venmo",
+    "minUsd": 0.385,
+    "countries": 1,
+    "stock": 550861
+  },
+  {
+    "code": "aiv",
+    "name": "Remitly",
+    "minUsd": 0.0743,
+    "countries": 18,
+    "stock": 550313
+  },
+  {
+    "code": "qh",
+    "name": "Oriflame",
+    "minUsd": 0.044,
+    "countries": 5,
+    "stock": 531213
+  },
+  {
+    "code": "bqi",
+    "name": "Datanyze",
+    "minUsd": 0.198,
+    "countries": 3,
+    "stock": 529217
+  },
+  {
+    "code": "aws",
+    "name": "7-Eleven",
+    "minUsd": 0.0165,
+    "countries": 4,
+    "stock": 518471
+  },
+  {
+    "code": "cp",
+    "name": "Uklon",
+    "minUsd": 0.0161,
+    "countries": 4,
+    "stock": 516835
+  },
+  {
+    "code": "vy",
+    "name": "Meta",
+    "minUsd": 0.0161,
+    "countries": 4,
+    "stock": 511876
+  },
+  {
+    "code": "km",
+    "name": "Rozetka",
+    "minUsd": 0.0693,
+    "countries": 4,
+    "stock": 509959
+  },
+  {
+    "code": "agl",
+    "name": "Betano",
+    "minUsd": 0.0743,
+    "countries": 22,
+    "stock": 508354
+  },
+  {
+    "code": "kl",
+    "name": "kolesa.kz",
+    "minUsd": 0.0198,
+    "countries": 4,
+    "stock": 503012
+  },
+  {
+    "code": "aua",
+    "name": "同程旅行 Tongcheng Travel",
+    "minUsd": 0.0688,
+    "countries": 10,
+    "stock": 500417
+  },
+  {
+    "code": "aru",
+    "name": "UNNI 강남언니",
+    "minUsd": 0.0495,
+    "countries": 9,
+    "stock": 500004
+  },
+  {
+    "code": "ble",
+    "name": "Nexon",
+    "minUsd": 0.066,
+    "countries": 13,
+    "stock": 488208
+  },
+  {
+    "code": "btn",
+    "name": "Itau",
+    "minUsd": 0.286,
+    "countries": 1,
+    "stock": 485706
+  },
+  {
+    "code": "nq",
+    "name": "Trip",
+    "minUsd": 0.0473,
+    "countries": 14,
+    "stock": 485632
+  },
+  {
+    "code": "axr",
+    "name": "Match",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 485410
+  },
+  {
+    "code": "pr",
+    "name": "Trendyol",
+    "minUsd": 0.0619,
+    "countries": 10,
+    "stock": 483773
+  },
+  {
+    "code": "auh",
+    "name": "KeeTa 美团",
+    "minUsd": 0.0688,
+    "countries": 11,
+    "stock": 478646
+  },
+  {
+    "code": "ns",
+    "name": "Oldubil",
+    "minUsd": 0.11,
+    "countries": 11,
+    "stock": 466580
+  },
+  {
+    "code": "aav",
+    "name": "Alchemy ",
+    "minUsd": 0.0688,
+    "countries": 8,
+    "stock": 466012
+  },
+  {
+    "code": "oj",
+    "name": "LoveRu",
+    "minUsd": 0.088,
+    "countries": 12,
+    "stock": 462268
+  },
+  {
+    "code": "zb",
+    "name": "FreeNow",
+    "minUsd": 0.033,
+    "countries": 9,
+    "stock": 461651
+  },
+  {
+    "code": "cct",
+    "name": "Factory",
+    "minUsd": 0.077,
+    "countries": 5,
+    "stock": 452580
+  },
+  {
+    "code": "yn",
+    "name": "Allegro",
+    "minUsd": 0.132,
+    "countries": 5,
+    "stock": 450355
+  },
+  {
+    "code": "aaq",
+    "name": "Netease",
+    "minUsd": 0.055,
+    "countries": 7,
+    "stock": 447869
+  },
+  {
+    "code": "bnl",
+    "name": "Reddit",
+    "minUsd": 0.066,
+    "countries": 8,
+    "stock": 441844
+  },
+  {
+    "code": "cam",
+    "name": "Eleme 饿了么",
+    "minUsd": 0.077,
+    "countries": 4,
+    "stock": 438776
+  },
+  {
+    "code": "ev",
+    "name": "Picpay ",
+    "minUsd": 0.154,
+    "countries": 1,
+    "stock": 435922
+  },
+  {
+    "code": "qo",
+    "name": "Moneylion",
+    "minUsd": 0.165,
+    "countries": 2,
+    "stock": 433451
+  },
+  {
+    "code": "axn",
+    "name": "FastMoss",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 425466
+  },
+  {
+    "code": "bbu",
+    "name": "InternationalCupid",
+    "minUsd": 0.0715,
+    "countries": 10,
+    "stock": 424689
+  },
+  {
+    "code": "sv",
+    "name": "Dostavista",
+    "minUsd": 0.088,
+    "countries": 3,
+    "stock": 423532
+  },
+  {
+    "code": "co",
+    "name": "Rediffmail",
+    "minUsd": 0.0178,
+    "countries": 4,
+    "stock": 422857
+  },
+  {
+    "code": "jx",
+    "name": "Swiggy",
+    "minUsd": 0.0161,
+    "countries": 4,
+    "stock": 422585
+  },
+  {
+    "code": "kv",
+    "name": "Rush",
+    "minUsd": 0.0605,
+    "countries": 4,
+    "stock": 421317
+  },
+  {
+    "code": "ha",
+    "name": "My11Circle",
+    "minUsd": 0.0297,
+    "countries": 4,
+    "stock": 419919
+  },
+  {
+    "code": "hp",
+    "name": "Meesho",
+    "minUsd": 0.0297,
+    "countries": 3,
+    "stock": 419641
+  },
+  {
+    "code": "zs",
+    "name": "Bilibili",
+    "minUsd": 0.0275,
+    "countries": 9,
+    "stock": 418510
+  },
+  {
+    "code": "zl",
+    "name": "Airtel",
+    "minUsd": 0.0178,
+    "countries": 3,
+    "stock": 417714
+  },
+  {
+    "code": "ari",
+    "name": "Ring4",
+    "minUsd": 0.0743,
+    "countries": 4,
+    "stock": 415784
+  },
+  {
+    "code": "btr",
+    "name": "Duet",
+    "minUsd": 0.088,
+    "countries": 4,
+    "stock": 412720
+  },
+  {
+    "code": "azi",
+    "name": "TheL",
+    "minUsd": 0.0165,
+    "countries": 5,
+    "stock": 411150
+  },
+  {
+    "code": "ahv",
+    "name": "Curve",
+    "minUsd": 0.0743,
+    "countries": 5,
+    "stock": 408514
+  },
+  {
+    "code": "byd",
+    "name": "Airtasker",
+    "minUsd": 0.0825,
+    "countries": 3,
+    "stock": 408405
+  },
+  {
+    "code": "abt",
+    "name": "ArenaPlus",
+    "minUsd": 0.0968,
+    "countries": 4,
+    "stock": 406919
+  },
+  {
+    "code": "ahx",
+    "name": "Bitrue",
+    "minUsd": 0.066,
+    "countries": 17,
+    "stock": 406620
+  },
+  {
+    "code": "bow",
+    "name": "Affirm",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 404808
+  },
+  {
+    "code": "brr",
+    "name": "LemFi",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 404425
+  },
+  {
+    "code": "agb",
+    "name": "Smiles",
+    "minUsd": 0.066,
+    "countries": 12,
+    "stock": 402648
+  },
+  {
+    "code": "apr",
+    "name": "Capital One",
+    "minUsd": 0.0825,
+    "countries": 3,
+    "stock": 400657
+  },
+  {
+    "code": "bny",
+    "name": "Suno",
+    "minUsd": 0.022,
+    "countries": 7,
+    "stock": 400544
+  },
+  {
+    "code": "oc",
+    "name": "DealShare",
+    "minUsd": 0.0693,
+    "countries": 4,
+    "stock": 395881
+  },
+  {
+    "code": "aer",
+    "name": "PlayerAuctions",
+    "minUsd": 0.066,
+    "countries": 6,
+    "stock": 395854
+  },
+  {
+    "code": "bkz",
+    "name": "Rewardy",
+    "minUsd": 0.066,
+    "countries": 10,
+    "stock": 394194
+  },
+  {
+    "code": "abo",
+    "name": "WEBDE",
+    "minUsd": 0.11,
+    "countries": 4,
+    "stock": 394023
+  },
+  {
+    "code": "apf",
+    "name": "Carrefour",
+    "minUsd": 0.1012,
+    "countries": 5,
+    "stock": 393645
+  },
+  {
+    "code": "wh",
+    "name": "TanTan",
+    "minUsd": 0.033,
+    "countries": 12,
+    "stock": 392498
+  },
+  {
+    "code": "adi",
+    "name": "Zepto",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 390451
+  },
+  {
+    "code": "aqy",
+    "name": "SAPO",
+    "minUsd": 0.0792,
+    "countries": 4,
+    "stock": 389481
+  },
+  {
+    "code": "agi",
+    "name": "Njuškalo",
+    "minUsd": 0.1144,
+    "countries": 5,
+    "stock": 388455
+  },
+  {
+    "code": "aci",
+    "name": "Colombian Cupid",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 388297
+  },
+  {
+    "code": "tp",
+    "name": "IndiaGold",
+    "minUsd": 0.0198,
+    "countries": 5,
+    "stock": 387483
+  },
+  {
+    "code": "aps",
+    "name": "Skelbiu",
+    "minUsd": 0.132,
+    "countries": 6,
+    "stock": 386970
+  },
+  {
+    "code": "zp",
+    "name": "Pinduoduo",
+    "minUsd": 0.033,
+    "countries": 4,
+    "stock": 382486
+  },
+  {
+    "code": "bbj",
+    "name": "OnePay",
+    "minUsd": 0.088,
+    "countries": 3,
+    "stock": 382186
+  },
+  {
+    "code": "bte",
+    "name": "CROCOBET",
+    "minUsd": 0.275,
+    "countries": 27,
+    "stock": 381521
+  },
+  {
+    "code": "ael",
+    "name": "Cloud Manager",
+    "minUsd": 0.055,
+    "countries": 14,
+    "stock": 377959
+  },
+  {
+    "code": "apl",
+    "name": "Sideline",
+    "minUsd": 0.176,
+    "countries": 2,
+    "stock": 371142
+  },
+  {
+    "code": "asp",
+    "name": "PhonePe",
+    "minUsd": 0.198,
+    "countries": 2,
+    "stock": 370724
+  },
+  {
+    "code": "asf",
+    "name": "TextFree",
+    "minUsd": 0.198,
+    "countries": 2,
+    "stock": 370416
+  },
+  {
+    "code": "bsy",
+    "name": "Air Miles",
+    "minUsd": 0.22,
+    "countries": 2,
+    "stock": 370257
+  },
+  {
+    "code": "bud",
+    "name": "WeTalk",
+    "minUsd": 0.198,
+    "countries": 2,
+    "stock": 370235
+  },
+  {
+    "code": "bbg",
+    "name": "Square",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 369983
+  },
+  {
+    "code": "ww",
+    "name": "BIP",
+    "minUsd": 0.044,
+    "countries": 6,
+    "stock": 369726
+  },
+  {
+    "code": "bbr",
+    "name": "WalletHub",
+    "minUsd": 0.187,
+    "countries": 2,
+    "stock": 368949
+  },
+  {
+    "code": "bwd",
+    "name": "Fetch",
+    "minUsd": 0.275,
+    "countries": 2,
+    "stock": 368573
+  },
+  {
+    "code": "bbq",
+    "name": "Chime",
+    "minUsd": 0.165,
+    "countries": 2,
+    "stock": 368052
+  },
+  {
+    "code": "afk",
+    "name": "Chevron",
+    "minUsd": 0.924,
+    "countries": 1,
+    "stock": 367999
+  },
+  {
+    "code": "aop",
+    "name": "Kleinanzeigen",
+    "minUsd": 0.11,
+    "countries": 31,
+    "stock": 365343
+  },
+  {
+    "code": "atp",
+    "name": "Vonage",
+    "minUsd": 0.0165,
+    "countries": 9,
+    "stock": 365162
+  },
+  {
+    "code": "aux",
+    "name": "Lightning AI",
+    "minUsd": 0.0743,
+    "countries": 8,
+    "stock": 363384
+  },
+  {
+    "code": "bay",
+    "name": "Genome",
+    "minUsd": 0.0688,
+    "countries": 16,
+    "stock": 356998
+  },
+  {
+    "code": "awu",
+    "name": "MosGram",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 350463
+  },
+  {
+    "code": "bke",
+    "name": "FOOTDISTRICT",
+    "minUsd": 0.308,
+    "countries": 2,
+    "stock": 346875
+  },
+  {
+    "code": "bwe",
+    "name": "Immutable Play",
+    "minUsd": 0.077,
+    "countries": 11,
+    "stock": 345302
+  },
+  {
+    "code": "cba",
+    "name": "Enilive",
+    "minUsd": 1.87,
+    "countries": 1,
+    "stock": 345007
+  },
+  {
+    "code": "boh",
+    "name": "Yophone",
+    "minUsd": 0.055,
+    "countries": 12,
+    "stock": 343502
+  },
+  {
+    "code": "bqy",
+    "name": "SNAI",
+    "minUsd": 1.1785,
+    "countries": 1,
+    "stock": 341376
+  },
+  {
+    "code": "bqe",
+    "name": "Lottomatica",
+    "minUsd": 0.143,
+    "countries": 2,
+    "stock": 336993
+  },
+  {
+    "code": "aik",
+    "name": "ZUS Coffee",
+    "minUsd": 0.044,
+    "countries": 4,
+    "stock": 329708
+  },
+  {
+    "code": "afm",
+    "name": "myboost",
+    "minUsd": 0.044,
+    "countries": 4,
+    "stock": 327981
+  },
+  {
+    "code": "aof",
+    "name": "Guzman y Gomez",
+    "minUsd": 0.165,
+    "countries": 4,
+    "stock": 325814
+  },
+  {
+    "code": "apq",
+    "name": "WePoker",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 324729
+  },
+  {
+    "code": "anh",
+    "name": "Cadbury",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 306113
+  },
+  {
+    "code": "aqj",
+    "name": "BigBasket",
+    "minUsd": 0.0594,
+    "countries": 3,
+    "stock": 305911
+  },
+  {
+    "code": "apd",
+    "name": "2dehands",
+    "minUsd": 0.033,
+    "countries": 12,
+    "stock": 302621
+  },
+  {
+    "code": "zo",
+    "name": "Kaggle",
+    "minUsd": 0.0165,
+    "countries": 7,
+    "stock": 290581
+  },
+  {
+    "code": "rs",
+    "name": "Lotus",
+    "minUsd": 0.0605,
+    "countries": 4,
+    "stock": 287205
+  },
+  {
+    "code": "bdt",
+    "name": "HOT51",
+    "minUsd": 0.066,
+    "countries": 6,
+    "stock": 286707
+  },
+  {
+    "code": "pz",
+    "name": "Lidl",
+    "minUsd": 0.0275,
+    "countries": 6,
+    "stock": 270668
+  },
+  {
+    "code": "awr",
+    "name": "KCEX",
+    "minUsd": 0.033,
+    "countries": 5,
+    "stock": 267273
+  },
+  {
+    "code": "tf",
+    "name": "Noon",
+    "minUsd": 0.165,
+    "countries": 5,
+    "stock": 265536
+  },
+  {
+    "code": "ze",
+    "name": "Shpock",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 262958
+  },
+  {
+    "code": "kw",
+    "name": "Foody",
+    "minUsd": 0.033,
+    "countries": 4,
+    "stock": 261193
+  },
+  {
+    "code": "akr",
+    "name": "Voi",
+    "minUsd": 0.088,
+    "countries": 5,
+    "stock": 261088
+  },
+  {
+    "code": "azz",
+    "name": "Crystalbet",
+    "minUsd": 0.1898,
+    "countries": 4,
+    "stock": 255880
+  },
+  {
+    "code": "aab",
+    "name": "BharatPe",
+    "minUsd": 0.0594,
+    "countries": 4,
+    "stock": 255212
+  },
+  {
+    "code": "byh",
+    "name": "Adobe",
+    "minUsd": 0.0825,
+    "countries": 12,
+    "stock": 254589
+  },
+  {
+    "code": "blh",
+    "name": "Winner",
+    "minUsd": 0.0594,
+    "countries": 4,
+    "stock": 250768
+  },
+  {
+    "code": "bkn",
+    "name": "betlive",
+    "minUsd": 0.1898,
+    "countries": 4,
+    "stock": 250355
+  },
+  {
+    "code": "aem",
+    "name": "AstraPay",
+    "minUsd": 0.077,
+    "countries": 2,
+    "stock": 244552
+  },
+  {
+    "code": "agv",
+    "name": "DoneDeal",
+    "minUsd": 0.0715,
+    "countries": 2,
+    "stock": 242304
+  },
+  {
+    "code": "agw",
+    "name": "Adverts",
+    "minUsd": 0.0715,
+    "countries": 2,
+    "stock": 241622
+  },
+  {
+    "code": "bpi",
+    "name": "Askable",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 240240
+  },
+  {
+    "code": "bso",
+    "name": "PayWell",
+    "minUsd": 0.275,
+    "countries": 8,
+    "stock": 238454
+  },
+  {
+    "code": "uv",
+    "name": "BinBin",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 237797
+  },
+  {
+    "code": "bsm",
+    "name": "Ahlan",
+    "minUsd": 0.066,
+    "countries": 6,
+    "stock": 237419
+  },
+  {
+    "code": "anl",
+    "name": "AttaPoll",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 236598
+  },
+  {
+    "code": "btl",
+    "name": "D4",
+    "minUsd": 0.088,
+    "countries": 2,
+    "stock": 233717
+  },
+  {
+    "code": "bpt",
+    "name": "SerpApi ",
+    "minUsd": 0.033,
+    "countries": 2,
+    "stock": 230497
+  },
+  {
+    "code": "bij",
+    "name": "Prodege",
+    "minUsd": 0.022,
+    "countries": 4,
+    "stock": 229582
+  },
+  {
+    "code": "blp",
+    "name": "MEEFF",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 223649
+  },
+  {
+    "code": "bix",
+    "name": "Hotel101",
+    "minUsd": 0.066,
+    "countries": 7,
+    "stock": 221924
+  },
+  {
+    "code": "bck",
+    "name": "Onion Academy 洋葱学园",
+    "minUsd": 0.0605,
+    "countries": 5,
+    "stock": 220407
+  },
+  {
+    "code": "bxn",
+    "name": "Intel SAP",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 219843
+  },
+  {
+    "code": "yj",
+    "name": "eWallet",
+    "minUsd": 0.0605,
+    "countries": 2,
+    "stock": 215307
+  },
+  {
+    "code": "pc",
+    "name": "Casino/bet/gambling",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 215219
+  },
+  {
+    "code": "bab",
+    "name": "Opera Mini",
+    "minUsd": 0.0275,
+    "countries": 6,
+    "stock": 212850
+  },
+  {
+    "code": "tl",
+    "name": "Truecaller",
+    "minUsd": 0.0688,
+    "countries": 31,
+    "stock": 211894
+  },
+  {
+    "code": "axx",
+    "name": "Shopback",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 211545
+  },
+  {
+    "code": "api",
+    "name": "KKTIX",
+    "minUsd": 0.0187,
+    "countries": 4,
+    "stock": 210857
+  },
+  {
+    "code": "bra",
+    "name": "Touch n Go TNG",
+    "minUsd": 0.0617,
+    "countries": 5,
+    "stock": 206234
+  },
+  {
+    "code": "avj",
+    "name": "SumUp ",
+    "minUsd": 0.0165,
+    "countries": 8,
+    "stock": 205487
+  },
+  {
+    "code": "alo",
+    "name": "Profee",
+    "minUsd": 0.088,
+    "countries": 15,
+    "stock": 204654
+  },
+  {
+    "code": "bii",
+    "name": "MEXC",
+    "minUsd": 0.0688,
+    "countries": 7,
+    "stock": 198763
+  },
+  {
+    "code": "ace",
+    "name": "Tata Neu",
+    "minUsd": 0.044,
+    "countries": 4,
+    "stock": 196193
+  },
+  {
+    "code": "bib",
+    "name": "myBCA",
+    "minUsd": 0.066,
+    "countries": 4,
+    "stock": 194681
+  },
+  {
+    "code": "afn",
+    "name": "roomster",
+    "minUsd": 0.044,
+    "countries": 6,
+    "stock": 192961
+  },
+  {
+    "code": "atl",
+    "name": "Watsons MY",
+    "minUsd": 0.0688,
+    "countries": 2,
+    "stock": 183691
+  },
+  {
+    "code": "bkd",
+    "name": "Sahibinden",
+    "minUsd": 0.11,
+    "countries": 4,
+    "stock": 180043
+  },
+  {
+    "code": "bbm",
+    "name": "TrueMoney",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 178180
+  },
+  {
+    "code": "ayc",
+    "name": "HungerStation",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 177670
+  },
+  {
+    "code": "ayn",
+    "name": "Lime",
+    "minUsd": 0.0935,
+    "countries": 2,
+    "stock": 176035
+  },
+  {
+    "code": "xs",
+    "name": "GroupMe",
+    "minUsd": 0.0396,
+    "countries": 2,
+    "stock": 175985
+  },
+  {
+    "code": "te",
+    "name": "eFood",
+    "minUsd": 0.0715,
+    "countries": 2,
+    "stock": 175352
+  },
+  {
+    "code": "bwa",
+    "name": "Hostinger",
+    "minUsd": 0.11,
+    "countries": 3,
+    "stock": 173605
+  },
+  {
+    "code": "aaa",
+    "name": "Nubank",
+    "minUsd": 0.0688,
+    "countries": 2,
+    "stock": 172841
+  },
+  {
+    "code": "aox",
+    "name": "Aukro",
+    "minUsd": 0.0743,
+    "countries": 2,
+    "stock": 172345
+  },
+  {
+    "code": "aeg",
+    "name": "Flowwow",
+    "minUsd": 0.0715,
+    "countries": 3,
+    "stock": 172271
+  },
+  {
+    "code": "ajn",
+    "name": "Gopuff",
+    "minUsd": 0.044,
+    "countries": 2,
+    "stock": 172102
+  },
+  {
+    "code": "aaz",
+    "name": "Ozan",
+    "minUsd": 0.0688,
+    "countries": 3,
+    "stock": 172064
+  },
+  {
+    "code": "bdd",
+    "name": "BetMen",
+    "minUsd": 0.1056,
+    "countries": 4,
+    "stock": 171845
+  },
+  {
+    "code": "py",
+    "name": "Monese",
+    "minUsd": 0.2574,
+    "countries": 1,
+    "stock": 171336
+  },
+  {
+    "code": "adc",
+    "name": "PlayOJO",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 171211
+  },
+  {
+    "code": "aid",
+    "name": "Kwiff",
+    "minUsd": 0.0743,
+    "countries": 1,
+    "stock": 171126
+  },
+  {
+    "code": "axs",
+    "name": "AIS PLAY",
+    "minUsd": 0.0594,
+    "countries": 4,
+    "stock": 171048
+  },
+  {
+    "code": "alm",
+    "name": "Muzz",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 170758
+  },
+  {
+    "code": "fk",
+    "name": "BLIBLI",
+    "minUsd": 0.0385,
+    "countries": 2,
+    "stock": 170691
+  },
+  {
+    "code": "aax",
+    "name": "Boyaa",
+    "minUsd": 0.0715,
+    "countries": 3,
+    "stock": 170330
+  },
+  {
+    "code": "bwu",
+    "name": "SkyBet",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 169597
+  },
+  {
+    "code": "atn",
+    "name": "Fawry",
+    "minUsd": 0.11,
+    "countries": 4,
+    "stock": 166354
+  },
+  {
+    "code": "cw",
+    "name": "PaddyPower",
+    "minUsd": 0.0858,
+    "countries": 1,
+    "stock": 163364
+  },
+  {
+    "code": "zt",
+    "name": "Budweiser",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 162193
+  },
+  {
+    "code": "pb",
+    "name": "SkyTV",
+    "minUsd": 0.22,
+    "countries": 1,
+    "stock": 161102
+  },
+  {
+    "code": "xu",
+    "name": "RecargaPay",
+    "minUsd": 0.187,
+    "countries": 1,
+    "stock": 160869
+  },
+  {
+    "code": "apj",
+    "name": "Tinkoff VoiceKit",
+    "minUsd": 0.22,
+    "countries": 5,
+    "stock": 160513
+  },
+  {
+    "code": "cj",
+    "name": "Dotz",
+    "minUsd": 0.22,
+    "countries": 1,
+    "stock": 159982
+  },
+  {
+    "code": "bbi",
+    "name": "aiqfome",
+    "minUsd": 0.242,
+    "countries": 1,
+    "stock": 159753
+  },
+  {
+    "code": "anb",
+    "name": "Abastece-aí",
+    "minUsd": 1.045,
+    "countries": 1,
+    "stock": 159477
+  },
+  {
+    "code": "akz",
+    "name": "Panvel",
+    "minUsd": 0.308,
+    "countries": 1,
+    "stock": 159355
+  },
+  {
+    "code": "acn",
+    "name": "Gringo",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 159275
+  },
+  {
+    "code": "blx",
+    "name": "2ememain",
+    "minUsd": 0.0825,
+    "countries": 20,
+    "stock": 158202
+  },
+  {
+    "code": "agh",
+    "name": "Getnet",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 157440
+  },
+  {
+    "code": "avv",
+    "name": "shopFarEast",
+    "minUsd": 0.275,
+    "countries": 4,
+    "stock": 154453
+  },
+  {
+    "code": "ff",
+    "name": "AVON",
+    "minUsd": 0.0198,
+    "countries": 10,
+    "stock": 149633
+  },
+  {
+    "code": "zg",
+    "name": "Setel",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 135796
+  },
+  {
+    "code": "avb",
+    "name": "Tealive",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 133923
+  },
+  {
+    "code": "agx",
+    "name": "MeiQFashion",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 133585
+  },
+  {
+    "code": "ail",
+    "name": "Smotryoshka",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 133051
+  },
+  {
+    "code": "anm",
+    "name": "CaltexGO",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 132094
+  },
+  {
+    "code": "ban",
+    "name": "BLINK by BonusLink",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 132062
+  },
+  {
+    "code": "bau",
+    "name": "FieldStar",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 131752
+  },
+  {
+    "code": "bvh",
+    "name": "ParenTeam",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 131751
+  },
+  {
+    "code": "bwx",
+    "name": "Chagee",
+    "minUsd": 0.0935,
+    "countries": 1,
+    "stock": 131456
+  },
+  {
+    "code": "bkv",
+    "name": "Zen",
+    "minUsd": 0.088,
+    "countries": 5,
+    "stock": 128962
+  },
+  {
+    "code": "wd",
+    "name": "Столото",
+    "minUsd": 0.22,
+    "countries": 8,
+    "stock": 127745
+  },
+  {
+    "code": "ms",
+    "name": "NovaPoshta",
+    "minUsd": 0.495,
+    "countries": 2,
+    "stock": 125398
+  },
+  {
+    "code": "aoo",
+    "name": "Pegasus Airlines",
+    "minUsd": 0.0165,
+    "countries": 6,
+    "stock": 123972
+  },
+  {
+    "code": "bpz",
+    "name": "Just Eat",
+    "minUsd": 0.077,
+    "countries": 12,
+    "stock": 114140
+  },
+  {
+    "code": "bss",
+    "name": "Trade Republic",
+    "minUsd": 0.088,
+    "countries": 13,
+    "stock": 113754
+  },
+  {
+    "code": "ni",
+    "name": "Gojek",
+    "minUsd": 0.044,
+    "countries": 6,
+    "stock": 112915
+  },
+  {
+    "code": "ym",
+    "name": "youla.ru",
+    "minUsd": 0.011,
+    "countries": 14,
+    "stock": 109481
+  },
+  {
+    "code": "ae",
+    "name": "myGLO",
+    "minUsd": 0.1375,
+    "countries": 2,
+    "stock": 104716
+  },
+  {
+    "code": "ng",
+    "name": "FunPay",
+    "minUsd": 0.165,
+    "countries": 2,
+    "stock": 102340
+  },
+  {
+    "code": "xd",
+    "name": "Tokopedia",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 97284
+  },
+  {
+    "code": "wt",
+    "name": "IZI",
+    "minUsd": 0.176,
+    "countries": 2,
+    "stock": 94300
+  },
+  {
+    "code": "ft",
+    "name": "Bookmakers",
+    "minUsd": 0.22,
+    "countries": 3,
+    "stock": 94031
+  },
+  {
+    "code": "blq",
+    "name": "Ari10",
+    "minUsd": 0.0825,
+    "countries": 3,
+    "stock": 93139
+  },
+  {
+    "code": "bsj",
+    "name": "Pagaleve",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 92032
+  },
+  {
+    "code": "ge",
+    "name": "Paytm",
+    "minUsd": 0.099,
+    "countries": 26,
+    "stock": 91819
+  },
+  {
+    "code": "sl",
+    "name": "robota.ua",
+    "minUsd": 0.462,
+    "countries": 1,
+    "stock": 91703
+  },
+  {
+    "code": "bwo",
+    "name": "KabanchikUA",
+    "minUsd": 0.66,
+    "countries": 1,
+    "stock": 91583
+  },
+  {
+    "code": "bem",
+    "name": "Shafa",
+    "minUsd": 0.473,
+    "countries": 1,
+    "stock": 91518
+  },
+  {
+    "code": "bxr",
+    "name": "AlFursan",
+    "minUsd": 0.077,
+    "countries": 2,
+    "stock": 90969
+  },
+  {
+    "code": "bvs",
+    "name": "Вчасно",
+    "minUsd": 0.77,
+    "countries": 1,
+    "stock": 90531
+  },
+  {
+    "code": "bpe",
+    "name": "Сільпо",
+    "minUsd": 0.495,
+    "countries": 1,
+    "stock": 90510
+  },
+  {
+    "code": "bje",
+    "name": "Meest",
+    "minUsd": 0.297,
+    "countries": 1,
+    "stock": 90488
+  },
+  {
+    "code": "ju",
+    "name": "Indomaret",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 89789
+  },
+  {
+    "code": "bjp",
+    "name": "Ria",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 88214
+  },
+  {
+    "code": "vr",
+    "name": "MotorkuX",
+    "minUsd": 0.0495,
+    "countries": 1,
+    "stock": 85944
+  },
+  {
+    "code": "bzb",
+    "name": "Big Cash",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 85109
+  },
+  {
+    "code": "xh",
+    "name": "OVO",
+    "minUsd": 0.0385,
+    "countries": 1,
+    "stock": 84879
+  },
+  {
+    "code": "bxi",
+    "name": "Grupo Madero",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 84262
+  },
+  {
+    "code": "cbh",
+    "name": "ZUL",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 84248
+  },
+  {
+    "code": "cac",
+    "name": "Vesseo",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 84213
+  },
+  {
+    "code": "tm",
+    "name": "Akulaku",
+    "minUsd": 0.099,
+    "countries": 1,
+    "stock": 84018
+  },
+  {
+    "code": "bzv",
+    "name": "TOP",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 83965
+  },
+  {
+    "code": "aet",
+    "name": "Greywoods",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 82734
+  },
+  {
+    "code": "abu",
+    "name": "BPJSTK",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 79665
+  },
+  {
+    "code": "fr",
+    "name": "Dana",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 78084
+  },
+  {
+    "code": "ajy",
+    "name": "All Access",
+    "minUsd": 0.121,
+    "countries": 1,
+    "stock": 72038
+  },
+  {
+    "code": "btd",
+    "name": "Volcengine 火山引擎",
+    "minUsd": 0.077,
+    "countries": 5,
+    "stock": 71485
+  },
+  {
+    "code": "aka",
+    "name": "LinkAja",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 70771
+  },
+  {
+    "code": "bfw",
+    "name": "Finya",
+    "minUsd": 0.308,
+    "countries": 3,
+    "stock": 70699
+  },
+  {
+    "code": "bli",
+    "name": "Scalapay",
+    "minUsd": 0.154,
+    "countries": 5,
+    "stock": 70437
+  },
+  {
+    "code": "ang",
+    "name": "TOMORO COFFEE",
+    "minUsd": 0.022,
+    "countries": 2,
+    "stock": 67330
+  },
+  {
+    "code": "sr",
+    "name": "Starbucks",
+    "minUsd": 0.0275,
+    "countries": 1,
+    "stock": 64952
+  },
+  {
+    "code": "bn",
+    "name": "Alfagift",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 64571
+  },
+  {
+    "code": "ark",
+    "name": "SageMaker Studio Lab",
+    "minUsd": 0.0688,
+    "countries": 4,
+    "stock": 64012
+  },
+  {
+    "code": "yx",
+    "name": "JTExpress",
+    "minUsd": 0.033,
+    "countries": 1,
+    "stock": 62634
+  },
+  {
+    "code": "cbs",
+    "name": "lalafo",
+    "minUsd": 0.0605,
+    "countries": 2,
+    "stock": 62474
+  },
+  {
+    "code": "afd",
+    "name": "Astra Otoshop",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 61370
+  },
+  {
+    "code": "afc",
+    "name": "Bunda",
+    "minUsd": 0.099,
+    "countries": 1,
+    "stock": 61142
+  },
+  {
+    "code": "aeq",
+    "name": "Godrej",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 61102
+  },
+  {
+    "code": "bdp",
+    "name": "Kredito",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 60710
+  },
+  {
+    "code": "bou",
+    "name": "汇旺 Huione Pay",
+    "minUsd": 0.0715,
+    "countries": 5,
+    "stock": 60442
+  },
+  {
+    "code": "bcq",
+    "name": "Mantan/Kopi Kenangan",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 60348
+  },
+  {
+    "code": "bdr",
+    "name": "Yara Farmcare",
+    "minUsd": 0.066,
+    "countries": 2,
+    "stock": 60092
+  },
+  {
+    "code": "ahl",
+    "name": "Maxim",
+    "minUsd": 0.044,
+    "countries": 2,
+    "stock": 59967
+  },
+  {
+    "code": "ber",
+    "name": "Gumtree",
+    "minUsd": 1.1,
+    "countries": 1,
+    "stock": 59769
+  },
+  {
+    "code": "nh",
+    "name": "AlloBank",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 59722
+  },
+  {
+    "code": "fv",
+    "name": "Vidio",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 59582
+  },
+  {
+    "code": "ayo",
+    "name": "360Kredi",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 59513
+  },
+  {
+    "code": "aym",
+    "name": "Langit Musik",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 59477
+  },
+  {
+    "code": "bsf",
+    "name": "Rupiah Cepat",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 59470
+  },
+  {
+    "code": "bcz",
+    "name": "UATAS",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 59435
+  },
+  {
+    "code": "bme",
+    "name": "myIM3",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 59429
+  },
+  {
+    "code": "azl",
+    "name": "MotoRan ",
+    "minUsd": 0.0165,
+    "countries": 1,
+    "stock": 59326
+  },
+  {
+    "code": "bdo",
+    "name": "AdaModal",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 59266
+  },
+  {
+    "code": "bcy",
+    "name": "Finplus",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 59190
+  },
+  {
+    "code": "byf",
+    "name": "SeaBank",
+    "minUsd": 0.0825,
+    "countries": 2,
+    "stock": 59165
+  },
+  {
+    "code": "bcx",
+    "name": "Bantusaku",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 59086
+  },
+  {
+    "code": "ais",
+    "name": "DiDiFood",
+    "minUsd": 0.066,
+    "countries": 5,
+    "stock": 59064
+  },
+  {
+    "code": "akj",
+    "name": "Easycash",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 56050
+  },
+  {
+    "code": "ani",
+    "name": "Talabat",
+    "minUsd": 0.044,
+    "countries": 8,
+    "stock": 55926
+  },
+  {
+    "code": "akl",
+    "name": "DOKU",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 55857
+  },
+  {
+    "code": "ajq",
+    "name": "MyValue",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 55794
+  },
+  {
+    "code": "aju",
+    "name": "Daya Auto",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 55447
+  },
+  {
+    "code": "alx",
+    "name": "NutriClub",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 55325
+  },
+  {
+    "code": "ajv",
+    "name": "ShareParty",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 55167
+  },
+  {
+    "code": "aly",
+    "name": "Bebeclub",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 55094
+  },
+  {
+    "code": "akm",
+    "name": "LOTTE Mart",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 55063
+  },
+  {
+    "code": "brt",
+    "name": "Netwin",
+    "minUsd": 1.155,
+    "countries": 1,
+    "stock": 54721
+  },
+  {
+    "code": "bnu",
+    "name": "Qpon",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 54576
+  },
+  {
+    "code": "axj",
+    "name": "FIFGROUP MOBILE CUSTOMER",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 54130
+  },
+  {
+    "code": "bls",
+    "name": "WeTV",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 53927
+  },
+  {
+    "code": "asy",
+    "name": "Fore Coffee",
+    "minUsd": 0.0165,
+    "countries": 1,
+    "stock": 53692
+  },
+  {
+    "code": "aoy",
+    "name": "PLN Mobile",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 53653
+  },
+  {
+    "code": "bhz",
+    "name": "Eurobet",
+    "minUsd": 1.65,
+    "countries": 1,
+    "stock": 53536
+  },
+  {
+    "code": "brc",
+    "name": "Casa it",
+    "minUsd": 1.1785,
+    "countries": 1,
+    "stock": 52791
+  },
+  {
+    "code": "ahf",
+    "name": "GAIL`s Bakery",
+    "minUsd": 0.0743,
+    "countries": 6,
+    "stock": 52766
+  },
+  {
+    "code": "bqx",
+    "name": "Club Q8",
+    "minUsd": 1.1785,
+    "countries": 1,
+    "stock": 52764
+  },
+  {
+    "code": "bmj",
+    "name": "Betflag",
+    "minUsd": 1.65,
+    "countries": 1,
+    "stock": 52508
+  },
+  {
+    "code": "bpp",
+    "name": "Bliq",
+    "minUsd": 0.066,
+    "countries": 9,
+    "stock": 52298
+  },
+  {
+    "code": "bhe",
+    "name": "Jago",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 51970
+  },
+  {
+    "code": "bhb",
+    "name": "Wuling",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 51918
+  },
+  {
+    "code": "bns",
+    "name": "PAC Cash",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 51650
+  },
+  {
+    "code": "bbf",
+    "name": "Neosurf",
+    "minUsd": 0.0825,
+    "countries": 6,
+    "stock": 51503
+  },
+  {
+    "code": "bih",
+    "name": "Indosaku",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 51471
+  },
+  {
+    "code": "bic",
+    "name": "Marktde",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 51187
+  },
+  {
+    "code": "bbk",
+    "name": "FilipinoCupid",
+    "minUsd": 0.066,
+    "countries": 2,
+    "stock": 50024
+  },
+  {
+    "code": "bsv",
+    "name": "AmarthaFin",
+    "minUsd": 0.0935,
+    "countries": 1,
+    "stock": 46404
+  },
+  {
+    "code": "bko",
+    "name": "Vision Plus",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 46367
+  },
+  {
+    "code": "bob",
+    "name": "Shell GO",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 46366
+  },
+  {
+    "code": "bwf",
+    "name": "MyGo",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 46359
+  },
+  {
+    "code": "bnt",
+    "name": "Treasury",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 46299
+  },
+  {
+    "code": "can",
+    "name": "BAGI",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 46058
+  },
+  {
+    "code": "bxv",
+    "name": "PAPER",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 46047
+  },
+  {
+    "code": "bxw",
+    "name": "Credinex",
+    "minUsd": 0.0825,
+    "countries": 1,
+    "stock": 45973
+  },
+  {
+    "code": "bgt",
+    "name": "Alfamidi",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 45638
+  },
+  {
+    "code": "blt",
+    "name": "INDOPAKET",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 45565
+  },
+  {
+    "code": "bsu",
+    "name": "Dingtone",
+    "minUsd": 0.088,
+    "countries": 7,
+    "stock": 45456
+  },
+  {
+    "code": "bgv",
+    "name": "Clearpay",
+    "minUsd": 0.0715,
+    "countries": 6,
+    "stock": 45202
+  },
+  {
+    "code": "bru",
+    "name": "myPOS",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 43561
+  },
+  {
+    "code": "bqm",
+    "name": "Beebs",
+    "minUsd": 0.0715,
+    "countries": 4,
+    "stock": 43538
+  },
+  {
+    "code": "bol",
+    "name": "My TELUS",
+    "minUsd": 0.077,
+    "countries": 4,
+    "stock": 43422
+  },
+  {
+    "code": "bas",
+    "name": "Stoiximan",
+    "minUsd": 0.077,
+    "countries": 3,
+    "stock": 43282
+  },
+  {
+    "code": "bxg",
+    "name": "BAT",
+    "minUsd": 0.088,
+    "countries": 4,
+    "stock": 41928
+  },
+  {
+    "code": "agc",
+    "name": "VIMpay",
+    "minUsd": 0.11,
+    "countries": 2,
+    "stock": 41866
+  },
+  {
+    "code": "bqo",
+    "name": " Caffe Nero",
+    "minUsd": 0.0715,
+    "countries": 3,
+    "stock": 41474
+  },
+  {
+    "code": "bng",
+    "name": "Jush ",
+    "minUsd": 0.0715,
+    "countries": 2,
+    "stock": 38676
+  },
+  {
+    "code": "blw",
+    "name": "BP",
+    "minUsd": 0.0688,
+    "countries": 3,
+    "stock": 38254
+  },
+  {
+    "code": "amw",
+    "name": "Tise",
+    "minUsd": 0.044,
+    "countries": 3,
+    "stock": 37515
+  },
+  {
+    "code": "aag",
+    "name": "Pockit",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 36015
+  },
+  {
+    "code": "zd",
+    "name": "Zilch",
+    "minUsd": 0.2574,
+    "countries": 1,
+    "stock": 36009
+  },
+  {
+    "code": "bmm",
+    "name": "Hey Cash",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 35982
+  },
+  {
+    "code": "ej",
+    "name": "MrQ",
+    "minUsd": 0.0429,
+    "countries": 1,
+    "stock": 35279
+  },
+  {
+    "code": "ir",
+    "name": "Chispa",
+    "minUsd": 0.066,
+    "countries": 3,
+    "stock": 35248
+  },
+  {
+    "code": "bxp",
+    "name": "Tennents",
+    "minUsd": 0.0825,
+    "countries": 1,
+    "stock": 34449
+  },
+  {
+    "code": "bzf",
+    "name": "Dabble",
+    "minUsd": 0.0825,
+    "countries": 1,
+    "stock": 34449
+  },
+  {
+    "code": "bni",
+    "name": "Pets4Homes",
+    "minUsd": 0.0715,
+    "countries": 1,
+    "stock": 34448
+  },
+  {
+    "code": "acw",
+    "name": "YouDo",
+    "minUsd": 0.0495,
+    "countries": 2,
+    "stock": 33298
+  },
+  {
+    "code": "bcg",
+    "name": "2ГИС",
+    "minUsd": 0.044,
+    "countries": 2,
+    "stock": 32888
+  },
+  {
+    "code": "rk",
+    "name": "Fotka",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 32515
+  },
+  {
+    "code": "qe",
+    "name": "GG",
+    "minUsd": 0.1001,
+    "countries": 1,
+    "stock": 32242
+  },
+  {
+    "code": "bhf",
+    "name": "InPost",
+    "minUsd": 0.682,
+    "countries": 1,
+    "stock": 32063
+  },
+  {
+    "code": "mx",
+    "name": "SoulApp",
+    "minUsd": 0.066,
+    "countries": 2,
+    "stock": 22327
+  },
+  {
+    "code": "btx",
+    "name": "Amap 高德地图",
+    "minUsd": 0.077,
+    "countries": 2,
+    "stock": 22221
+  },
+  {
+    "code": "qy",
+    "name": "Zhihu",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 21499
+  },
+  {
+    "code": "ahr",
+    "name": "This Fate",
+    "minUsd": 1.54,
+    "countries": 1,
+    "stock": 17004
+  },
+  {
+    "code": "apo",
+    "name": "Netmarble",
+    "minUsd": 1.375,
+    "countries": 1,
+    "stock": 16493
+  },
+  {
+    "code": "bji",
+    "name": "Perfect World 完美世界",
+    "minUsd": 1.32,
+    "countries": 1,
+    "stock": 16485
+  },
+  {
+    "code": "ayv",
+    "name": "myTVSUPER",
+    "minUsd": 0.363,
+    "countries": 1,
+    "stock": 16432
+  },
+  {
+    "code": "we",
+    "name": "DrugVokrug",
+    "minUsd": 0.022,
+    "countries": 8,
+    "stock": 16130
+  },
+  {
+    "code": "bd",
+    "name": "X5ID",
+    "minUsd": 0.0286,
+    "countries": 5,
+    "stock": 14906
+  },
+  {
+    "code": "bbd",
+    "name": "DBS Bank",
+    "minUsd": 0.935,
+    "countries": 3,
+    "stock": 14881
+  },
+  {
+    "code": "aix",
+    "name": "Move It",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 14701
+  },
+  {
+    "code": "cbb",
+    "name": "KeepCalling",
+    "minUsd": 0.088,
+    "countries": 2,
+    "stock": 14592
+  },
+  {
+    "code": "bdh",
+    "name": "Singledk",
+    "minUsd": 0.308,
+    "countries": 3,
+    "stock": 14550
+  },
+  {
+    "code": "boo",
+    "name": "Casino Plus",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 14259
+  },
+  {
+    "code": "azn",
+    "name": "UFC",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 14125
+  },
+  {
+    "code": "aqm",
+    "name": "Tala",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 13897
+  },
+  {
+    "code": "jl",
+    "name": "Hopi",
+    "minUsd": 0.2318,
+    "countries": 3,
+    "stock": 13628
+  },
+  {
+    "code": "ny",
+    "name": "BitcoinBon",
+    "minUsd": 0.715,
+    "countries": 2,
+    "stock": 13526
+  },
+  {
+    "code": "bui",
+    "name": "OKbet",
+    "minUsd": 0.0825,
+    "countries": 1,
+    "stock": 13036
+  },
+  {
+    "code": "ars",
+    "name": "Bingo Plus",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 12475
+  },
+  {
+    "code": "adp",
+    "name": "Cabify",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 12160
+  },
+  {
+    "code": "bc",
+    "name": "GCash",
+    "minUsd": 0.0605,
+    "countries": 1,
+    "stock": 11895
+  },
+  {
+    "code": "ji",
+    "name": "Monobank",
+    "minUsd": 0.715,
+    "countries": 1,
+    "stock": 11837
+  },
+  {
+    "code": "bmx",
+    "name": "Canal RCN",
+    "minUsd": 0.099,
+    "countries": 1,
+    "stock": 11475
+  },
+  {
+    "code": "awz",
+    "name": "PlayTime",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 8473
+  },
+  {
+    "code": "ib",
+    "name": "Immowelt",
+    "minUsd": 0.572,
+    "countries": 1,
+    "stock": 7884
+  },
+  {
+    "code": "aoq",
+    "name": "JB Hi-Fi",
+    "minUsd": 1.98,
+    "countries": 1,
+    "stock": 7384
+  },
+  {
+    "code": "sc",
+    "name": "Voggt",
+    "minUsd": 0.55,
+    "countries": 1,
+    "stock": 6465
+  },
+  {
+    "code": "amz",
+    "name": "ImmoScout24",
+    "minUsd": 1.133,
+    "countries": 2,
+    "stock": 6432
+  },
+  {
+    "code": "axt",
+    "name": "GNJOY",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 6076
+  },
+  {
+    "code": "ahj",
+    "name": "Strato",
+    "minUsd": 0.495,
+    "countries": 1,
+    "stock": 5979
+  },
+  {
+    "code": "cbk",
+    "name": "Fastwork",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 5960
+  },
+  {
+    "code": "bgn",
+    "name": "Veeka",
+    "minUsd": 0.022,
+    "countries": 1,
+    "stock": 5941
+  },
+  {
+    "code": "blo",
+    "name": "SiliconFlow 硅基流动",
+    "minUsd": 0.066,
+    "countries": 1,
+    "stock": 5939
+  },
+  {
+    "code": "bpq",
+    "name": "MChat",
+    "minUsd": 0.0385,
+    "countries": 1,
+    "stock": 5865
+  },
+  {
+    "code": "bzk",
+    "name": "Amaze Super App",
+    "minUsd": 0.0825,
+    "countries": 1,
+    "stock": 5764
+  },
+  {
+    "code": "brg",
+    "name": "Letgo",
+    "minUsd": 1.1,
+    "countries": 1,
+    "stock": 5471
+  },
+  {
+    "code": "avk",
+    "name": "Quoka ",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 5344
+  },
+  {
+    "code": "bos",
+    "name": "Casino Portugal",
+    "minUsd": 0.165,
+    "countries": 2,
+    "stock": 5122
+  },
+  {
+    "code": "arp",
+    "name": "Continente",
+    "minUsd": 0.088,
+    "countries": 1,
+    "stock": 5057
+  },
+  {
+    "code": "kq",
+    "name": "FotoCasa",
+    "minUsd": 0.869,
+    "countries": 1,
+    "stock": 4857
+  },
+  {
+    "code": "bry",
+    "name": "Mobile DE",
+    "minUsd": 0.66,
+    "countries": 1,
+    "stock": 4829
+  },
+  {
+    "code": "arx",
+    "name": "Zinia",
+    "minUsd": 0.715,
+    "countries": 1,
+    "stock": 4803
+  },
+  {
+    "code": "bro",
+    "name": "YouGov Shopper",
+    "minUsd": 0.66,
+    "countries": 1,
+    "stock": 4768
+  },
+  {
+    "code": "adz",
+    "name": "Shokoladnica",
+    "minUsd": 0.55,
+    "countries": 1,
+    "stock": 4628
+  },
+  {
+    "code": "arc",
+    "name": "CHECK24",
+    "minUsd": 0.715,
+    "countries": 1,
+    "stock": 4621
+  },
+  {
+    "code": "bfo",
+    "name": "MSport",
+    "minUsd": 0.308,
+    "countries": 1,
+    "stock": 4542
+  },
+  {
+    "code": "asj",
+    "name": "T-online",
+    "minUsd": 0.495,
+    "countries": 1,
+    "stock": 4479
+  },
+  {
+    "code": "bcr",
+    "name": "ESX",
+    "minUsd": 0.143,
+    "countries": 2,
+    "stock": 4447
+  },
+  {
+    "code": "auo",
+    "name": "Mycashbacks",
+    "minUsd": 0.66,
+    "countries": 1,
+    "stock": 4422
+  },
+  {
+    "code": "bwl",
+    "name": "Guthabende",
+    "minUsd": 0.715,
+    "countries": 1,
+    "stock": 4269
+  },
+  {
+    "code": "caj",
+    "name": "GoMoney",
+    "minUsd": 0.352,
+    "countries": 1,
+    "stock": 4108
+  },
+  {
+    "code": "avu",
+    "name": "Karos",
+    "minUsd": 0.176,
+    "countries": 2,
+    "stock": 4069
+  },
+  {
+    "code": "hy",
+    "name": "Ininal",
+    "minUsd": 16.5,
+    "countries": 1,
+    "stock": 3745
+  },
+  {
+    "code": "bzo",
+    "name": "SeLoger",
+    "minUsd": 0.132,
+    "countries": 2,
+    "stock": 3484
+  },
+  {
+    "code": "bxs",
+    "name": "LikeCard",
+    "minUsd": 0.275,
+    "countries": 3,
+    "stock": 3351
+  },
+  {
+    "code": "bfg",
+    "name": "EMAG",
+    "minUsd": 0.044,
+    "countries": 2,
+    "stock": 3202
+  },
+  {
+    "code": "bkw",
+    "name": "Bilkraft",
+    "minUsd": 0.143,
+    "countries": 2,
+    "stock": 2809
+  },
+  {
+    "code": "bsw",
+    "name": "Milanuncios",
+    "minUsd": 0.825,
+    "countries": 1,
+    "stock": 2791
+  },
+  {
+    "code": "bif",
+    "name": "OPAP",
+    "minUsd": 0.77,
+    "countries": 1,
+    "stock": 2715
+  },
+  {
+    "code": "bvf",
+    "name": "GymPlius",
+    "minUsd": 0.1595,
+    "countries": 2,
+    "stock": 2619
+  },
+  {
+    "code": "aga",
+    "name": "Publi24",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 2563
+  },
+  {
+    "code": "cak",
+    "name": "Bazaraki",
+    "minUsd": 0.825,
+    "countries": 1,
+    "stock": 2416
+  },
+  {
+    "code": "bly",
+    "name": "COSMOTE",
+    "minUsd": 0.77,
+    "countries": 1,
+    "stock": 2360
+  },
+  {
+    "code": "ve",
+    "name": "Dream11",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 2280
+  },
+  {
+    "code": "adj",
+    "name": "RummyCircle",
+    "minUsd": 0.077,
+    "countries": 1,
+    "stock": 2125
+  },
+  {
+    "code": "mi",
+    "name": "Zupee",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 2098
+  },
+  {
+    "code": "avt",
+    "name": "HuntTheMouse",
+    "minUsd": 0.0688,
+    "countries": 1,
+    "stock": 2096
+  },
+  {
+    "code": "xm",
+    "name": "Letual",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1893
+  },
+  {
+    "code": "bsl",
+    "name": "Oskelly",
+    "minUsd": 0.187,
+    "countries": 1,
+    "stock": 1833
+  },
+  {
+    "code": "azd",
+    "name": "Вплюсе",
+    "minUsd": 0.198,
+    "countries": 1,
+    "stock": 1797
+  },
+  {
+    "code": "bnp",
+    "name": "Airba Fresh",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 1725
+  },
+  {
+    "code": "bfv",
+    "name": "Chocofamily",
+    "minUsd": 0.187,
+    "countries": 1,
+    "stock": 1716
+  },
+  {
+    "code": "bre",
+    "name": "Лемана ПРО",
+    "minUsd": 0.176,
+    "countries": 1,
+    "stock": 1710
+  },
+  {
+    "code": "acd",
+    "name": "Cloud.ru",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1651
+  },
+  {
+    "code": "ayr",
+    "name": "Superbet",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1626
+  },
+  {
+    "code": "dy",
+    "name": "Zomato",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 1621
+  },
+  {
+    "code": "bhp",
+    "name": "PPC",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 1446
+  },
+  {
+    "code": "bst",
+    "name": "AdmiralBet",
+    "minUsd": 0.176,
+    "countries": 1,
+    "stock": 1445
+  },
+  {
+    "code": "azy",
+    "name": "Casa Pariurilor",
+    "minUsd": 0.132,
+    "countries": 1,
+    "stock": 1430
+  },
+  {
+    "code": "bxf",
+    "name": "Disney Plus",
+    "minUsd": 0.825,
+    "countries": 1,
+    "stock": 1415
+  },
+  {
+    "code": "bnf",
+    "name": "ContiCazino",
+    "minUsd": 0.154,
+    "countries": 1,
+    "stock": 1406
+  },
+  {
+    "code": "bnz",
+    "name": "Seven Bet",
+    "minUsd": 0.154,
+    "countries": 1,
+    "stock": 1399
+  },
+  {
+    "code": "arb",
+    "name": "Las Vegas Casino",
+    "minUsd": 0.143,
+    "countries": 1,
+    "stock": 1371
+  },
+  {
+    "code": "bwt",
+    "name": "Stanleybet",
+    "minUsd": 0.165,
+    "countries": 1,
+    "stock": 1347
+  },
+  {
+    "code": "bog",
+    "name": "France Mobilities",
+    "minUsd": 0.66,
+    "countries": 1,
+    "stock": 1323
+  },
+  {
+    "code": "bxu",
+    "name": "Chronodrive",
+    "minUsd": 0.77,
+    "countries": 1,
+    "stock": 1312
+  },
+  {
+    "code": "atu",
+    "name": "Sber/Cooper",
+    "minUsd": 1.65,
+    "countries": 1,
+    "stock": 1136
+  },
+  {
+    "code": "si",
+    "name": "Cita Previa",
+    "minUsd": 0.55,
+    "countries": 1,
+    "stock": 1109
+  },
+  {
+    "code": "adu",
+    "name": "Seznam",
+    "minUsd": 0.814,
+    "countries": 1,
+    "stock": 1105
+  },
+  {
+    "code": "acr",
+    "name": "QwikCilver",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 1043
+  },
+  {
+    "code": "bla",
+    "name": "FDJ ParionsSport",
+    "minUsd": 0.605,
+    "countries": 1,
+    "stock": 1018
+  },
+  {
+    "code": "byw",
+    "name": "Annoncelight",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 951
+  },
+  {
+    "code": "brv",
+    "name": "999 md",
+    "minUsd": 0.6105,
+    "countries": 1,
+    "stock": 939
+  },
+  {
+    "code": "buj",
+    "name": "ASVLA",
+    "minUsd": 0.825,
+    "countries": 1,
+    "stock": 937
+  },
+  {
+    "code": "alp",
+    "name": "Mera Gaon",
+    "minUsd": 0.044,
+    "countries": 1,
+    "stock": 917
+  },
+  {
+    "code": "yk",
+    "name": "SportMaster",
+    "minUsd": 0.11,
+    "countries": 1,
+    "stock": 642
+  },
+  {
+    "code": "bvu",
+    "name": "SwaRail ",
+    "minUsd": 0.33,
+    "countries": 1,
+    "stock": 542
+  },
+  {
+    "code": "of",
+    "name": "urent/jet/RuSharing",
+    "minUsd": 0.275,
+    "countries": 1,
+    "stock": 334
+  },
+  {
+    "code": "bjq",
+    "name": "Surveyon ",
+    "minUsd": 0.605,
+    "countries": 1,
+    "stock": 324
+  },
+  {
+    "code": "bhj",
+    "name": "Jòfogàs",
+    "minUsd": 1.43,
+    "countries": 1,
+    "stock": 304
+  },
+  {
+    "code": "qg",
+    "name": "MoneyPay",
+    "minUsd": 16.5,
+    "countries": 1,
+    "stock": 273
+  },
+  {
+    "code": "aih",
+    "name": "Fups",
+    "minUsd": 16.5,
+    "countries": 1,
+    "stock": 207
+  },
+  {
+    "code": "fw",
+    "name": "99acres",
+    "minUsd": 0.055,
+    "countries": 1,
+    "stock": 1
+  }
+]

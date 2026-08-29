@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex Invite Pilot</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="mark">C</div>
+      <div><h1>Codex Invite Pilot</h1><p>邀请链接手动打开 · 验证码和接码自动</p></div>
+      <button id="openAdmin" class="icon-button" title="管理员设置">⚙</button>
+    </header>
+
+    <main>
+      <section class="status-card">
+        <div><span id="stateLabel">准备中</span><strong id="progress">0 / 6</strong></div>
+        <p id="message">先创建一个邮箱。</p>
+      </section>
+
+      <section id="steps" class="steps">
+        <article class="step" data-step="1">
+          <span class="dot">1</span>
+          <div><h2>创建邮箱 <small>等待</small></h2><p>生成 Cloudflare 临时邮箱。</p>
+            <div class="row"><input id="mailName" placeholder="自定义前缀（可留空）"><button id="createMail">创建</button></div>
+            <details><summary>使用已有邮箱</summary><div class="row"><input id="existingMail" type="email" placeholder="name@example.com"><button id="useMail" class="secondary">使用</button></div></details>
+          </div>
+        </article>
+        <article class="step" data-step="2">
+          <span class="dot">2</span>
+          <div><h2>填写邀请邮箱 <small>等待</small></h2><p>复制邮箱，在 Codex 邀请页面发送邀请。</p>
+            <div id="addressBox" class="address" hidden><code id="address">—</code><button id="copyMail" class="secondary">复制</button></div>
+            <button id="startFlow" disabled>邀请已发送，开始</button>
+          </div>
+        </article>
+        <article class="step" data-step="3">
+          <span class="dot">3</span>
+          <div>
+            <h2>提取邀请链接 <small>等待</small></h2>
+            <p>只抽出官方邀请，请复制后自己打开。扩展不会代为打开页面。</p>
+            <div id="inviteBox" class="address" hidden>
+              <code id="inviteUrl">—</code>
+              <button id="copyInvite" class="secondary">复制</button>
+            </div>
+          </div>
+        </article>
+        <article class="step" data-step="4">
+          <span class="dot">4</span>
+          <div>
+            <h2>邮箱验证码 <small>等待</small></h2>
+            <p>自动提取官方六位验证码；页面已打开时会尝试自动填写。</p>
+            <div id="otpBox" class="address" hidden>
+              <code id="emailOtp">—</code>
+              <button id="copyOtp" class="secondary">复制</button>
+            </div>
+          </div>
+        </article>
+        <article class="step" data-step="5"><span class="dot">5</span><div><h2>手机接码 <small>等待</small></h2><p>按管理员选择的国家和报价获取号码并填写短信验证码。</p><p id="smsMeta" class="meta"></p></div></article>
+        <article class="step" data-step="6"><span class="dot">6</span><div><h2>登录成功 <small>等待</small></h2><p>登录态保留在你当前的 Chrome 中。</p></div></article>
+      </section>
+
+      <section class="controls">
+        <button id="continueFlow" hidden>我已处理，继续</button>
+        <button id="replacePhone" class="warning" hidden>更换号码</button>
+        <button id="confirmApp" hidden>已打开 Codex，完成</button>
+        <button id="cancelFlow" class="danger" hidden>停止本轮</button>
+        <button id="resetFlow" class="secondary" hidden>开始新一轮</button>
+      </section>
+
+      <section class="logs"><h2>本轮日志</h2><ol id="logList"></ol></section>
+    </main>
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

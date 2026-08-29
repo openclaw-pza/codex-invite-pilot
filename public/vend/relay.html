@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>填入助手</title>
+<link rel="stylesheet" href="vend.css">
+<style>
+/* 这页只在书签弹出的小窗里出现（380x560），不复用主站的排版。
+   目标是「一眼看出点哪个」——买家此刻正卡在 OpenAI 的注册页上，
+   多一秒困惑就多一分放弃。 */
+body{margin:0;padding:16px;background:var(--bg);color:var(--t1);font-family:var(--sans)}
+h1{font-size:16px;font-weight:700;margin:0 0 4px}
+.sub{font-size:12.5px;line-height:1.7;color:var(--t3);margin:0 0 14px;text-wrap:pretty}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  padding:12px 14px;border:0;border-radius:12px;cursor:pointer;
+  background:var(--panel-raised);box-shadow:var(--shadow-1);
+  transition:transform .14s var(--ease),box-shadow .14s var(--ease);
+}
+.item:hover{transform:translateY(-1px);box-shadow:var(--shadow-2)}
+.item:active{transform:translateY(0)}
+.item:disabled{opacity:.45;cursor:default;transform:none}
+.k{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--t3)}
+.v{flex:1;min-width:0;font-family:var(--monos);font-size:15px;font-weight:700;
+   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.go{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--on-gold);
+    background:var(--gold);padding:5px 10px;border-radius:7px}
+.msg{margin-top:14px;font-size:12.5px;line-height:1.7;color:var(--t3);text-wrap:pretty}
+.msg b{color:var(--hot)}
+.ok{color:var(--ok-text)}
+</style>
+</head>
+<body>
+<h1>要填哪个？</h1>
+<p class="sub">点一下就填进你刚才那个页面。<b>只填不提交</b>——提交按钮还是你自己点。</p>
+
+<div class="items" id="items"></div>
+<p class="msg" id="msg"></p>
+
+<script type="module" src="relay.js"></script>
+</body>
+</html>

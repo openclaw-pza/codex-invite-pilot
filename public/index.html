@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex Invite Pilot · Chrome 插件</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <div class="brand-text"><h1>Codex Invite Pilot</h1><p>已切换为 Chrome 插件执行</p></div>
+        </div>
+        <div class="status-chips" id="statusChips" aria-live="polite"></div>
+        <a class="btn btn-ghost" href="/admin.html">管理员设置</a>
+      </header>
+
+      <main class="install-layout">
+        <section class="install-hero">
+          <span class="eyebrow">CHROME EXTENSION · LOCAL ONLY</span>
+          <h2>邀请链接你自己打开，验证码和接码仍然自动</h2>
+          <p>v0.2.1：扩展只抽出邀请链接给你复制，不再自动打开页面。邮箱 OTP 会提取并尽量自动填写，手机号仍走 HeroSMS 自动接码。</p>
+          <div class="install-path">
+            <code id="extensionPath">F:\sms-project\extension</code>
+            <button class="btn btn-primary" id="copyExtensionPath">复制目录</button>
+          </div>
+        </section>
+
+        <section class="install-card">
+          <header><span>一次性安装</span><strong>约 1 分钟</strong></header>
+          <ol class="install-steps">
+            <li><span>1</span><div><h3>打开扩展管理页</h3><p>在 Chrome 地址栏输入 <code>chrome://extensions</code>。</p><button class="btn btn-ghost btn-sm" id="copyExtensionsUrl">复制地址</button></div></li>
+            <li><span>2</span><div><h3>打开开发者模式</h3><p>启用页面右上角的“开发者模式”。</p></div></li>
+            <li><span>3</span><div><h3>加载已解压的扩展程序</h3><p>选择上方目录中的 <code>extension</code> 文件夹。</p></div></li>
+            <li><span>4</span><div><h3>改代码后重新加载</h3><p>扩展卡片点「重新加载」，版本应为 <code>0.2.1</code>。侧边栏副标题是「邀请链接手动打开 · 验证码和接码自动」。</p></div></li>
+          </ol>
+        </section>
+
+        <section class="architecture-card">
+          <h2>现在的执行方式</h2>
+          <div class="architecture-grid">
+            <article><strong>本地服务</strong><p>Cloudflare 邮箱、邮件轮询、HeroSMS 和管理员配置。</p></article>
+            <span>→</span>
+            <article><strong>Chrome 扩展</strong><p>打开邀请、填写邮箱/手机号/验证码、检测登录结果。</p></article>
+            <span>→</span>
+            <article><strong>当前 Chrome</strong><p>保留正常 Cookie 和登录环境；CAPTCHA 可直接人工接管。</p></article>
+          </div>
+          <p class="security-note">扩展不会读取或保存 API Key，也不会申请 debugger、代理或全站访问权限。</p>
+        </section>
+
+        <section class="logbar" aria-label="状态日志"><ol class="log-list" id="logList"></ol></section>
+      </main>
+    </div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

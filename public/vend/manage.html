@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<title>管理 · 验证码取号</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./vend.css?v=437c8752">
+<style>
+/* 旧皮 token 的别名。黑金版 vend.css 没有这几个变量，
+   不补的话每一条 var() 都解析失败，整页退回浏览器默认样式。 */
+:root {
+  --hairline: var(--line);
+  --muted: var(--t3);
+  --signal: var(--gold);
+  --ink: var(--t1);
+  --surface: var(--panel);
+  --paper: var(--panel-3);
+  --alert: var(--warn);
+}
+
+/* 旧皮里有、新皮里删掉了的组件类，在这页本地补齐 */
+.bar { position: sticky; top: 0; z-index: 30; background: rgba(240,238,240,.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.bar-in { max-width: 860px; margin: 0 auto; padding: 0 24px; height: 58px; display: flex; align-items: center; gap: 12px; }
+.bar-link { font-size: 13.5px; color: var(--gold); text-decoration: none; }
+.bar-link:hover { text-decoration: underline; }
+.field {
+  height: 42px; padding: 0 12px; border-radius: 10px;
+  border: 1px solid var(--line-2); background: var(--input-bg); color: var(--t2);
+  font-size: 14px; font-family: inherit; outline: none;
+}
+.field:focus { border-color: var(--gold); }
+.pill {
+  height: 42px; padding: 0 20px; border: none; border-radius: 11px;
+  background: var(--gold-grad); color: var(--on-gold);
+  font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer;
+}
+.pill:hover { filter: brightness(1.07); }
+.pill:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+.pill.ghost { background: transparent; border: 1px solid var(--line-2); color: var(--t3); font-weight: 400; }
+.pill.ghost:hover { border-color: var(--gold); color: var(--hot); filter: none; }
+.pill.sm { height: 36px; padding: 0 16px; font-size: 13px; border-radius: 9px; }
+.mut { color: var(--t3); }
+.sm { font-size: 12.5px; line-height: 1.75; }
+.mono { font-family: var(--mono); }
+.toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%);
+  background: #17150F; border: 1px solid rgba(233,200,122,.4); color: #F0E3C0;
+  padding: 11px 18px; border-radius: 12px; font-size: 13.5px; z-index: 90;
+}
+.bad{color:var(--red)}
+  body { padding-bottom: 40px; }
+  .adm { max-width: 860px; margin: 0 auto; padding: 32px 24px 64px; }
+  .adm h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; color: var(--t1); }
+  .panel {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+  }
+  .panel h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--t1); }
+  .line { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .line .field { height: 42px; font-size: 14px; }
+  .num { width: 92px; flex: 0 0 auto; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13.5px; }
+  th, td { padding: 11px 8px; text-align: left; border-top: 1px solid var(--hairline); vertical-align: middle; }
+  th { color: var(--muted); font-weight: 500; font-size: 12.5px; border-top: 0; }
+  td.amt { font-family: var(--mono); font-size: 15px; color: var(--signal); }
+  .codes {
+    margin-top: 14px;
+    padding: 14px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.9;
+    max-height: 260px;
+    overflow: auto;
+    white-space: pre;
+  }
+  .empty { padding: 20px 0; color: var(--muted); font-size: 13.5px; }
+  .warn { margin-top: 10px; font-size: 12.5px; color: var(--alert); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <span class="brand">取号管理</span>
+    <a class="bar-link" href="./" style="margin-left:auto">取号页</a>
+  </div>
+</header>
+
+<main class="adm">
+  <h1>管理</h1>
+
+  <!-- 口令 -->
+  <section class="panel">
+    <h2>口令</h2>
+    <div class="line">
+      <input class="field mono" id="token" type="password" placeholder="VEND_ADMIN_TOKEN" autocomplete="off">
+      <button class="pill sm" id="btnLogin">进入</button>
+      <span class="mut sm" id="loginState">未登录</span>
+    </div>
+    <p class="warn">口令只存在这个标签页里（sessionStorage），关掉就没了。不要在公共电脑上用。</p>
+  </section>
+
+  <!-- 待核对补差价 -->
+  <section class="panel" id="topupPanel" hidden>
+    <h2>待核对的补差价</h2>
+    <p class="mut sm">买家点了「我已付款」才会出现在这里。<b>先去支付宝确认到账，再点确认</b>——确认后这张卡密就能用那个地区取号了。</p>
+    <div id="topupBody"></div>
+    <div class="line" style="margin-top:14px">
+      <button class="pill ghost sm" id="btnRefresh">刷新</button>
+    </div>
+  </section>
+
+  <!-- 对账 -->
+  <section class="panel" id="ledgerPanel" hidden>
+    <h2>对账</h2>
+    <p class="mut sm">这里只看<b>接码平台那边的钱</b>：取了号又退掉的，平台到底退没退。
+      「挂账」= 钱花出去了、没退回来、也没换来验证码。少量属正常（号自然过期本就不退），
+      持续增长说明有问题，要去平台后台核。</p>
+    <div id="ledgerSummary" class="mut sm"></div>
+    <div id="ledgerBody"></div>
+    <button id="btnLedger" class="ghost">刷新</button>
+  </section>
+
+  <!-- 待退款 -->
+  <section class="panel" id="refundPanel" hidden>
+    <h2>待退款的卡密</h2>
+    <p class="mut sm">买家试了几次没收到验证码、主动注销卡密后会出现在这里。<b>退款要你在下单平台手动操作</b>——这里只负责记录处理结果，不会自动退钱。</p>
+    <div id="refundBody"></div>
+    <div class="line" style="margin-top:14px">
+      <button class="pill ghost sm" id="btnRefreshRefunds">刷新</button>
+    </div>
+  </section>
+
+  <!-- 发卡 -->
+  <section class="panel" id="issuePanel" hidden>
+    <h2>手动发卡</h2>
+    <p class="mut sm">正常下单走闲鱼自动发货，这里只用于补发或测试。生成的卡密要自己保存，页面刷新就没了。</p>
+    <div class="line" style="margin-top:12px">
+      <input class="field num mono" id="denom" type="number" step="0.1" min="0.1" value="1.9" aria-label="面额">
+      <span class="mut sm">元 ×</span>
+      <input class="field num mono" id="count" type="number" step="1" min="1" max="200" value="1" aria-label="数量">
+      <span class="mut sm">张</span>
+      <button class="pill sm" id="btnIssue">生成</button>
+      <button class="pill ghost sm" id="btnCopyCodes" hidden>复制全部</button>
+    </div>
+    <div class="codes" id="codes" hidden></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="./manage.js?v=1ffa9409" type="module"></script>
+</body>
+</html>
