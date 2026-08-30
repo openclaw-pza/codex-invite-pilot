@@ -1,4 +1,4 @@
-# 验证码取号 · sms.tempmail2026.xyz
+# 验证码取号 · your-domain.example
 # 开放给生成式引擎抓取（GEO）。接口和管理页一律不许爬。
 
 User-agent: *
@@ -35,4 +35,4 @@ Allow: /
 User-agent: Sogou web spider
 Allow: /
 
-Sitemap: https://sms.tempmail2026.xyz/sitemap.xml
+Sitemap: https://your-domain.example/sitemap.xml

@@ -806,7 +806,7 @@ main{width:min(1560px,100% - 40px);margin:0 auto}
 .numflag-wrap { display: inline-flex; align-items: center; gap: 8px; }
 
 /* 换了几个号还收不到码时才出现的退款入口。
- * 交付稿把这一整块丢了 —— 没有它，买家只能直接去闲鱼开纠纷。 */
+ * 交付稿把这一整块丢了 —— 没有它，买家只能直接去平台开纠纷。 */
 .void-box {
   margin-top: 12px;
   padding: 12px 14px;

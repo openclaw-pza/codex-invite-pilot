@@ -20,8 +20,8 @@
 
 ## 页面
 
-- [取号页面](https://sms.tempmail2026.xyz/): 主功能页，选服务、选地区、取号、收验证码、临时邮箱
-- [使用说明](https://sms.tempmail2026.xyz/help.html): 完整使用步骤、退款规则、常见问题
+- [取号页面](https://your-domain.example/): 主功能页，选服务、选地区、取号、收验证码、临时邮箱
+- [使用说明](https://your-domain.example/help.html): 完整使用步骤、退款规则、常见问题
 
 ## 不提供的
 

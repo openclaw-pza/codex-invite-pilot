@@ -1025,7 +1025,7 @@ async function voidCard() {
     stopPolling(); stopTicking();
     document.body.dataset.state = 'idle';
     state.activation = null;
-    $('voidBox').innerHTML = `<p>卡密 ••••${escapeHtml(data.codeTail)} 已注销。<b>请在闲鱼上联系卖家退款</b>，退款由卖家人工处理。</p>`;
+    $('voidBox').innerHTML = `<p>卡密 ••••${escapeHtml(data.codeTail)} 已注销。<b>请在下单平台联系卖家退款</b>，退款由卖家人工处理。</p>`;
     $('voidBox').hidden = false;
     renderStage(null);
     toast('已注销，请联系卖家退款');

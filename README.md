@@ -7,6 +7,8 @@
 [![Node](https://img.shields.io/badge/node-%3E%3D20-green)]()
 [![Tests](https://img.shields.io/badge/tests-358%20passing-brightgreen)]()
 
+![买家页](docs/img/buyer.png)
+
 ---
 
 ## 目录
@@ -202,7 +204,10 @@ npm test          # 358 项
 - 待处理充值与退款
 - 账目流水与**风险敞口**（已收款但未完成履约的单子）
 
-> 截图待补。想先看实物的，直接去 [线上示例站](https://sms.tempmail2026.xyz)。
+![管理后台](docs/img/admin.png)
+
+> 这两张图由 `npm run shots` 自动生成 —— 它自己起临时服务、自己造演示数据、截完自己清干净，**不碰任何真实数据库**。
+> 界面改了就重跑一次，README 上的图不会过期。
 
 > 入库体检为什么必须做：坏的凭据不体检，只会在真正用到它的时候才暴露——那时候已经晚了。
 > 体检会真去换一次令牌**并真读一次数据**，只拿到令牌不算数。

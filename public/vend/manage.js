@@ -119,7 +119,7 @@ async function loadRefunds() {
       return;
     }
     const table = document.createElement('table');
-    table.innerHTML = '<thead><tr><th>注销时间</th><th>卡密后四位</th><th>面额</th><th>取过几次</th><th>闲鱼订单</th><th></th></tr></thead>';
+    table.innerHTML = '<thead><tr><th>注销时间</th><th>卡密后四位</th><th>面额</th><th>取过几次</th><th>平台订单</th><th></th></tr></thead>';
     const tbody = document.createElement('tbody');
     for (const row of rows) {
       const tr = document.createElement('tr');
@@ -136,7 +136,7 @@ async function loadRefunds() {
       const order = document.createElement('td');
       order.className = 'mono';
       order.style.fontSize = '12px';
-      // 闲鱼订单号是去平台退款时要用的，必须显示全
+      // 平台订单号是去退款时要用的，必须显示全
       order.textContent = row.orderId || '—';
       const actions = document.createElement('td');
       actions.style.textAlign = 'right';

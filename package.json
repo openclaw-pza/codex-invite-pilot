@@ -11,7 +11,8 @@
     "test": "node --test --import ./test.setup.mjs",
     "setup-browser": "playwright install chromium",
     "vend": "node server/vend-server.js",
-    "vend:dev": "node --watch server/vend-server.js"
+    "vend:dev": "node --watch server/vend-server.js",
+    "shots": "node scripts/doc-shots.mjs"
   },
   "dependencies": {
     "flag-icons": "^7.5.0",
