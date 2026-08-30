@@ -3,11 +3,14 @@
 const fs = require('fs');
 const path = require('path');
 const countries = require('i18n-iso-countries');
+
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = require('node:path').join(__dirname, '..').replace(/\\/g, '/');
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
-const SRC = 'F:/sms-project/node_modules/flag-icons/flags/4x3';
-const OUT = 'F:/sms-project/public/vend/flags';
-const raw = JSON.parse(fs.readFileSync('F:/sms-project/data/hero-countries.json', 'utf8'));
+const SRC = `${ROOT}/node_modules/flag-icons/flags/4x3`;
+const OUT = `${ROOT}/public/vend/flags`;
+const raw = JSON.parse(fs.readFileSync(`${ROOT}/data/hero-countries.json`, 'utf8'));
 
 // 上游用的英文名跟 ISO 标准名对不上的，在这里显式对应。
 // 每一条都是人工核过的，不是猜的。
@@ -143,7 +146,7 @@ for (const iso of needed) {
 }
 
 fs.writeFileSync(
-  'F:/sms-project/public/vend/country-iso.json',
+  `${ROOT}/public/vend/country-iso.json`,
   JSON.stringify(mapping),
 );
 

@@ -15,8 +15,8 @@ const fs = require('fs');
 const countries = require('i18n-iso-countries');
 countries.registerLocale(require('i18n-iso-countries/langs/zh.json'));
 
-const ISO = JSON.parse(fs.readFileSync('F:/sms-project/public/vend/country-iso.json', 'utf8'));
-const RAW = JSON.parse(fs.readFileSync('F:/sms-project/data/hero-countries.json', 'utf8'));
+const ISO = JSON.parse(fs.readFileSync(`${ROOT}/public/vend/country-iso.json`, 'utf8'));
+const RAW = JSON.parse(fs.readFileSync(`${ROOT}/data/hero-countries.json`, 'utf8'));
 const list = Array.isArray(RAW) ? RAW : (RAW.countries || Object.values(RAW));
 const byId = new Map(list.map((c) => [String(c.id), c]));
 
@@ -43,12 +43,15 @@ for (const [id, v] of Object.entries(ISO)) {
   if (upstream && upstream !== zh) changed.push(`${id}\t${upstream}\t->\t${zh}`);
 }
 
-fs.writeFileSync('F:/sms-project/data/country-cn.json', JSON.stringify(out, null, 0), 'utf8');
+fs.writeFileSync(`${ROOT}/data/country-cn.json`, JSON.stringify(out, null, 0), 'utf8');
 
 // 顺带把国际区号写进 country-iso.json：前端要按区号把号码拆成「区号 + 本地号码」。
 // 区号长度 1~4 位不定（+1 / +63 / +852 / +1876），靠正则猜必错 ——
 // 用 libphonenumber-js 按 ISO2 查真值，构建期算好，运行时零成本。
 const { getCountryCallingCode } = require('libphonenumber-js');
+
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = require('node:path').join(__dirname, '..').replace(/\\/g, '/');
 let ccOk = 0;
 let ccMiss = [];
 for (const [id, v] of Object.entries(ISO)) {
@@ -59,7 +62,7 @@ for (const [id, v] of Object.entries(ISO)) {
     ccMiss.push(id + '/' + v.iso);   // 查不到就不写，前端会退回整串显示
   }
 }
-fs.writeFileSync('F:/sms-project/public/vend/country-iso.json', JSON.stringify(ISO, null, 0), 'utf8');
+fs.writeFileSync(`${ROOT}/public/vend/country-iso.json`, JSON.stringify(ISO, null, 0), 'utf8');
 console.log('calling codes: ' + ccOk + ' ok, ' + ccMiss.length + ' missing' + (ccMiss.length ? ' -> ' + ccMiss.join(' ') : ''));
 
 fs.writeFileSync(

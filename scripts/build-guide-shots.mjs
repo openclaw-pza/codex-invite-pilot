@@ -20,7 +20,12 @@ import { chromium } from 'playwright';
 import { startVendServer } from '../server/vend-server.js';
 import { CardStore } from '../server/cards.js';
 
-const OUT = 'F:/sms-project/public/vend/guide';
+import { dirname as _dirname, join as _join } from 'node:path';
+import { fileURLToPath as _fileURLToPath } from 'node:url';
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = _join(_dirname(_fileURLToPath(import.meta.url)), '..').replace(/\\/g, '/');
+
+const OUT = `${ROOT}/public/vend/guide`;
 const TMP = 'C:/WINDOWS/TEMP/claude/D----/fae349b8-7916-464f-82e6-ab335a208072/scratchpad/guide-db';
 const PORT = 8791;
 

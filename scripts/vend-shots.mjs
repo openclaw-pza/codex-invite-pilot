@@ -9,21 +9,26 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 
+import { dirname as _dirname, join as _join } from 'node:path';
+import { fileURLToPath as _fileURLToPath } from 'node:url';
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = _join(_dirname(_fileURLToPath(import.meta.url)), '..').replace(/\\/g, '/');
+
 for (const k of ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'ALL_PROXY', 'all_proxy', 'NODE_USE_ENV_PROXY']) {
   delete process.env[k];
 }
-for (const line of readFileSync('F:/sms-project/.env', 'utf8').split('\n')) {
+for (const line of readFileSync(`${ROOT}/.env`, 'utf8').split('\n')) {
   if (!line.includes('=') || line.trim().startsWith('#')) continue;
   const i = line.indexOf('=');
   process.env[line.slice(0, i).trim()] = line.slice(i + 1).trim();
 }
 
-const { startVendServer } = await import('file:///F:/sms-project/server/vend-server.js');
+const { startVendServer } = await import(`file:///${ROOT}/server/vend-server.js`);
 const dir = join(tmpdir(), `vend-shot-${randomUUID()}`);
 const server = await startVendServer({ dbPath: join(dir, 'vend.sqlite'), port: 0, skipVendorSync: true });
 const PORT = server.port ?? server.address?.().port;
 const BASE = `http://127.0.0.1:${PORT}`;
-const OUT = 'F:/sms-project/design/shots';
+const OUT = `${ROOT}/design/shots`;
 mkdirSync(OUT, { recursive: true });
 
 const results = [];

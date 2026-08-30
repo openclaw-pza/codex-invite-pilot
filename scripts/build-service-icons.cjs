@@ -5,7 +5,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = 'F:/sms-project';
 const DATA_PATH = path.join(ROOT, 'data/hero-services.json');
 const ICONS_SVG_DIR = path.join(ROOT, 'node_modules/simple-icons/icons');
 
@@ -29,6 +28,9 @@ const ICONS = simpleIconsData.icons || simpleIconsData;
 // 第二图标源：@iconify-json/logos（gilbarbara/logos，CC0），补 simple-icons 因商标下架的大牌。
 // simple-icons 是单色可控的，永远优先；logos 是彩色多元素的，只用来补缺口。
 const logosData = require('@iconify-json/logos/icons.json');
+
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = require('node:path').join(__dirname, '..').replace(/\\/g, '/');
 const LOGOS_ICONS = logosData.icons;
 const LOGOS_DEFAULT_WIDTH = logosData.width || 24;
 const LOGOS_DEFAULT_HEIGHT = logosData.height || 24;

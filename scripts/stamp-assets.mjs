@@ -13,7 +13,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 
-const ROOT = 'F:/sms-project/public/vend';
+const ROOT = `${ROOT}/public/vend`;
 const hash = (p) => createHash('sha256').update(readFileSync(join(ROOT, p))).digest('hex').slice(0, 8);
 
 // 去掉已有的 ?v=，保证幂等

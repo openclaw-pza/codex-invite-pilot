@@ -15,8 +15,13 @@ import { readFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 import { pathToFileURL } from 'node:url';
 
+import { dirname as _dirname, join as _join } from 'node:path';
+import { fileURLToPath as _fileURLToPath } from 'node:url';
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = _join(_dirname(_fileURLToPath(import.meta.url)), '..').replace(/\\/g, '/');
+
 const SRC = 'C:/WINDOWS/TEMP/claude/D----/fae349b8-7916-464f-82e6-ab335a208072/scratchpad/redesign/deliver/index.html';
-const CUR = 'F:/sms-project/public/vend/index.html';
+const CUR = `${ROOT}/public/vend/index.html`;
 const OUT = CUR;
 
 // ---------- 1. 从现有文件里抠出 <head>：meta / canonical / og / 三段 JSON-LD / favicon ----------
@@ -324,7 +329,7 @@ html = html.replace('</body>', '<script type="module" src="vend.js"></script>\n<
 writeFileSync(OUT, html, 'utf8');
 
 // ---------- 5. 核对：JS 绑的 id 一个都不能少 ----------
-const js = readFileSync('F:/sms-project/public/vend/vend.js', 'utf8');
+const js = readFileSync(`${ROOT}/public/vend/vend.js`, 'utf8');
 const bound = [...new Set([...js.matchAll(/\$\('([A-Za-z0-9]+)'\)/g)].map((m) => m[1]))];
 const have = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
 const still = bound.filter((id) => !have.has(id));

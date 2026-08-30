@@ -5,8 +5,13 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { config } from '../server/config.js';
 
+import { dirname as _dirname, join as _join } from 'node:path';
+import { fileURLToPath as _fileURLToPath } from 'node:url';
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = _join(_dirname(_fileURLToPath(import.meta.url)), '..').replace(/\\/g, '/');
+
 const REQUEST_TIMEOUT_MS = 45000;
-const OUT_PATH = 'F:/sms-project/data/hero-services.json';
+const OUT_PATH = `${ROOT}/data/hero-services.json`;
 
 // 抄自 server/vend-catalog.js 的 CN_NAMES（只读引用，不 import 私有变量，不改动该文件）。
 const CN_NAMES = {
@@ -112,7 +117,7 @@ async function main() {
   const [offers, names] = await Promise.all([fetchAllOffers(), fetchServiceNames()]);
   const { rows, namelessCodes } = distill(offers, names);
 
-  mkdirSync('F:/sms-project/data', { recursive: true });
+  mkdirSync(`${ROOT}/data`, { recursive: true });
   writeFileSync(OUT_PATH, JSON.stringify(rows, null, 2));
 
   console.log(`dump 完成：${rows.length} 个服务 -> ${OUT_PATH}`);

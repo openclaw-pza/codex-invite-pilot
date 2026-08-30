@@ -75,6 +75,11 @@ export const config = {
 // 暴露给前端的非敏感状态：只说明「配齐没」，绝不返回密钥本身
 export function publicConfigStatus() {
   return {
+    // 扩展目录要给出**这台机器上的真实绝对路径** —— 装扩展时要粘进浏览器的
+    // 加载对话框里。页面上写死一个路径的话，别人 clone 到任何别的目录，
+    // 那个「复制目录」按钮复制到的都是原作者的路径。
+    // 这个进程只听回环，暴露自己的安装路径没有额外风险。
+    paths: { extension: join(ROOT_DIR, 'extension') },
     mail: {
       baseUrlSet: Boolean(config.mail.baseUrl),
       adminAuthSet: Boolean(config.mail.adminAuth),

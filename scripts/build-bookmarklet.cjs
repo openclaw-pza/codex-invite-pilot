@@ -8,9 +8,12 @@
 
 const fs = require('fs');
 
+// 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
+const ROOT = require('node:path').join(__dirname, '..').replace(/\\/g, '/');
+
 const ORIGIN = process.argv[2] || 'https://sms.tempmail2026.xyz';
-const SRC = 'F:/sms-project/public/vend/fill.src.js';
-const HTML = 'F:/sms-project/public/vend/index.html';
+const SRC = `${ROOT}/public/vend/fill.src.js`;
+const HTML = `${ROOT}/public/vend/index.html`;
 
 let code = fs.readFileSync(SRC, 'utf8');
 code = code.replace('__RELAY_ORIGIN__', ORIGIN);

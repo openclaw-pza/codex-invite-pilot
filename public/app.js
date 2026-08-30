@@ -32,6 +32,10 @@ async function copyText(value, label) {
 async function loadConfig() {
   try {
     const config = await api('/api/config');
+    // 扩展目录由服务端报，不写死在 HTML 里 —— 每个人 clone 到的目录都不一样，
+    // 而这个值是要粘进浏览器加载对话框的，写死等于让别人复制到我的路径。
+    const extPath = config.paths?.extension;
+    if (extPath) $('extensionPath').textContent = extPath;
     const chips = [
       { label: config.mail.adminAuthSet && config.mail.baseUrlSet ? '邮箱已连接' : '邮箱未配置', ok: config.mail.adminAuthSet && config.mail.baseUrlSet },
       { label: config.heroSms.apiKeySet ? 'HeroSMS 已连接' : 'HeroSMS 未配置', ok: config.heroSms.apiKeySet },

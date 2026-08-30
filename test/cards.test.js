@@ -1,6 +1,6 @@
 // cards.test.js — 卡密模块不变量测试
 //
-// 红线：本测试**只**在系统临时目录建库，绝不碰 F:\sms-project\data 下的生产文件。
+// 红线：本测试**只**在系统临时目录建库，绝不碰仓库 data/ 下的生产文件。
 // CardStore 的库路径是构造参数（不是模块级常量），所以这里天然隔离，不需要 monkeypatch。
 
 import test from 'node:test';
