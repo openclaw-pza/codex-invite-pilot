@@ -20,6 +20,10 @@
     "libphonenumber-js": "^1.13.10",
     "playwright": "^1.62.1"
   },
+  "//optionalDependencies": "patchright 只有执行器那台机器用得上（scripts/desktop/desktop-run.mjs）。放 optional 是为了让只跑售卖站的人不必下载一整套浏览器；缺了它售卖站照常，只有邀请链路跑不起来。",
+  "optionalDependencies": {
+    "patchright": "^1.62.2"
+  },
   "devDependencies": {
     "@iconify-json/logos": "^1.2.13",
     "simple-icons": "^16.28.0"

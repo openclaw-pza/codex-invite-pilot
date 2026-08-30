@@ -16,6 +16,9 @@ import { chromium } from 'patchright';
 import { spawn, execSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { readFileSync, existsSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { tmpdir } from 'node:os';
 // 收信走 mailProvider：MAIL_PROVIDER=cloudflare（一次性域）/ outlook（真实微软邮箱）。
 // 两条臂共用**同一份**下游代码，切换只动一个环境变量 —— 对照实验成立的前提。
 // createAddress 仍从 cloudflare 拿：只有一次性域需要现建地址，微软号地址是固定的。
@@ -34,9 +37,18 @@ import {
   detectProfileStage, detectPhoneStage, submitPhoneNumber, fillSmsCodeAndSubmit,
 } from './server/automationBrowser.js';
 
-const SHOTS = '/opt/codex-worker/shots';
-const URL_FILE = '/tmp/opened-urls.txt';
-const CDP = 'http://127.0.0.1:9333';
+// 这三个原本写死成部署机上的路径。别人 clone 下来跑，截图会往一个不存在的
+// 目录里写、假 xdg-open 又写在另一个地方 —— 两边对不上的表现是
+// 「一直等不到 OAuth 链接」，而真正的原因（路径不一致）一条日志都不会说。
+// 所以做成可覆盖，默认值落在仓库内，不依赖任何特定部署布局。
+const HERE_DIR = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = join(HERE_DIR, '..', '..');
+// 截图目录：出事时的现场证据。默认放仓库 data/shots/（已被 .gitignore 排除）。
+const SHOTS = process.env.CODEX_SHOTS_DIR || join(REPO_ROOT, 'data', 'shots');
+// 假 xdg-open 把桌面端要打开的 URL 写在这里。**装 xdg-open 时用的路径必须和这里一致**，
+// 否则脚本会一直等一个永远不会出现的文件。
+const URL_FILE = process.env.CODEX_URL_FILE || join(tmpdir(), 'opened-urls.txt');
+const CDP = process.env.CODEX_CDP_URL || 'http://127.0.0.1:9333';
 const T0 = Date.now();
 let W0 = null;                       // 10 分钟窗口起点（邀请到达时开始）
 const el = () => ((Date.now() - T0) / 1000).toFixed(0) + 's';
