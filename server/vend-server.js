@@ -20,6 +20,7 @@ import { loadVendConfig, VEND_DB_PATH, readSecrets } from './vend-config.js';
 import { createVendRoutes } from './vend-routes.js';
 import { getCatalog } from './vend-catalog.js';
 import { startBalanceWatch } from './balanceWatch.js';
+import { injectBranding, brandingEnabled, brandingUrl } from './branding.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(HERE, '..');
@@ -229,6 +230,16 @@ async function serveStatic(req, res, pathname) {
       'Cache-Control': LONG_CACHE.has(ext) ? 'public, max-age=31536000, immutable' : 'no-cache',
       ...headers,
     });
+    // 署名只加在 HTML 上。relay.html 跳过：它是给跨源 opener 用的功能页，
+    // 不是给人看的页面，往里塞可见元素只会干扰握手时的视觉判断。
+    // 没有显式设 Content-Length，改了长度也不会对不上。
+    if (ext === '.html' && !isRelay) {
+      res.end(injectBranding(data, {
+        enabled: brandingEnabled(),
+        url: brandingUrl(),
+      }));
+      return;
+    }
     res.end(data);
   } catch {
     sendJson(res, 404, { ok: false, error: '页面不存在' });
