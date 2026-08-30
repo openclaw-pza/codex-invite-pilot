@@ -12,7 +12,13 @@
 import { chromium } from 'playwright';
 import { rmSync, mkdirSync } from 'node:fs';
 
-const URL = process.argv[2] || 'https://sms.tempmail2026.xyz/';
+// 不给默认值：这个脚本会**真的发请求**。默认值指向作者的生产站，
+// 意味着任何人不带参数跑一次，都是在探别人的服务器。
+const URL = process.argv[2];
+if (!URL) {
+  console.error('用法：node scripts/check-prod.mjs https://你的站点/');
+  process.exit(2);
+}
 const PROFILE = 'C:/WINDOWS/TEMP/claude/D----/fae349b8-7916-464f-82e6-ab335a208072/scratchpad/prod-profile';
 const OUT = 'C:/WINDOWS/TEMP/claude/D----/fae349b8-7916-464f-82e6-ab335a208072/scratchpad';
 

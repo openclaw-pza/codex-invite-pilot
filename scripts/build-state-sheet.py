@@ -13,8 +13,9 @@ import io, os
 from PIL import Image, ImageDraw, ImageFont
 
 SP = r'C:/WINDOWS/TEMP/claude/D----/fae349b8-7916-464f-82e6-ab335a208072/scratchpad'
-GUIDE = r'F:/sms-project/public/vend/guide'
-OUT = r'F:/sms-project/design/现状快照-给ClaudeDesign.jpg'
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+GUIDE = os.path.join(ROOT, 'public', 'vend', 'guide')
+OUT = os.path.join(ROOT, 'data', 'state-sheet.jpg')
 
 FONT = 'C:/Windows/Fonts/msyh.ttc'
 FONT_B = 'C:/Windows/Fonts/msyhbd.ttc'

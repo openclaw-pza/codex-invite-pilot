@@ -4,14 +4,16 @@
 // 手写维护不了（几百行代码挤成一行没法读也没法改）。
 // 源码留在 fill.src.js 里正常写、正常加注释，构建时才压。
 //
-// 用法：node scripts/build-bookmarklet.cjs [https://sms.tempmail2026.xyz]
+// 用法：node scripts/build-bookmarklet.cjs https://你的站点
 
 const fs = require('fs');
 
 // 仓库根由脚本自身位置算出，不写死 —— 写死的话别人 clone 到任何别的目录都跑不了。
 const ROOT = require('node:path').join(__dirname, '..').replace(/\\/g, '/');
 
-const ORIGIN = process.argv[2] || 'https://sms.tempmail2026.xyz';
+// 默认值用占位域名 —— 生成出来的书签会指向这个地址，写作者的站
+// 等于别人生成的书签把他的买家送到我这儿来。
+const ORIGIN = process.argv[2] || 'https://your-domain.example';
 const SRC = `${ROOT}/public/vend/fill.src.js`;
 const HTML = `${ROOT}/public/vend/index.html`;
 
