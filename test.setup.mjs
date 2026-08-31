@@ -96,6 +96,12 @@ globalThis.fetch = async function testFetch(input, init) {
     return realFetch.call(this, input, init);
   }
 
+  // GitHub 接口同样不能真打：它有每小时 60 次的匿名限额，
+  // 测试跑几轮就会把开发机的额度耗光，然后表现成「star 功能的测试随机变红」。
+  if (url.hostname === 'api.github.com') {
+    return json({ stargazers_count: 1234, full_name: 'test-owner/test-repo' });
+  }
+
   // 不是接码上游 → 原样放行（本地服务、其他 mock 都不受影响）
   if (url.hostname !== UPSTREAM_HOST) return realFetch.call(this, input, init);
 

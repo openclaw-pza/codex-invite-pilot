@@ -21,6 +21,7 @@ import { createVendRoutes } from './vend-routes.js';
 import { getCatalog } from './vend-catalog.js';
 import { startBalanceWatch } from './balanceWatch.js';
 import { injectBranding, brandingEnabled, brandingUrl } from './branding.js';
+import { prewarmStars, githubRepo } from './githubStars.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(HERE, '..');
@@ -279,6 +280,10 @@ export async function startVendServer({ dbPath = VEND_DB_PATH, port, host, skipV
   getCatalog()
     .then((list) => console.log(`[vend] 服务目录已预热：${list.length} 个可售服务`))
     .catch((error) => console.warn(`[vend] 服务目录预热失败：${error.message}`));
+
+  // 顶栏 star 计数也预热一下：它是「立刻返回缓存、后台刷新」的取法，
+  // 不预热的话重启后第一个访客看到的是没有数字的按钮。没配 GITHUB_REPO 时这是个空操作。
+  prewarmStars(githubRepo());
   const sweeper = setInterval(reclaim, 60 * 1000);
   sweeper.unref();
 

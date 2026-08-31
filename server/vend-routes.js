@@ -15,6 +15,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { sendMail, smtpConfigFromEnv } from './smtpMail.js';
 import { buildPayUrl, checkNotify, alipayConfigFromEnv } from './alipay.js';
 import { secretEquals } from './cards.js';
+import { githubMeta } from './githubStars.js';
 import { createInviteRoutes } from './inviteRoutes.js';
 import {
   fetchAvailableCountries,
@@ -461,6 +462,8 @@ export function createVendRoutes({ store }) {
           // 否则买家点了付款按钮拿到空链接，比压根没这个按钮更糟。
           alipayAuto: Boolean(alipayConfigFromEnv()),
           contactNote: config.contactNote,
+          // 顶栏 GitHub star 按钮。没配 GITHUB_REPO 就是 null，前端据此不渲染。
+          github: await githubMeta(),
         };
       },
     },

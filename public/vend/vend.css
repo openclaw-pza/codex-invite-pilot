@@ -1095,3 +1095,29 @@ img.ann-qr { height: auto; aspect-ratio: 1; object-fit: cover; }
 .cx-shot figcaption b.bad{color:var(--red);margin-right:6px}
 .cx-shot-ok{border-color:rgba(84,117,95,.5)}
 .cx-shot-bad{border-color:rgba(163,75,68,.5)}
+
+/* ── GitHub star 按钮（顶栏最右）─────────────────────────
+ * 默认藏着，只有服务端配了 GITHUB_REPO 才由 vend.js 打开。
+ * 做成深色胶囊而不是跟 help-link 一样的浅色：它不是本站功能，
+ * 是个外链，视觉上就该和站内导航分开，免得买家误点。
+ * 高度对齐 help-link 的 36px，不撑高顶栏。 */
+.gh-star{
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  height:36px;padding:0 12px;border-radius:999px;
+  background:#1f2328;color:#fff;
+  font-size:13px;line-height:1;white-space:nowrap;
+  transition:background .15s ease;
+}
+.gh-star:hover{background:#32383f;color:#fff;text-decoration:none}
+.gh-star:focus-visible{outline:2px solid var(--t1);outline-offset:2px}
+.gh-star-mark{flex:none;display:block}
+/* 星号用暖黄，和 GitHub 自己的一致；没有计数时整块隐藏，只留图标 */
+.gh-star-ico{color:#e3b341;font-size:13px}
+.gh-star-num{font-variant-numeric:tabular-nums;font-weight:600}
+.gh-star:not([data-has-count]) .gh-star-ico,
+.gh-star:not([data-has-count]) .gh-star-num{display:none}
+/* 窄屏顶栏本来就挤，只留图标 */
+@media (max-width:760px){
+  .gh-star{padding:0 9px}
+  .gh-star .gh-star-ico,.gh-star .gh-star-num{display:none}
+}

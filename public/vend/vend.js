@@ -1857,6 +1857,19 @@ async function boot() {
       : `收不到码可更换号码，一张卡密最多换 ${state.maxChanges} 次`;
     if (state.meta.alipayQrUrl) $('alipayQr').src = state.meta.alipayQrUrl;
     if (state.meta.mailTtlDays) setText('mailTtlText', `${state.meta.mailTtlDays} 天`);
+    // GitHub star 按钮：服务端没配 GITHUB_REPO 就是 null，那就一直藏着。
+    // 计数拿不到也照常显示按钮 —— 它首先是个链接，数字只是锦上添花。
+    const gh = state.meta.github;
+    if (gh && gh.url) {
+      const el = $('ghStar');
+      el.href = gh.url;
+      el.title = `在 GitHub 上查看 ${gh.repo}`;
+      if (gh.starsText) {
+        setText('ghStarNum', gh.starsText);
+        el.setAttribute('data-has-count', '');
+      }
+      el.hidden = false;
+    }
   } catch (error) {
     console.warn('[vend] meta 加载失败', error);
   }
