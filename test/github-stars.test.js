@@ -10,6 +10,26 @@ import {
   githubRepo, githubUrl, formatStars, githubMeta, getStars, _resetStarsCache,
 } from '../server/githubStars.js';
 
+// 这个文件自带上游 stub，不依赖任何全局测试设置 ——
+// 同一份测试要在两个仓库里都能跑，而它们的 npm test 命令不一样。
+// 顺带也保证：**测试永远不会真打 GitHub**（匿名接口每小时 60 次，
+// 跑几轮就把开发机额度耗光，然后表现成这几个用例随机变红）。
+const STUB_STARS = 1234;
+function stubGitHub(stars = STUB_STARS) {
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const u = String(typeof input === 'string' ? input : input?.url ?? input);
+    if (u.includes('api.github.com')) {
+      return new Response(JSON.stringify({ stargazers_count: stars }), {
+        status: 200, headers: { 'content-type': 'application/json' },
+      });
+    }
+    return real(input, init);
+  };
+  return () => { globalThis.fetch = real; };
+}
+
+
 test('没配 GITHUB_REPO 就是没有按钮', () => {
   assert.equal(githubRepo({}), '');
   assert.equal(githubRepo({ GITHUB_REPO: '' }), '');
@@ -68,10 +88,13 @@ test('getStars 立刻返回，不等网络', async () => {
 
 test('后台刷完之后就有数了', async () => {
   _resetStarsCache();
+  const restore = stubGitHub();
+  try {
   getStars('test-owner/test-repo');
   // 等后台那次 fetch 落地（test.setup.mjs 把 api.github.com 拦成了固定值）
   await new Promise((r) => setTimeout(r, 60));
-  assert.equal(getStars('test-owner/test-repo'), 1234);
+  assert.equal(getStars('test-owner/test-repo'), STUB_STARS);
+  } finally { restore(); }
 });
 
 test('没配仓库时 getStars 不发任何请求', () => {
@@ -102,11 +125,12 @@ test('上游挂掉不抛异常 —— 装饰功能不该拖垮首屏接口', asy
 
 test('githubMeta 冷启动时会等第一次，拿到完整形状', async () => {
   _resetStarsCache();
+  const restore = stubGitHub();
   const env = { GITHUB_REPO: 'test-owner/test-repo' };
-  const meta = await githubMeta(env);
+  const meta = await githubMeta(env).finally(restore);
   assert.equal(meta.repo, 'test-owner/test-repo');
   assert.equal(meta.url, 'https://github.com/test-owner/test-repo');
-  assert.equal(meta.stars, 1234);
+  assert.equal(meta.stars, STUB_STARS);
   assert.equal(meta.starsText, '1.2k');
 });
 
