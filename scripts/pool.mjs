@@ -9,6 +9,7 @@
 //   node scripts/pool.mjs claim --ref card-001
 //   node scripts/pool.mjs confirm --address x@outlook.com
 //   node scripts/pool.mjs run --address x@outlook.com   # 也可省略 --address，自动取一个 ready 的
+//   node scripts/pool.mjs cooling            # 隔离区复检（干跑）；加 --apply 才落库
 //   node scripts/pool.mjs status
 
 import { spawn } from 'node:child_process';
@@ -20,8 +21,10 @@ import { parseAccountLine } from '../server/accountLine.js';
 import { verifyGraphToken } from '../server/outlookToken.js';
 import {
   addAccounts, claimAccount, confirmInvite, getAccount,
-  listByStatus, markDead, markFinished, markRunning, poolStats, releaseAccount, resetToReady, unconfirmInvite,
+  listByStatus, listCooling, markDead, markFinished, markRunning, nextReady, poolStats, releaseAccount,
+  resetToReady, settleCooling, unconfirmInvite,
 } from '../server/accountPool.js';
+import { mailboxHasInvite } from '../server/inviteSweep.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const cmd = process.argv[2] || 'status';
@@ -105,10 +108,13 @@ if (cmd === 'add') {
   unconfirmInvite(address);
   console.log(`✅ ${address} 已退回 assigned（邀请未发），在买家确认之前不会被 worker 取走`);
 } else if (cmd === 'release') {
-  // 卡退款/注销了、邀请还没发 —— 把号退回可分配池，别让好号跟废卡陪葬。
+  // 卡退款/注销了、邀请还没发 —— 把号收回来，别让好号跟废卡陪葬。
+  // 但收回来只到**隔离区**：买家可能在这之后才把邀请发出去，而一个 outlook
+  // 只能被邀请一次，直接再卖会把两个买家的钱货错配（见 accountPool.releaseAccount）。
   const address = arg('--address');
   releaseAccount(address);
-  console.log(`✅ ${address} 已退回 available，可以再派给别的买家`);
+  console.log(`✅ ${address} 已转入隔离区（cooling），**还不能**再派给别的买家`);
+  console.log('   复检信箱后才决定放回还是打死：pool.mjs cooling（先干跑，确认无误再加 --apply）');
 } else if (cmd === 'verify') {
   // 入库体检：把卖家发的令牌逐个真验一遍（换令牌 + 真读一次信箱）。
   //
@@ -147,10 +153,45 @@ if (cmd === 'add') {
   if (!account) { console.error(`池子里没有 ${address}`); process.exit(1); }
   markDead(address, arg('--note') || '');
   console.log(`✅ ${address} 已标记 dead，不会再派给买家`);
+} else if (cmd === 'cooling') {
+  // 隔离区复检。买家领了号却没发邀请、号被 sweep 收回时进的就是这里。
+  //
+  // 🔴 为什么不能收回就直接放回可用池：一个 outlook **只能被邀请一次**，而 sweep
+  // 读信箱只是某一刻的快照 —— 买家完全可能在那之后才把邀请发出来。真发生了而号
+  // 又被再卖一次的话，desktop-run 的微软臂不设基线（一号一邀，认信箱里现有那封），
+  // 认到的会是**前一个买家**那封：后一个买家付了钱，额度记到前一个人头上。
+  //
+  // 所以放回可用池必须以「此刻信箱里确实没有邀请信」为据，而且是人点头之后才放。
+  const rows = listCooling();
+  if (!rows.length) { console.log('隔离区是空的'); process.exit(0); }
+  const apply = process.argv.includes('--apply');
+  console.log(`隔离区 ${rows.length} 个${apply ? '（--apply：会真的改状态）' : '（干跑，不改任何状态；加 --apply 才落库）'}\n`);
+  for (const row of rows) {
+    let has = null;
+    try { has = await mailboxHasInvite(row); }
+    catch (error) { console.warn(`  读信箱出错：${error?.message || error}`); }
+    // 读不出来 ≠ 干净。查不到就继续关着，绝不放行。
+    const verdict = has === false ? 'clean' : (has === true ? 'used' : 'unknown');
+    const label = { clean: '✅ 信箱干净，可放回', used: '💀 信箱里有邀请信 —— 名额已被消耗，打死', unknown: '❓ 读不出来，继续隔离' }[verdict];
+    console.log(`  ${row.address}  隔离于 ${row.cooled_at || '?'}  ${label}`);
+    console.log(`      ${row.note || ''}`);
+    if (!apply || verdict === 'unknown') continue;
+    settleCooling(row.address, {
+      clean: verdict === 'clean',
+      detail: verdict === 'clean' ? '隔离复检：信箱无邀请信，放回可用池' : '隔离复检：信箱里已有邀请信，名额已消耗',
+    });
+  }
+  if (!apply) console.log('\n（以上只是判读，没有改任何状态。确认无误后加 --apply）');
 } else if (cmd === 'run') {
   let address = arg('--address');
   if (!address) {
-    const ready = listByStatus('ready', 1)[0];
+    // 🔴 必须和网站派单用同一个判据（nextReady）。
+    // 这里曾经是 listByStatus('ready',1)[0]（按号入库时间），而网站侧已经改成
+    // 按买家确认发出邀请的时间排 —— 两套顺序并存时，运维手工跑一轮会**跳过**
+    // 真正的队头，被跳过那位买家页面上的排位就从「马上轮到你」倒退成
+    // 「前面还有 1 个人」。而买家看到进度倒退正是他判定系统坏了、再下一单的原因，
+    // 也就是排位这个功能本来要消灭的东西。（2026-09-02 对抗性审计实测复现。）
+    const ready = nextReady();
     if (!ready) { console.error('没有 ready 状态的账号（买家确认发过邀请之后才会变 ready）'); process.exit(1); }
     address = ready.address;
     console.log(`没指定 --address，自动取一个 ready 的：${address}`);
@@ -224,11 +265,11 @@ if (cmd === 'add') {
 } else if (!['status', '', undefined].includes(cmd)) {
   // 打错子命令不能静默走 status 分支还 exit 0 —— 脚本化调用会把
   // 「没领到号」当成「领到了」。审计实测：pool.mjs claimm --ref x 看起来是成功的。
-  console.error(`未知子命令 ${cmd}。可用：add / claim / confirm / unconfirm / release / run / reset / verify / dead / status`);
+  console.error(`未知子命令 ${cmd}。可用：add / claim / confirm / unconfirm / release / run / reset / verify / dead / cooling / status`);
   process.exit(2);
 } else {
   console.log(JSON.stringify(poolStats(), null, 2));
-  for (const status of ['available', 'assigned', 'ready', 'running', 'failed', 'done', 'dead']) {
+  for (const status of ['available', 'assigned', 'ready', 'running', 'cooling', 'failed', 'done', 'dead']) {
     const rows = listByStatus(status, 20);
     if (!rows.length) continue;
     console.log(`\n[${status}]`);

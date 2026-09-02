@@ -159,16 +159,21 @@ test('unconfirm 只认 ready，其余状态一律拒绝', () => {
   assert.throws(() => pool.unconfirmInvite(a), /不在 ready/);   // running 不能退
 });
 
-// 退回可分配池：卡退款/注销而邀请还没发时用。只认 assigned ——
+// 收回号：卡退款/注销而邀请还没发时用。只认 assigned ——
 // ready 说明买家已确认发了邀请，running 可能还在跑，done/failed 是终态。
-test('release 只认 assigned，其余状态一律拒绝', () => {
+//
+// 🔴 2026-09-02 改了落点：收回来只到**隔离区**（cooling），不再直接回 available。
+// 依据是安哥明确的一条业务事实——一个 outlook 只能被邀请一次，而买家完全可能在
+// 号被收回之后才把邀请发出来。详见 test/invite-cooling.test.js 的文件头。
+test('release 只认 assigned，收回的号进隔离区而不是可分配池', () => {
   pool.addAccounts([{ address: 'rel@outlook.com', password: 'pw' }]);
   const a = pool.claimAccount('CARD-REL').address;
   assert.equal(pool.releaseAccount(a), true);
   const row = pool.getAccount(a);
-  assert.equal(row.status, 'available');
-  assert.equal(row.assigned_ref, null);          // 释放了唯一索引，能再派给别人
-  assert.throws(() => pool.releaseAccount(a), /不在 assigned/);   // available 不能再退
+  assert.equal(row.status, 'cooling');
+  assert.notEqual(row.status, 'available', '直接放回可分配池会把两个买家的钱货错配');
+  assert.equal(row.assigned_ref, null);          // 释放了唯一索引
+  assert.throws(() => pool.releaseAccount(a), /不在 assigned/);   // cooling 不能再退
   const b = pool.claimAccount('CARD-REL2').address;
   pool.confirmInvite(b);
   assert.throws(() => pool.releaseAccount(b), /不在 assigned/);   // ready 不能退

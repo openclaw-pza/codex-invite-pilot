@@ -19,9 +19,9 @@ test('密码里有空格/竖线/逗号也不能被截断', () => {
 });
 
 test('Graph 令牌号：四段全部收下', () => {
-  const r = parseAccountLine(`mqxjazc90287@outlook.com----nxuuyy375596----${CID}----${TOKEN}`);
-  assert.equal(r.address, 'mqxjazc90287@outlook.com');
-  assert.equal(r.password, 'nxuuyy375596');
+  const r = parseAccountLine(`sample1234@outlook.com----samplePw9012----${CID}----${TOKEN}`);
+  assert.equal(r.address, 'sample1234@outlook.com');
+  assert.equal(r.password, 'samplePw9012');
   assert.equal(r.clientId, CID);
   assert.equal(r.refreshToken, TOKEN);
 });

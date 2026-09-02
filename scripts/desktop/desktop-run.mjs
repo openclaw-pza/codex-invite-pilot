@@ -34,7 +34,7 @@ import {
 } from './server/desktopJudge.js';
 import {
   driveToOtp, fillOtpAndSubmit, fillProfileAndSubmit, makeProfile,
-  detectProfileStage, detectPhoneStage, submitPhoneNumber, fillSmsCodeAndSubmit,
+  detectProfileStage, detectPhoneStage, submitPhoneNumber, fillSmsCodeAndSubmit, pageIsLoggedIn,
 } from './server/automationBrowser.js';
 
 // 这三个原本写死成部署机上的路径。别人 clone 下来跑，截图会往一个不存在的
@@ -528,20 +528,57 @@ async function doPhone(page) {
   // 会**退回重填手机号页**（返回 phone_number），那一样会被判成「接受」，
   // 然后给一个被拒的号付不可退的钱。
   // 另外 isVisible 在 React 重渲染时可能瞬时读空，单次采样即定案同样会误付钱。
-  let accepted = false;
+  // 🔴 判「已接受」必须要**正向证据**，而上一版是纯反向的：只要 detectPhoneStage
+  // 返回空就算过。可它只认 add-phone / phone-verification 这两个表单
+  //（server/automationBrowser.js:54-68，选择器是 form[action*=...] 作用域的），
+  // 于是**被踢回 /log-in、React 重挂表单、提交中的 spinner —— 三种都返回空**。
+  // 采样窗口又只有 4 秒（2 次 × 2 秒），正好落在页面切换的空窗里。
+  //
+  // 后果是给一个**被拒**的号付了不可退的 finishNumber（约 $0.17），而且把
+  // 「被拒」这件事推迟到外层循环才发现。2026-09-02 那次事故的两个泰国号
+  // 大概率就是这么白付的 —— 它的失败形态恰恰是"被踢回 /log-in"。
+  //
+  // 改法：三条正向捷径 + 一条明确的反向否决 + 把兜底窗口从 4 秒拉到 20 秒。
+  // 误判成"没过"的代价只是退号重来（号能退，钱不亏）；误判成"过了"要真掏钱，
+  // 两边不对称，所以判据必须往"拿不到证据就不认账"这边偏。
+  let accepted = '';
   let clean = 0;
-  const vdl = Date.now() + 30000;
+  let kicked = 0;
+  const vdl = Date.now() + 45000;
   while (Date.now() < vdl && !accepted) {
-    await sleep(2000);
+    await sleep(2500);
+    // 反向否决要排在最前面：被踢回登录页和"过了"长得一模一样（都不在手机表单上）。
+    //
+    // 🔴 但它同样**不能单次采样即定案**。上面那段注释刚说完「isVisible 在 React
+    // 重渲染时可能瞬时读空，单次采样即定案会误付钱」，并据此把接受侧的窗口拉到 8 次；
+    // 拒绝侧却只采一次 —— 同一条规矩只用在一边。而 /log-in 在这条 OAuth 流程里
+    // **是个正常页面**（外层循环的「邮箱框 → 填本轮邮箱」分支伺候的就是它），
+    // 拿它当无条件的被拒证据，假设太强。
+    // 一次误判 = 换号重来（多买一个号）；三次误判 = phoneTries 用尽 = 整轮抛错
+    // = 烧一个不可再生的名额。多等 2.5 秒换这个，划算。（2026-09-02 审计提出）
+    if (/\/log-in|\/auth\/login/i.test(page.url())) {
+      kicked += 1;
+      if (kicked >= 2) throw new Error(`短信码 ${code} 提交后连续两次读到登录页 —— 判为被拒`);
+      continue;
+    }
+    kicked = 0;
     const st = await detectPhoneStage(page);
     if (st === 'phone_code') { clean = 0; continue; }
     if (st === 'phone_number') {
       throw new Error(`短信码 ${code} 被拒：页面退回重填手机号页，需换号重试`);
     }
+    // 正向捷径：真的走到了下一屏，才敢说它过了
+    if (await pageIsLoggedIn(page)) { accepted = '已进入 chatgpt 主界面'; break; }
+    if (await detectProfileStage(page)) { accepted = '已进到资料页'; break; }
+    if (await page.locator('input[autocomplete="one-time-code"]').first().isVisible().catch(() => false)) {
+      accepted = '已进到邮箱验证码页'; break;
+    }
     clean += 1;
-    accepted = clean >= 2;
+    if (clean >= 8) accepted = '连续 20 秒不在任何手机验证表单上';
   }
-  if (!accepted) throw new Error(`短信码 ${code} 提交后 30 秒仍停在手机验证页 —— 判为被拒`);
+  if (!accepted) throw new Error(`短信码 ${code} 提交后 45 秒拿不到任何「过了」的正向证据 —— 判为被拒`);
+  // 判据要留在日志里：白付的那 $0.17 事后只能靠这一行倒查是哪条判据放的行。
+  say(`短信码已被接受（判据：${accepted}）—— 结算这个接码号`);
   await finishNumber(activationId);
   activationId = null;
   await sleep(8000);
@@ -775,12 +812,36 @@ try {
   // 手机验证允许试两次：OpenAI 服务端超时那次的号就废了，重试要换新号。
   // 两次封顶，免得一直烧接码费。
   let phoneTries = 0;
+  // 手机验证实际失败了几次。phoneTries 只在**页面还停在手机号页**时才加得动，
+  // 而 OpenAI 拒完号会把浏览器直接踢回 /log-in —— 那之后 phoneTries 就冻住了，
+  // 它那套 `>= 3 就认输` 的闸再也够不着。于是 2026-09-02 那轮明明是手机验证挂了，
+  // 却掉进通用循环转了 350 秒，最后报出来的是「桌面端仍未登录」，指向完全错的方向。
+  let phoneFails = 0;
+  // 失败结论是要写进号池 result、也是排查时第一眼看的东西。手机验证挂过就把它带上，
+  // 别让「转圈」「验证码被拒」这类下游症状独占结论 —— 它们只是手机验证挂掉的后果。
+  const phoneNote = () => (phoneFails ? `（本轮手机验证已失败 ${phoneFails} 次，多半是它把登录卡住了）` : '');
   let stuck = 0;
   // 🔴 stuck 只在**点不到**东西时才增长。而 2026-08-27 那次是点得到、
   // 每次都「命中」、页面却纹丝不动 —— 于是循环空转 135 轮直到总超时。
   // 判据必须落在**页面有没有变**上，不是落在"点击这个动作成没成功"上。
   let lastSig = '';
   let sameSig = 0;
+  // 🔴 sameSig 只认「不动点」——连续两轮一模一样才计数。而 2026-09-02 那次是**转圈**：
+  // 登录页 → 提交邮箱 → 验证码页 → 又被踢回登录页，三个状态轮着来，
+  // 任意相邻两轮都不相同，于是 sameSig 每轮清零，永远到不了 15。
+  // 实测这个环转了约 50 圈、烧掉 350 秒，一路磨到窗口预算耗尽才死。
+  // 判据得从「连续相同」放宽到「累计见过几次」：环里的每个状态都会被反复访问，
+  // 而正常一轮 OAuth 每个页面只经过 1~3 次（实测成功轮次整个循环才转 2 圈）。
+  const sigSeen = new Map();
+  // 同一个页面状态累计见到这么多次就判环。取 10 —— 比正常轮次的峰值高约 4 倍，
+  // 又能在这次事故的第 30 轮左右就熔断（而不是第 150 轮）。
+  // 阈值宁高勿低：误杀一轮 = 白烧一个不可再生的邀请名额。
+  const SIG_CYCLE_MAX = 10;
+  // 🔴 findOtpMail 的去重键是**邮件 id**，不是那 6 位码。而 OpenAI 在验证码有效期内
+  // 重复发信时发的是**同一个码**（2026-09-02 实测：同一个 523052 连发 5 封新邮件）。
+  // 于是每一封都能过基线、每一次都被当成「新码」填进去，而它早就被服务端拒了 ——
+  // 这正是上面那个环转得起来的燃料。同一个码提交过就别再提交第二次。
+  const usedOtpCodes = new Map();
   let renewed = false;
   // OAuth 阶段那封 OTP 的基线，在提交邮箱那一刻才记（见下）
   let oauthOtpBase = (await listMailsRetry({ address, limit: 50 })).mails.map((m) => String(m.id));
@@ -796,7 +857,27 @@ try {
     }
     // 页面指纹：URL + 正文开头。连续不变 = 我们在原地打转。
     const sig = `${page.url()}|${t.slice(0, 300)}`;
-    if (sig === lastSig) sameSig += 1; else { sameSig = 0; lastSig = sig; }
+    if (sig === lastSig) {
+      sameSig += 1;
+    } else {
+      sameSig = 0;
+      lastSig = sig;
+      // 转圈检测（见上面 sigSeen 的注释）。和 sameSig 是两回事：那个管「站着不动」，
+      // 这个管「绕着圈跑」。少了这一条，只要失败形态是个环，熔断器就形同虚设。
+      //
+      // 🔴 只在**页面确实变了**的那一轮计数。上一版无条件每轮 +1，后果是：
+      // 静止的页面在第 10 轮就被这条抛掉，下面 sameSig >= 15 要第 16 轮才够 ——
+      // 那个分支从此永不可达（死代码，dk-X-noprogress.png 再也不会产生），
+      // 静止型故障的容忍窗口被从约 56 秒悄悄砍到约 35 秒。
+      // 而 2G 内存的机器上，OpenAI 同意屏慢响应一次就可能超过 35 秒，
+      // 误杀一轮 = 白烧一个不可再生的邀请名额。两道闸必须各管各的形态。
+      const seen = (sigSeen.get(sig) || 0) + 1;
+      sigSeen.set(sig, seen);
+      if (seen >= SIG_CYCLE_MAX) {
+        await page.screenshot({ path: SHOTS + '/dk-X-cycle.png', fullPage: true }).catch(() => {});
+        throw new Error(`OAuth 转圈：同一个页面状态累计第 ${seen} 次回到${phoneNote()}，停在 ${page.url()}｜${t.slice(0, 160)}`);
+      }
+    }
     if (sameSig >= 15) {
       await page.screenshot({ path: SHOTS + '/dk-X-noprogress.png', fullPage: true }).catch(() => {});
       throw new Error(`OAuth 原地打转：连续 ${sameSig} 轮页面无变化，停在 ${page.url()}｜${t.slice(0, 160)}`);
@@ -817,6 +898,7 @@ try {
         await page.screenshot({ path: SHOTS + '/dk-X-phonecode-stuck.png', fullPage: true }).catch(() => {});
         throw new Error('停在手机验证码页且换号次数已用尽 —— 上一条短信码未被接受');
       }
+      phoneFails += 1;
       say('停在手机验证码页 —— 上一条码没被接受，退回重填手机号换个号再来');
       if (activationId) { await cancelNumber(activationId).catch(() => {}); activationId = null; }
       await gotoRetry(page, 'https://auth.openai.com/add-phone', '退回重填手机号')
@@ -842,6 +924,7 @@ try {
         await doPhone(page);
       } catch (error) {
         if (activationId) { await cancelNumber(activationId).catch(() => {}); activationId = null; }
+        phoneFails += 1;
         if (phoneTries >= 3) throw error;
         say(`手机验证第 ${phoneTries} 次失败（${error?.message || '未知'}）—— 换个号再来`);
         await sleep(3000);
@@ -933,7 +1016,14 @@ try {
         await page.screenshot({ path: `${SHOTS}/dk-X-nootp.png`, fullPage: true }).catch(() => {});
         throw new Error('OAuth 阶段 3 分钟没等到邮箱验证码（信箱侧或发信侧出了问题）');
       }
-      say(`OAuth 阶段 OTP ${otp.code}`);
+      // 同一个码允许再试一次（第一次可能是 UI 抖动没填进去），第二次还回来就是它被拒了。
+      const tries = (usedOtpCodes.get(otp.code) || 0) + 1;
+      usedOtpCodes.set(otp.code, tries);
+      if (tries > 2) {
+        await page.screenshot({ path: `${SHOTS}/dk-X-otp-reused.png`, fullPage: true }).catch(() => {});
+        throw new Error(`OAuth 阶段验证码 ${otp.code} 已提交 ${tries - 1} 次仍被退回登录页 —— 这个号过不了 OAuth${phoneNote()}`);
+      }
+      say(`OAuth 阶段 OTP ${otp.code}${tries > 1 ? `（第 ${tries} 次提交同一个码）` : ''}`);
       await otpBox.fill(otp.code);
       await domClick(page, '^(继续|continue)$', 'OTP 继续');
       await sleep(6000);

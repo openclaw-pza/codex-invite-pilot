@@ -12,7 +12,7 @@
 // 一张卡永远只可能挂一个活号，应用层再出并发 bug 也超发不了。
 
 import {
-  claimAccount, confirmInvite, getAccount, getByRef, listByStatus,
+  claimAccount, confirmInvite, getAccount, getAnyByRef, getByRef, nextReady, queueAheadOf, requeueRun,
   markFinished, markRunning, poolStats, reclaimStaleRunning,
 } from './accountPool.js';
 import { secretEquals } from './cards.js';
@@ -51,12 +51,29 @@ const VIEW = {
   },
 };
 
+// 排队时把**真实排位**说出来，而不是一句含糊的「正在等待空闲通道」。
+//
+// 2026-09-02 出过一次：一轮卡了 40 分钟，买家在页面上只看到"正在等待"，
+// 以为系统死了，又下了一单 —— 于是两张卡吃掉两个不可再生的邀请名额。
+// 队列本来就是串行的，缺的从来不是限流，是**让买家知道自己排第几**。
+//
+// 每人 3～5 分钟是实测区间（近期成功轮次 150～230 秒，取整并留出取任务的间隔）。
+function queueText(ahead) {
+  if (!Number.isFinite(ahead)) return VIEW.ready.text;
+  if (ahead <= 0) return '已排队，马上就轮到你了，请保持页面打开。';
+  return `前面还有 ${ahead} 个人在排队，预计等待 ${ahead * 3}～${ahead * 5} 分钟。请保持页面打开，不用重复提交。`;
+}
+
 // available 是"还没派给任何人"的号，正常不会出现在按卡反查的结果里；
 // 真出现了当成异常处理，别把一个没绑定的号显示给买家。
-export function viewOf(row) {
+//
+// ahead 只对 ready 有意义，缺省 null —— 不传就退回原来那句通用文案，
+// 老调用点（含测试）不用改。
+export function viewOf(row, ahead = null) {
   if (!row) return { phase: 'none', text: '', done: false };
   const view = VIEW[row.status];
   if (!view) return { phase: 'failed', text: '邀请失败，请联系客服', done: true };
+  if (row.status === 'ready') return { ...view, text: queueText(ahead), ahead: Number.isFinite(ahead) ? ahead : null };
   return { ...view };
 }
 
@@ -96,7 +113,7 @@ export function createInviteRoutes({
     const ref = String(card.code);
     const existing = getByRef(ref);
     // 幂等：买家刷新页面、重复点，都只会拿回同一个号
-    if (existing) return { address: existing.address, ...viewOf(existing) };
+    if (existing) return { address: existing.address, ...viewOf(existing, queueAheadOf(existing)) };
 
     let account;
     try {
@@ -107,7 +124,7 @@ export function createInviteRoutes({
       throw new VendError('暂时没有可用名额了，请联系客服', 409, 'pool_empty');
     }
     const row = getByRef(ref);
-    return { address: account.address, ...viewOf(row) };
+    return { address: account.address, ...viewOf(row, queueAheadOf(row)) };
   }
 
   const routes = [
@@ -135,7 +152,7 @@ export function createInviteRoutes({
         // 已经在跑或已跑完的，重复点不做任何事，直接回当前状态
         if (row.status === 'assigned') confirmInvite(row.address);
         const after = getByRef(String(card.code));
-        return { address: after.address, ...viewOf(after) };
+        return { address: after.address, ...viewOf(after, queueAheadOf(after)) };
       },
     },
 
@@ -145,8 +162,17 @@ export function createInviteRoutes({
       handler: async ({ query }) => {
         const { card } = requireSession(query?.token, { allowUsed: true });
         const row = getByRef(String(card.code));
-        if (!row) return { address: '', phase: 'none', text: '', done: false };
-        return { address: row.address, ...viewOf(row) };
+        if (!row) {
+          // 号被标 dead 了（令牌失效/被封，运维的日常动作）。这时**不能**回空壳：
+          // 前端按 address 判「领取」按钮的显隐，而它缓存着上次拿到的 address，
+          // 于是按钮不出现；phase='none' 又让结论区和转圈区一起隐藏；done=false
+          // 让轮询永不停。买家页面上从此一个字都没有，每 4 秒空转一次。
+          // 给他一个明确终态，让他知道该找客服 —— 后端其实允许他重新领一个号。
+          const dead = getAnyByRef(String(card.code));
+          if (dead) return { address: '', phase: 'failed', text: '邀请失败，请联系客服', done: true };
+          return { address: '', phase: 'none', text: '', done: false };
+        }
+        return { address: row.address, ...viewOf(row, queueAheadOf(row)) };
       },
     },
   ];
@@ -173,7 +199,9 @@ export function createInviteRoutes({
       // 取任务前先清一次陈旧的 running（worker 中途挂掉留下的），
       // 否则那个号会永久卡住 —— markFinished 只认 running→终态，reset 又拒绝 running。
       reclaimStaleRunning();
-      const next = listByStatus('ready', 1)[0];
+      // 队头按**买家确认发出邀请**的先后取，和 queueAheadOf 共用同一个判据 ——
+      // 两边不一致的话，页面上显示的排位就是假的（见 accountPool.QUEUE_ORDER 的注释）。
+      const next = nextReady();
       if (!next) return { job: null };
       // 先置 running 再交出去：交出去之后才置的话，两次拉取之间会把同一个号发给两个 worker。
       markRunning(next.address);
@@ -196,7 +224,33 @@ export function createInviteRoutes({
     handler: async ({ body }) => {
       requireWorker(body?.secret);
       const address = String(body?.address || '').trim().toLowerCase();
-      if (!getAccount(address)) throw new VendError('没有这个号', 404, 'no_account');
+      const before = getAccount(address);
+      if (!before) throw new VendError('没有这个号', 404, 'no_account');
+
+      // 🔴 「worker 压根没开跑」的失败不能写 failed —— failed 在买家侧是终态死路
+      // （卡不退、号不回队列、买家侧三条路由一条都救不了，只能运维手工 reset）。
+      // 本机锁被占、spawn 失败、静默看门狗回收都属于这一类：买家已经付过钱、
+      // 邀请名额已经发到那个地址上了，凭一次调度打嗝把他判死是这套系统里最贵的错。
+      // 放回队列他还站在原位（invite_confirmed_at 没动），下一轮就轮到他。
+      if (!body?.ok && body?.requeue) {
+        // 🔴 这条分支自己也要幂等。worker 回报会重试 5 次，而「第一次已落库、
+        // 响应在网络上丢了」按提交信息自己的说法是常态 —— 第 2 次进来时号已经是
+        // ready，requeueRun 只认 running 会返回 false，于是掉进下面的 markFinished
+        // 当场 500，日志刷 5 条假告警。那**正是**下面那段注释说要消灭的现象，
+        // 而新加的分支没享受到这个修复。（2026-09-02 审计实测：第 2、3 次都是 500。）
+        if (before.status === 'ready') return { ok: true, status: 'ready', requeued: true, idempotent: true };
+        if (requeueRun(address, { note: String(body?.note || '') })) {
+          return { ok: true, status: 'ready', requeued: true };
+        }
+        // 没能放回去（重试预算用尽，或已被陈旧清扫捡走）就照常走终态，别静默吞掉
+      }
+
+      // 幂等：worker 回报会重试 5 次，而「第一次已落库、响应在网络上丢了」是常态。
+      // 不认幂等的话第 2 次起必然 500，日志刷 5 条假告警，运维会以为号卡在
+      // running 跑去手工 reset —— 而它其实早就是终态了。
+      const want = body?.ok ? 'done' : 'failed';
+      if (before.status === want) return { ok: true, status: want, idempotent: true };
+
       markFinished(address, {
         ok: Boolean(body?.ok),
         result: String(body?.result || ''),

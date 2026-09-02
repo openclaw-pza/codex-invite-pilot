@@ -13,6 +13,9 @@
 //   available → assigned（已发给买家）→ ready（买家说邀请发了）
 //             → running → done / failed
 //   dead：账号本身废了（登不上/被封），不再参与分配
+//   cooling：买家没发邀请、号被收回，但**不能直接再卖** —— 一个 outlook 只能被
+//            邀请一次，而他可能在收回之后才把邀请发出来。必须复检信箱才能定去留
+//            （见 releaseAccount / settleCooling）。
 
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync, chmodSync } from 'node:fs';
@@ -32,6 +35,16 @@ function migrate(conn) {
   const cols = conn.prepare('PRAGMA table_info(accounts)').all().map((c) => c.name);
   if (!cols.includes('refresh_token')) conn.exec('ALTER TABLE accounts ADD COLUMN refresh_token TEXT');
   if (!cols.includes('client_id')) conn.exec('ALTER TABLE accounts ADD COLUMN client_id TEXT');
+  // 这个号被派出去跑过几轮。requeueRun 靠它封顶：瞬时故障值得自动重试，
+  // 但一个真坏掉的号无限重试会一直烧接码费（每轮最多约 $0.34），而且没人会发现。
+  if (!cols.includes('run_attempts')) conn.exec('ALTER TABLE accounts ADD COLUMN run_attempts INTEGER NOT NULL DEFAULT 0');
+  // 被退回的时刻。退回的号要先隔离复检才能再卖，靠它判断隔离够久了没有。
+  if (!cols.includes('cooled_at')) conn.exec('ALTER TABLE accounts ADD COLUMN cooled_at TEXT');
+  // 退回前挂的是哪张卡。assigned_ref 必须清空（它上面有唯一索引，留着会占住坑），
+  // 但清空之后买家侧就再也反查不到这一行 —— 状态接口回空壳，前端结论区和转圈区
+  // 一起隐藏、领取按钮不出现、轮询永不停，买家页面上一个字都没有。
+  // 单独留一列，既不碰唯一索引，也让买家拿得到明确终态。
+  if (!cols.includes('released_ref')) conn.exec('ALTER TABLE accounts ADD COLUMN released_ref TEXT');
 }
 
 function open() {
@@ -59,7 +72,10 @@ function open() {
       finished_at         TEXT,
       result              TEXT,
       note                TEXT,
-      created_at          TEXT NOT NULL
+      created_at          TEXT NOT NULL,
+      run_attempts        INTEGER NOT NULL DEFAULT 0,
+      cooled_at           TEXT,
+      released_ref        TEXT
     );
     CREATE INDEX IF NOT EXISTS idx_accounts_status ON accounts(status);
     CREATE INDEX IF NOT EXISTS idx_accounts_ref ON accounts(assigned_ref);
@@ -161,7 +177,8 @@ export function markRunning(address) {
   const conn = open();
   const key = String(address || '').trim().toLowerCase();
   const info = conn.prepare(
-    "UPDATE accounts SET status='running', started_at=? WHERE address=? AND status='ready'",
+    "UPDATE accounts SET status='running', started_at=?, run_attempts=run_attempts+1"
+    + " WHERE address=? AND status='ready'",
   ).run(now(), key);
   if (!info.changes) throw new Error(`${key} 不在 ready 状态，拒绝开跑（防止邀请还没来就动账号）`);
   return true;
@@ -187,7 +204,7 @@ export function markFinished(address, { ok, result = '', note = '' } = {}) {
 // worker 跑一半机器挂了 / 网络断了，号会**永久卡在 running**：
 // markFinished 只认 running→终态，而 reset 默认拒绝 running —— 一次崩溃就废掉
 // 一个不可再生的邀请名额。这条清扫把陈旧的 running 放回队列（复用模式能救回来，
-// 已实证：2026-08-27 minci931350 就是这么救回来的）。
+// 已实证：2026-08-27 有一轮就是这么救回来的）。
 //
 // 阈值必须大于最坏的一轮（窗口预算 25 分钟 + 启动开销），默认 45 分钟。
 // 🔴 时间戳读不出来时**不动它**：反过来处理的话，格式一变就会把正在跑的那一轮
@@ -228,13 +245,87 @@ export function unconfirmInvite(address) {
 //
 // 只认 assigned。ready 说明买家已确认发了邀请，running 可能还在跑，
 // done/failed 是终态 —— 这几种都不能凭空回到"没派给任何人"。
+/**
+ * 买家领了号却一直没发邀请，把号收回来。
+ *
+ * 🔴 收回来的号**不能直接回到 available**，必须先隔离（cooling）。
+ *
+ * 判据是「一个 outlook 只能被邀请一次」（安哥 2026-09-02 明确）。而 sweep 读信箱
+ * 只是**某一刻**的快照：买家完全可能在那一刻之后才把邀请发出来。于是：
+ *   买家1 迟发的邀请落进这个信箱 → 号回到池子 → 买家2 领到它
+ *   → desktop-run 的微软臂**不设基线**（scripts/desktop/desktop-run.mjs:615-617，
+ *      因为"一号一邀，信箱里那封就是要认的那封"）→ 它认的是**买家1那封**
+ *   → 买家2 付了钱，500 额度记到买家1 头上，买家2 自己的名额还白烧一个。
+ *
+ * 这是整套系统里最坏的一种错：钱和货给了两个不同的人，而且双方都不会察觉。
+ * 所以宁可让号在隔离区多待一会儿，也不能凭一次快照就把它当干净的再卖一次。
+ * 隔离区的号靠 `pool.mjs cooling` 复检信箱后才决定放回还是打死。
+ *
+ * 线上实测：这条路径 30 天内一次都没触发过，所以隔离的库存代价约等于零。
+ */
 export function releaseAccount(address) {
   const conn = open();
   const key = String(address || '').trim().toLowerCase();
   const info = conn.prepare(
-    "UPDATE accounts SET status='available', assigned_ref=NULL, assigned_at=NULL WHERE address=? AND status='assigned'",
-  ).run(key);
+    "UPDATE accounts SET status='cooling', cooled_at=?,"
+    // 谁占过它要留痕：复检时看到信箱里有邀请，得能说清那是谁的。
+    + " note='退回隔离区（原卡 ' || COALESCE(assigned_ref,'?') || '）',"
+    // released_ref 保住反查链路（见 getAnyByRef）。assigned_ref 仍要清空：
+    // 它上面有唯一索引 idx_accounts_ref_live，留着会一直占住这张卡的坑。
+    + ' released_ref=assigned_ref, assigned_ref=NULL, assigned_at=NULL'
+    + " WHERE address=? AND status='assigned'",
+  ).run(now(), key);
   if (!info.changes) throw new Error(`${key} 不在 assigned 状态，拒绝退回（只有"已领号但邀请未发"才能退回池子）`);
+  return true;
+}
+
+/**
+ * 按卡号反查，**含 dead**。
+ *
+ * getByRef 会把 dead 过滤掉，于是运维一执行 `pool.mjs dead`（令牌失效/被封时的
+ * 日常动作），买家侧状态接口就回一个空壳 {phase:'none'}：前端既不显示结论、
+ * 也不放出「领取邮箱」按钮（它按 address 判显隐，而 address 被前端缓存着），
+ * 而 done=false 让轮询永不停止 —— 买家页面上从此一个字都没有，每 4 秒空转一次。
+ * 要给他一个明确终态，就得先能查到这一行。
+ */
+export function getAnyByRef(ref) {
+  const key = String(ref || '').trim();
+  if (!key) return null;
+  return open()
+    // released_ref 也要认：号被退回隔离区时 assigned_ref 被清空（那一列有唯一索引，
+    // 留着会占住卡的坑），只查 assigned_ref 的话隔离掉的号又变成"查不到"——
+    // 买家侧就回到那张白板页了。这个洞在 dead 那条上补过一次，别在 cooling 上重开。
+    .prepare('SELECT * FROM accounts WHERE assigned_ref = ? OR released_ref = ? ORDER BY assigned_at DESC LIMIT 1')
+    .get(key, key) || null;
+}
+
+/** 隔离区里的号。复检要用。 */
+export function listCooling() {
+  return open().prepare("SELECT * FROM accounts WHERE status='cooling' ORDER BY cooled_at").all();
+}
+
+/**
+ * 隔离复检的结论落库。
+ * clean=true  → 信箱干净，放回 available，可以再卖
+ * clean=false → 信箱里有邀请，这个号已经被消耗掉了（一号一邀），打死
+ */
+export function settleCooling(address, { clean, detail = '' } = {}) {
+  // 🔴 clean 必须显式传 true/false，不接受 undefined。
+  // 原来走的是 truthiness —— 漏传参数就落进 'dead' 分支，**默认动作是打死一个好号**。
+  // 这类默认值的方向必须反过来：拿不准就报错，绝不默认执行不可逆的那一边。
+  if (clean !== true && clean !== false) {
+    throw new Error(`settleCooling 需要显式的 clean:true/false（收到 ${clean}）—— 不允许靠默认值决定打不打死一个号`);
+  }
+  const conn = open();
+  const key = String(address || '').trim().toLowerCase();
+  const info = conn.prepare(
+    `UPDATE accounts SET status='${clean ? 'available' : 'dead'}', note=?, cooled_at=NULL`
+    + (clean ? '' : ', finished_at=?')
+    + " WHERE address=? AND status='cooling'",
+  ).run(...(clean
+    ? [String(detail).slice(0, 500), key]
+    : [String(detail).slice(0, 500), now(), key]));
+  if (!info.changes) throw new Error(`settleCooling 无效：${key} 不在 cooling 状态`);
   return true;
 }
 
@@ -267,6 +358,76 @@ export function listByStatus(status, limit = 50) {
   return open().prepare('SELECT * FROM accounts WHERE status = ? ORDER BY created_at LIMIT ?').all(String(status), Number(limit) || 50);
 }
 
+// 排在这一位买家前面还有几个人。
+//
+// 🔴 排序判据必须和**派单**用的一模一样，否则显示出来的数字是假的：
+// worker 取任务走的是 listByStatus('ready', 1)，也就是 `ORDER BY created_at`——
+// 注意那是**号的创建时间**，不是买家确认发出邀请的时间。所以这里也只能按 created_at 数，
+// 换成 assigned_at / invite_confirmed_at 看着更"合理"，实际就和派单顺序对不上了。
+//
+// 前面的人数 = 比我早的 ready 条数 + 正在跑的那一个（队列串行，running 最多 1 个，
+// 但这里照数不写死 1 —— 万一哪天并发度变了，这个数字不会跟着说谎）。
+//
+// created_at 完全相同的两条会各自把对方数漏（显示少 1）。实测线上库无并列值，
+// 且 ISO 毫秒时间戳撞值只可能来自同一毫秒批量入库，属于可接受的显示误差。
+// 队列里的先后 = 买家**确认发出邀请**的先后。老数据没有这一列就退回 created_at；
+// address 做次级键，让顺序全序、可复现（时间戳撞值时两边不会互相漏数）。
+//
+// 🔴 上一版按 created_at 排，理由是「显示判据必须和派单一致」—— 判据是对的，
+// 但当时把因果搞反了：派单顺序本身就是错的。created_at 是**号入库的时间**，
+// 跟买家什么时候进队列毫无关系。后果是先领号、后发邀请的人会插到别人前面，
+// 别人的排位从 0 变 1、1 变 2 —— 而「数字倒退」恰恰是这个功能要消灭的东西
+// （买家一看进度倒退就判定系统坏了，再下一单，再烧一个不可再生的名额）。
+// 所以派单和显示要**一起**改成这个判据，不是让显示去迁就一个错的顺序。
+const QUEUE_ORDER = 'COALESCE(invite_confirmed_at, created_at), address';
+
+/** 队头：下一个该派给 worker 的号。所有派单入口都必须走这里，不许自己另排一套。 */
+export function nextReady() {
+  return open().prepare(`SELECT * FROM accounts WHERE status = 'ready' ORDER BY ${QUEUE_ORDER} LIMIT 1`).get() || null;
+}
+
+export function queueAheadOf(row) {
+  if (!row || row.status !== 'ready') return null;
+  const key = row.invite_confirmed_at || row.created_at;
+  // 缺字段就说"不知道"，绝不抛。这个函数挂在买家每 4 秒一次的状态轮询上，
+  // 抛出去就是 500，而调用方拿不到排位时本来就会退回通用文案 —— 代价天差地别。
+  if (!key || !row.address) return null;
+  const conn = open();
+  const ahead = conn.prepare(
+    "SELECT COUNT(*) AS n FROM accounts WHERE status = 'ready'"
+    + ' AND (COALESCE(invite_confirmed_at, created_at) < ?'
+    + '   OR (COALESCE(invite_confirmed_at, created_at) = ? AND address < ?))',
+  ).get(key, key, row.address).n;
+  const running = conn.prepare("SELECT COUNT(*) AS n FROM accounts WHERE status = 'running'").get().n;
+  return ahead + running;
+}
+
+// 一个号最多被派出去跑几轮。瞬时故障（锁被占、spawn 挂了、看门狗回收）值得自动重试，
+// 但真坏掉的号无限重试会一直烧接码费（每轮最多约 $0.34），而且账面上看不出异常 ——
+// 它永远显示"排队中"，没人会去查。到顶就老老实实落 failed，交给人。
+export const MAX_RUN_ATTEMPTS = Number(process.env.INVITE_MAX_ATTEMPTS) || 3;
+
+/**
+ * 把一轮**没真跑过**的失败放回队列，而不是打成 failed。
+ *
+ * 🔴 failed 在买家侧是终态死路：卡不退、号不回队列、三条买家路由一条都救不了，
+ * 只能运维手工 pool.mjs reset。所以「worker 压根没开跑」这类瞬时原因
+ * （本机锁被占、spawn 失败、静默看门狗回收）绝不能写 failed ——
+ * 买家付了钱、邀请名额已经发到那个地址上，凭一次调度打嗝就把他判死是最贵的错。
+ *
+ * 只认 running（就是 worker/next 刚置的那个），保持和 markFinished 同一条守卫线。
+ * invite_confirmed_at 一个字都不动，所以回队列后他还站在**原来的位置**，不用重新排。
+ */
+export function requeueRun(address, { note = '' } = {}) {
+  const conn = open();
+  const key = String(address || '').trim().toLowerCase();
+  const info = conn.prepare(
+    "UPDATE accounts SET status='ready', started_at=NULL, note=?"
+    + " WHERE address=? AND status='running' AND run_attempts < ?",
+  ).run(String(note).slice(0, 500), key, MAX_RUN_ATTEMPTS);
+  return Boolean(info.changes);
+}
+
 export function poolStats() {
   const rows = open().prepare('SELECT status, COUNT(*) AS n FROM accounts GROUP BY status').all();
   const stats = Object.fromEntries(rows.map((r) => [r.status, r.n]));
@@ -278,11 +439,8 @@ export function closePool() {
   if (db) { db.close(); db = null; }
 }
 
-/**
- * 把 failed/running 的号放回 ready 重跑。
- * 用在「账号其实已经建好、只是某一步卡了」的情况 —— 邀请已经消耗，
- * 换个号等于白扔一个邀请名额，能重跑就重跑。
- */
+// 把 failed 的号放回 ready 重跑。用在「账号已经建好、只是某一步卡了」的情况 ——
+// 邀请已经消耗掉了，换个号等于白扔一个邀请名额，能重跑就重跑。
 export function resetToReady(address, { force = false } = {}) {
   const conn = open();
   const key = String(address || '').trim().toLowerCase();
@@ -295,7 +453,13 @@ export function resetToReady(address, { force = false } = {}) {
   // 正是验证判据改动最省的办法，比拿一个新号去试划算得多。
   const allowed = force ? "('failed','running','done')" : "('failed')";
   const info = conn.prepare(
-    `UPDATE accounts SET status='ready', started_at=NULL, finished_at=NULL, result=NULL, note=NULL WHERE address=? AND status IN ${allowed}`,
+    // 🔴 run_attempts 必须一起清零。不清的话 reset 只恢复了状态、没恢复重试预算：
+    // 一个跑满 MAX_RUN_ATTEMPTS 轮的号 reset 回 ready，下一次派单计数就超了，
+    // requeueRun 当场拒绝 → 第一次瞬时故障（锁被占/spawn 挂了/看门狗回收）
+    // 就再次被打成 failed。而 failed 是买家侧的终态死路，唯一出路又是 reset ——
+    // 死循环，运维会得出"reset 不管用"的结论，然后弃用唯一有效的补救手段。
+    // 让人失去对补救工具信任的 bug，比偶发的功能 bug 贵。
+    `UPDATE accounts SET status='ready', started_at=NULL, finished_at=NULL, result=NULL, note=NULL, run_attempts=0 WHERE address=? AND status IN ${allowed}`,
   ).run(key);
   if (!info.changes) throw new Error(`${key} 不在 ${force ? 'failed/running' : 'failed'} 状态，拒绝 reset`);
   return conn.prepare('SELECT * FROM accounts WHERE address = ?').get(key);

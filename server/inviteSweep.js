@@ -97,13 +97,17 @@ export async function sweepAssigned({
       } else if (decision === 'release') {
         releaseAccount(row.address);
         out.released += 1;
-        // 卡也一并注销：号退回去了，这张卡再拿去领会领到另一个号，
-        // 等于一张卡吃两个名额。买家还需要就找客服，客服那边能补发。
+        // 🔴 卡必须一并注销。不注销的话这张卡再拿去领会领到**另一个**号，
+        // 而买家的邀请可能已经花在前一个地址上了 —— 一个 outlook 只能被邀请一次，
+        // 于是一张卡吃掉两个不可再生的名额。买家还需要就找客服，客服那边能补发。
+        // （2026-09-02 安哥确认：这条不能改成"只退号不注销卡"。）
         if (voidCard && row.assigned_ref) {
           try { voidCard(row.assigned_ref, '卡已过期，号已退回池子'); }
           catch (error) { console.warn(`[sweep] 注销卡 ${row.assigned_ref} 失败：${error?.message || error}`); }
         }
-        console.log(`[sweep] ${row.address} 卡已过期且信箱里没有邀请信 —— 退回号池，卡同时注销`);
+        // 注意措辞：号进的是**隔离区**不是可用池 —— 它可能在这一刻之后才收到
+        // 买家迟发的邀请，直接再卖会把两个买家的钱货错配（见 releaseAccount 的注释）。
+        console.log(`[sweep] ${row.address} 卡已过期且信箱里没有邀请信 —— 转入隔离区待复检（pool.mjs cooling），卡同时注销`);
       } else {
         out.kept += 1;
       }
