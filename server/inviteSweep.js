@@ -12,7 +12,7 @@
 //   · 信箱是空的       → 他没发，收回池子
 //   · 信箱读不出来     → **什么都不做**。读不到不等于没发，宁可多占一会儿
 
-import { confirmInvite, listByStatus, releaseAccount } from './accountPool.js';
+import { confirmInvite, listByStatus, releaseAccount, updateRefreshToken } from './accountPool.js';
 import { fetchMessagesWithToken } from './outlookToken.js';
 import { normalizeGraphMail } from './outlookMail.js';
 import { findInvitationMail } from './automationMatch.js';
@@ -65,6 +65,13 @@ export async function mailboxHasInvite(row) {
     clientId: row.client_id,
   });
   if (!result.ok) return null;
+  // 读信这一趟微软可能顺手轮换了 refresh_token。存回去，否则库里那份
+  // 会越来越旧，最后在真要用的时候失效。CAS：只有库里还是我这次拿去换的
+  // 那个值才写，免得把别的流程推进过的链掰回上一环。
+  if (result.refreshToken && result.refreshToken !== row.refresh_token) {
+    try { updateRefreshToken(row.address, result.refreshToken, { expect: row.refresh_token }); }
+    catch (error) { console.warn(`[sweep] ${row.address} 存新令牌失败：${error?.message || error}`); }
+  }
   const mails = (result.messages || []).map(normalizeGraphMail);
   return Boolean(findInvitationMail(mails, []));
 }

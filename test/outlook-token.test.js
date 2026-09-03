@@ -35,8 +35,11 @@ test('没有令牌直接判死，不去打网络', () => {
 
 // scope 写错是这条链路上最容易犯又最难看出的错：
 // 写死 Mail.Read 会被拒（AADSTS70000），而报错长得像"令牌坏了"。
-test('scope 固定用 .default', () => {
-  assert.equal(DEFAULT_SCOPE, 'https://graph.microsoft.com/.default');
+test('scope 必须同时有 .default 和 offline_access', () => {
+  assert.match(DEFAULT_SCOPE, /https:\/\/graph\.microsoft\.com\/\.default/,
+    '丢了 .default 会撞 AADSTS70000，而报错长得像「令牌坏了」');
+  assert.ok(DEFAULT_SCOPE.includes('offline_access'),
+    '丢了 offline_access 微软就不回吐新的 refresh_token，号池会在第 90 天静默集体失效');
 });
 
 // 🔴 判据必须落在**产物**上：只拿到 access_token 不算数。

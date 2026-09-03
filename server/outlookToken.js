@@ -19,7 +19,19 @@ export const THUNDERBIRD_CLIENT_ID = '9e5f94bc-e8a4-4e73-b8be-63364c29d753';
 // 'https://graph.microsoft.com/Mail.Read' 会被拒（AADSTS70000: 请求的 scope
 // 未授权）。.default 的语义正是「把这个 client 已获授权的一切给我」。
 // 2026-08-27 实测：这批货源授予的是 Mail.ReadWrite + Mail.Send。
-export const DEFAULT_SCOPE = 'https://graph.microsoft.com/.default';
+// 🔴 必须带 offline_access，否则微软**不会回吐新的 refresh_token**。
+//
+// refresh_token 是滚动有效期：拿它换 access_token 时，只要 scope 里有
+// offline_access，响应里就会附一个新的 refresh_token，90 天从那一刻重新计。
+// 不带它，号在货架上一天天逼近 90 天悬崖，体检跑得再勤也不会延寿 ——
+// 到期那天不报错，只是号池里的号集体登不上。
+//
+// 2026-09-03 拿真实账号逐个 scope 实测（n=1，判据是响应里有没有 refresh_token）：
+//   .default 单独                     → 200，**没有** refresh_token 字段
+//   offline_access + .default         → 200，有 refresh_token，且与旧的不同 ✅
+//   offline_access + 显式 Mail.* scope → 同上
+//   offline_access 单独               → 400 invalid_scope
+export const DEFAULT_SCOPE = 'offline_access https://graph.microsoft.com/.default';
 
 /**
  * 把刷新令牌的失败分成两类。分错的代价不对称：
@@ -72,7 +84,10 @@ export async function fetchMessagesWithToken({ refreshToken, clientId, top = 25,
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) return { ok: false, messages: [], detail: `读信 HTTP ${response.status}` };
-    return { ok: true, messages: data.value || [], detail: '' };
+    // 把微软轮换回来的新令牌带出去，交给调用方用 CAS 写回
+    //（见 accountPool.updateRefreshToken）。丢掉的话，库里那份会越来越旧，
+    // 等于一边有续期一边在漏气。
+    return { ok: true, messages: data.value || [], detail: '', refreshToken: payload.refresh_token || null };
   } catch (error) {
     return { ok: false, messages: [], detail: `网络失败：${error?.message || error}` };
   }
@@ -133,6 +148,8 @@ export async function verifyGraphToken({ refreshToken, clientId, timeoutMs = 200
       detail: '令牌可用',
       mailCount: (data.value || []).length,
       scope: payload.scope || '',
+      // 同上：轮换来的新令牌要交给调用方写回，不能在这儿丢掉
+      refreshToken: payload.refresh_token || null,
     };
   } catch (error) {
     return { ok: false, verdict: 'transient', detail: `读信网络失败：${error?.message || error}` };

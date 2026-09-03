@@ -92,6 +92,37 @@ const now = () => new Date().toISOString();
 
 
 /** 批量入池。已存在的地址跳过，不覆盖 —— 免得把正在跑的号重置回 available。 */
+/**
+ * 写回轮换来的 refresh_token。
+ *
+ * 🔴 微软的 refresh_token 是 **90 天滚动有效期**：拿它换 access_token 时，
+ * 只要请求 scope 里带 offline_access，响应里就会附一个新的 refresh_token，
+ * 90 天从那一刻重新计。号在货架上放着不动，第 91 天会集体失效 ——
+ * 而且不报错，只是某天买家取到的号全部登不上。所以换到新的必须存回去。
+ *
+ * 🔴 CAS（expect）：只有库里还是「我换令牌时用的那个值」才写回去。
+ * 否则说明中间有别的流程已经推进过轮换链，我手上这个是从**陈旧值**换来的，
+ * 写回去等于把链条掰回上一环。微软对轮换令牌有重放检测，掰回去可能直接作废。
+ *
+ * @returns {boolean} 真写进去了没有
+ */
+export function updateRefreshToken(address, refreshToken, { expect } = {}) {
+  const token = String(refreshToken || '').trim();
+  if (!token) return false;
+  const key = String(address || '').trim().toLowerCase();
+  // 已判死的号不再改令牌：它的令牌就是死因，覆盖掉只会让排查时看不到证据。
+  const conds = ['address = ?', 'refresh_token IS NOT ?', "status <> 'dead'"];
+  const args = [token, key, token];
+  if (expect !== undefined) {
+    conds.push('refresh_token IS ?');
+    args.push(expect === null || expect === undefined ? null : String(expect));
+  }
+  const info = open().prepare(
+    `UPDATE accounts SET refresh_token = ? WHERE ${conds.join(' AND ')}`,
+  ).run(...args);
+  return Number(info.changes) > 0;
+}
+
 export function addAccounts(rows = []) {
   const conn = open();
   const insert = conn.prepare(

@@ -178,3 +178,21 @@ test('release 只认 assigned，收回的号进隔离区而不是可分配池', 
   pool.confirmInvite(b);
   assert.throws(() => pool.releaseAccount(b), /不在 assigned/);   // ready 不能退
 });
+
+test('轮换来的新令牌要能写回，但 CAS 挡住拿陈旧值换来的', () => {
+  pool.addAccounts([{ address: 'cas1@outlook.com', password: 'p', refreshToken: 'GEN-1', clientId: 'c' }]);
+
+  // 正常轮换：手里的旧值和库里一致 → 写得进去
+  assert.equal(pool.updateRefreshToken('cas1@outlook.com', 'GEN-2', { expect: 'GEN-1' }), true);
+  assert.equal(pool.getAccount('cas1@outlook.com').refresh_token, 'GEN-2');
+
+  // 陈旧值：手里还是 GEN-1，但库里已经是 GEN-2 了 → 必须挡住。
+  // 挡不住的话会把轮换链掰回上一环，而微软对轮换令牌有重放检测。
+  assert.equal(pool.updateRefreshToken('cas1@outlook.com', 'STALE', { expect: 'GEN-1' }), false);
+  assert.equal(pool.getAccount('cas1@outlook.com').refresh_token, 'GEN-2',
+    'CAS 没挡住，陈旧值把更新的令牌覆盖了');
+
+  // 判死的号不再改令牌：它的令牌就是死因，覆盖掉就看不到证据了
+  pool.markDead('cas1@outlook.com', '令牌失效');
+  assert.equal(pool.updateRefreshToken('cas1@outlook.com', 'GEN-3'), false);
+});
